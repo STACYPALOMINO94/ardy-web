@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-09-03T00:31:59.235Z",
+  "cantidad": 1,
+  "productos": [
+    {
+      "Nombre": "BANDANA PARA MASCOTAS",
+      "Categoria": "Mascotas",
+      "MOQ": 100,
+      "Precio 100 uds (S/)": 2.45,
+      "Precio 300 uds (S/)": 2.39,
+      "Precio 500 uds (S/)": 2.33,
+      "Precio 1000 uds (S/)": 2.29,
+      "Material": "Poliéster",
+      "Tecnicas de marcado": "DTF TEXTIL - SERIGRAFIA",
+      "Area de marcado": "10 x 10",
+      "Acabado 1": "",
+      "Acabado 2": "",
+      "Acabado 3": "",
+      "Disponibilidad": "En stock",
+      "Permiso MTC": false,
+      "Novedad": false,
+      "Colores": "Rojo, Negro, Azul, Blanco, Verde, Naranja",
+      "Tallas": "Poliéster, talla L (75*52*52), Poliéster, talla M (68*45*45), Poliéster, talla S (50*35*35)",
+      "Foto 1": "https://cbu01.alicdn.com/img/ibank/O1CN01yTGNc01efKfxlsIdp_!!2207981393898-0-cib.jpg",
+      "Foto 2": "https://cbu01.alicdn.com/img/ibank/O1CN016vDviD1efKg6fBql3_!!2207981393898-0-cib.jpg",
+      "Foto 3": "https://cbu01.alicdn.com/img/ibank/O1CN01u98EA51efKg8EBYVn_!!2207981393898-0-cib.jpg",
+      "Foto 4": "https://cbu01.alicdn.com/img/ibank/O1CN01aG3MR51efKg75PiNX_!!2207981393898-0-cib.jpg",
+      "Fecha": "Wed Sep 02 2026 02:00:00 GMT-0500 (Peru Standard Time)",
+      "Notas web": ""
+    }
+  ]
+}

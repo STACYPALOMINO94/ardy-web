@@ -1,0 +1,89 @@
+name: Procesar catálogo web
+
+on:
+  push:
+    paths:
+      - "src/data/raw/productos_procesados_*.json"
+    branches:
+      - main
+
+  # Ejecución manual desde GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  procesar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Buscar JSONs pendientes (sin _DONE_)
+        id: find
+        run: |
+          PENDIENTES=$(find src/data/raw -name "productos_procesados_*.json" \
+            ! -name "*_DONE_*" 2>/dev/null | sort -t_ -k3 -n)
+          if [ -z "$PENDIENTES" ]; then
+            echo "No hay JSONs pendientes de procesar."
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Pendientes:"
+            echo "$PENDIENTES"
+            echo "found=true" >> "$GITHUB_OUTPUT"
+            # Guardar como lista multiline
+            echo "files<<EOF" >> "$GITHUB_OUTPUT"
+            echo "$PENDIENTES" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Procesar cada JSON pendiente
+        if: steps.find.outputs.found == 'true'
+        run: |
+          echo "${{ steps.find.outputs.files }}" | while IFS= read -r FILE; do
+            [ -z "$FILE" ] && continue
+            echo "========================================="
+            echo "Procesando: $FILE"
+            echo "========================================="
+            node scripts/procesar-catalogo.mjs "$FILE"
+            echo ""
+          done
+
+      - name: Verificar resultado
+        if: steps.find.outputs.found == 'true'
+        run: |
+          if [ ! -f src/data/productos.ts ]; then
+            echo "Error: no se generó src/data/productos.ts"
+            exit 1
+          fi
+          echo "productos.ts generado:"
+          wc -l src/data/productos.ts
+          echo ""
+          head -20 src/data/productos.ts
+
+      - name: Commit y push
+        if: steps.find.outputs.found == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Agregar productos.ts y los JSONs renombrados a _DONE_
+          git add src/data/productos.ts
+          git add src/data/raw/
+
+          if git diff --cached --quiet; then
+            echo "Sin cambios, nada que commitear."
+          else
+            FECHA=$(date -u +"%Y-%m-%d")
+            CANTIDAD=$(git diff --cached --name-only | grep "_DONE_" | wc -l)
+            git commit -m "Actualizar catálogo - $FECHA ($CANTIDAD archivo(s) procesados)"
+            git push
+            echo ""
+            echo "Push exitoso. Vercel desplegará automáticamente."
+          fi

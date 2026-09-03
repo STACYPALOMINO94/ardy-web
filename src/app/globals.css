@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/*
+  Escala de espaciado del proyecto: 8, 16, 24, 40, 64, 88px.
+  Con el spacing por defecto de Tailwind (1 unidad = 4px) equivale a:
+  8px=2  16px=4  24px=6  40px=10  64px=16  88px=22
+  No usar valores fuera de esta escala.
+*/
+
+@theme {
+  --color-marino: #16283c;
+  --color-marino-2: #1f3854;
+  --color-marino-3: #0d1926;
+  --color-oliva: #6b7a4f;
+  --color-oliva-2: #5a6842;
+  --color-ambar: #b8842a;
+  --color-ambar-2: #e3b65c;
+  --color-crema: #f4efe2;
+  --color-crema-2: #fbf8f1;
+  --color-tinta: #1b1b18;
+  --color-gris: #6c6a61;
+  --color-linea: #ded6c4;
+  --color-linea-2: #c9bea5;
+  --color-ok: #3e6b41;
+  --color-alerta: #8e3b2e;
+
+  --font-sans: "Helvetica Neue", Helvetica, -apple-system, Arial, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*
+  Fondo base del sitio: blanco puro. --crema/--crema-2 quedan reservados para
+  secciones puntuales de contraste (franjas alternas, bloques), nunca como
+  fondo general de página.
+*/
+body {
+  background: #ffffff;
+  color: var(--color-tinta);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4.2vw, 3.1rem);
+}
+
+h2 {
+  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+}
+
+h3 {
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  font-weight: 600;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-ambar);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  html {
+    transition: none !important;
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+  }
+}

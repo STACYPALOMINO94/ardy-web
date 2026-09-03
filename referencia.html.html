@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="es-PE">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ARDY Import — Merchandising para proyectos con fecha</title>
+<meta name="description" content="Importación aérea de merchandising de alto valor. Producto en blanco o marcado en Lima, para proyectos con fecha.">
+<style>
+:root{
+  --marino:#16283C;
+  --marino-2:#1F3854;
+  --marino-3:#0D1926;
+  --oliva:#6B7A4F;
+  --oliva-2:#5A6842;
+  --ambar:#B8842A;
+  --ambar-2:#E3B65C;
+  --crema:#F4EFE2;
+  --crema-2:#FBF8F1;
+  --tinta:#1B1B18;
+  --gris:#6C6A61;
+  --linea:#DED6C4;
+  --linea-2:#C9BEA5;
+  --ok:#3E6B41;
+  --alerta:#8E3B2E;
+  --s1:8px; --s2:16px; --s3:24px; --s4:40px; --s5:64px; --s6:88px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--crema);color:var(--tinta);
+  font-family:"Helvetica Neue",Helvetica,-apple-system,Arial,sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.env{max-width:1240px;margin:0 auto;padding:0 20px}
+h1,h2,h3,h4{line-height:1.12;letter-spacing:-0.025em;font-weight:700}
+h1{font-size:clamp(1.9rem,4.2vw,3.1rem)}
+h2{font-size:clamp(1.35rem,2.4vw,1.85rem)}
+h3{font-size:1rem;letter-spacing:-0.01em;font-weight:600}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0;background:none}
+img,svg{display:block;max-width:100%}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.tit-sec{display:flex;align-items:baseline;justify-content:space-between;gap:var(--s2);
+  border-bottom:2px solid var(--marino);padding-bottom:10px;margin-bottom:var(--s3)}
+.tit-sec .link{font-size:.87rem;color:var(--gris);white-space:nowrap}
+.tit-sec .link:hover{color:var(--marino)}
+
+/* ===== barra superior ===== */
+.top{background:var(--marino-3);color:#93A3B4;font-size:.8rem;padding:7px 0}
+.top .env{display:flex;justify-content:space-between;gap:var(--s2);flex-wrap:wrap}
+.top a{color:#93A3B4}
+.top a:hover{color:var(--ambar-2)}
+
+/* ===== nav ===== */
+header{position:sticky;top:0;z-index:80;background:var(--marino);box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.nav{display:flex;align-items:center;gap:var(--s3);padding:0 20px;max-width:1240px;margin:0 auto;min-height:64px}
+.marca{font-weight:800;font-size:1.25rem;letter-spacing:-0.04em;color:#fff;white-space:nowrap}
+.marca span{color:var(--ambar-2)}
+.menu{display:flex;gap:2px;list-style:none;margin-left:auto;align-items:stretch}
+.menu>li{position:relative;display:flex}
+.menu>li>a,.menu>li>button{display:flex;align-items:center;gap:6px;color:#DCE4EC;font-size:.88rem;
+  padding:0 14px;min-height:64px;letter-spacing:.01em;font-weight:500}
+.menu>li>a:hover,.menu>li>button:hover,.menu>li.on>button{background:var(--marino-2);color:#fff}
+.caret{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;opacity:.7}
+.drop{position:absolute;top:100%;left:0;background:var(--crema-2);border:1px solid var(--linea);
+  min-width:230px;padding:10px 0;display:none;box-shadow:0 8px 24px rgba(13,25,38,.16)}
+.menu>li.on .drop{display:block}
+.drop a{display:block;padding:9px 18px;font-size:.88rem;color:var(--marino)}
+.drop a:hover{background:var(--crema);color:var(--ambar)}
+.acciones{display:flex;align-items:center;gap:var(--s1);margin-left:var(--s2)}
+.cot-btn{background:var(--ambar);color:var(--marino-3);padding:10px 16px;font-size:.88rem;font-weight:700}
+.cot-btn:hover{background:var(--ambar-2)}
+.cot-btn .n{background:var(--marino-3);color:var(--ambar-2);border-radius:11px;padding:1px 8px;margin-left:7px;font-size:.8rem}
+.hamb{display:none;color:#fff;font-size:1.4rem;padding:8px 10px;margin-left:auto}
+
+/* ===== slider ===== */
+.slider{position:relative;overflow:hidden;background:var(--marino-2)}
+.slides{display:flex;transition:transform .5s ease}
+.slide{min-width:100%;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:var(--s4);
+  padding:var(--s5) 20px;max-width:1240px;margin:0 auto}
+.slide .txt h2{color:#fff;font-size:clamp(1.8rem,3.6vw,2.7rem);line-height:1.08}
+.slide .txt p{color:#B9C7D6;margin-top:12px;font-size:1.02rem;max-width:44ch}
+.slide .txt .eti{display:inline-block;background:var(--ambar);color:var(--marino-3);font-size:.74rem;
+  font-weight:700;letter-spacing:.06em;padding:5px 11px;margin-bottom:14px}
+.slide .txt .cta{display:inline-block;margin-top:22px;background:#fff;color:var(--marino);
+  padding:13px 26px;font-weight:700;font-size:.93rem}
+.slide .txt .cta:hover{background:var(--ambar-2)}
+.slide .art{display:flex;justify-content:center;align-items:center;min-height:230px}
+.slide .art svg{width:min(100%,320px);height:auto}
+.sl-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.13);color:#fff;
+  width:44px;height:60px;font-size:1.3rem;z-index:5}
+.sl-btn:hover{background:rgba(255,255,255,.28)}
+.sl-prev{left:0}.sl-next{right:0}
+.dots{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:5}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35)}
+.dot[aria-current="true"]{background:var(--ambar-2);width:26px;border-radius:5px}
+
+/* ===== validador ===== */
+.val-wrap{background:var(--crema-2);border-bottom:1px solid var(--linea)}
+.val{display:flex;gap:var(--s2);align-items:flex-end;flex-wrap:wrap;padding:var(--s3) 0}
+.val .c{display:flex;flex-direction:column;gap:5px}
+.val label{font-size:.76rem;color:var(--gris);font-weight:600;letter-spacing:.02em}
+.val select,.val input{padding:10px 11px;border:1px solid var(--linea-2);background:#fff;
+  font-family:inherit;font-size:.92rem;color:var(--tinta);min-width:168px}
+.val .go{background:var(--marino);color:#fff;padding:11px 22px;font-weight:700;font-size:.92rem}
+.val .go:hover{background:var(--marino-2)}
+.val .out{flex:1;min-width:250px;font-size:.88rem;color:var(--gris);
+  border-left:4px solid var(--linea-2);padding:6px 0 6px 14px}
+.val .out.ok{border-left-color:var(--oliva);color:var(--ok)}
+.val .out.aj{border-left-color:var(--ambar);color:#8A6318}
+.val .out.no{border-left-color:var(--alerta);color:var(--alerta)}
+
+/* ===== mosaicos ===== */
+.mosaico{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2)}
+.tile{position:relative;overflow:hidden;padding:var(--s3);min-height:196px;display:flex;
+  flex-direction:column;justify-content:space-between;color:#fff;transition:transform .25s}
+.tile:hover{transform:translateY(-3px)}
+.tile.grande{grid-column:span 2;min-height:196px}
+.tile.t1{background:var(--marino)}
+.tile.t2{background:var(--oliva)}
+.tile.t3{background:var(--marino-2)}
+.tile.t4{background:var(--oliva-2)}
+.tile h3{font-size:1.15rem;color:#fff;position:relative;z-index:2}
+.tile p{font-size:.85rem;color:rgba(255,255,255,.78);margin-top:6px;position:relative;z-index:2;max-width:26ch}
+.tile .ver{font-size:.83rem;font-weight:700;color:var(--ambar-2);position:relative;z-index:2;margin-top:14px}
+.tile .fig{position:absolute;right:-18px;bottom:-18px;width:130px;opacity:.22;z-index:1}
+.tile.grande .fig{width:170px}
+
+/* ===== carruseles ===== */
+.car-wrap{position:relative}
+.car{display:flex;gap:var(--s2);overflow-x:auto;scroll-behavior:smooth;padding-bottom:6px;scrollbar-width:thin}
+.car::-webkit-scrollbar{height:6px}
+.car::-webkit-scrollbar-thumb{background:var(--linea-2)}
+.car>.card{min-width:236px;flex:0 0 236px}
+.car-btn{position:absolute;top:38%;background:#fff;border:1px solid var(--linea-2);width:38px;height:38px;
+  font-size:1.1rem;color:var(--marino);z-index:6;box-shadow:0 2px 8px rgba(0,0,0,.09)}
+.car-btn:hover{background:var(--marino);color:#fff;border-color:var(--marino)}
+.car-prev{left:-14px}.car-next{right:-14px}
+
+/* ===== tarjeta producto ===== */
+.card{background:var(--crema-2);border:1px solid var(--linea);display:flex;flex-direction:column;
+  transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--linea-2);transform:translateY(-2px)}
+.foto{position:relative;aspect-ratio:1/1;background:#fff;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;cursor:zoom-in;border-bottom:1px solid var(--linea)}
+.foto svg{width:64%;height:64%;transition:transform .3s}
+.card:hover .foto svg{transform:scale(1.07)}
+.badges{position:absolute;top:9px;left:9px;display:flex;flex-direction:column;gap:5px;align-items:flex-start;z-index:3}
+.badge{font-size:.66rem;padding:3px 8px;font-weight:700;letter-spacing:.04em}
+.b-aerea{background:var(--marino);color:#fff}
+.b-local{background:var(--oliva);color:#fff}
+.b-nuevo{background:var(--ambar);color:var(--marino-3)}
+.b-mtc{background:var(--alerta);color:#fff}
+.tonos{position:absolute;bottom:9px;left:9px;display:flex;gap:5px;z-index:3}
+.tono{width:15px;height:15px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--linea-2);cursor:pointer}
+.tono[aria-pressed="true"]{box-shadow:0 0 0 2px var(--marino)}
+.lupa{position:absolute;inset:0;background:rgba(22,40,60,.62);color:#fff;display:flex;align-items:center;
+  justify-content:center;font-size:.85rem;font-weight:600;opacity:0;transition:opacity .2s;z-index:2}
+.foto:hover .lupa{opacity:1}
+.cuerpo{padding:14px;display:flex;flex-direction:column;flex:1}
+.cat-eti{font-size:.7rem;color:var(--ambar);font-weight:700;letter-spacing:.05em;margin-bottom:5px}
+.card h3{color:var(--marino);margin-bottom:6px;line-height:1.3}
+.card .meta{font-size:.81rem;color:var(--gris);line-height:1.45;margin-bottom:10px}
+.datos{font-size:.8rem;border-top:1px solid var(--linea);padding-top:9px;margin-top:auto;
+  display:flex;justify-content:space-between;gap:8px;color:var(--gris)}
+.datos b{color:var(--marino)}
+.add{margin-top:11px;border:1px solid var(--marino);color:var(--marino);padding:9px;
+  font-size:.85rem;font-weight:600;width:100%;background:transparent}
+.add:hover{background:var(--marino);color:#fff}
+.add.puesto{background:var(--oliva);border-color:var(--oliva);color:#fff}
+.ph{background:#EEE4CB;padding:0 5px;color:#7A5F1C;font-size:.79rem}
+
+/* ===== filtros y grilla ===== */
+.filtros{padding:var(--s3) 0 var(--s1)}
+.fgrupo{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:9px}
+.fgrupo .tit{font-size:.76rem;color:var(--gris);font-weight:700;min-width:74px;letter-spacing:.03em}
+.chip{border:1px solid var(--linea-2);padding:7px 14px;font-size:.85rem;color:var(--marino);background:transparent}
+.chip:hover{border-color:var(--marino)}
+.chip[aria-pressed="true"]{background:var(--marino);color:#fff;border-color:var(--marino)}
+.conteo{font-size:.83rem;color:var(--gris);margin:12px 0 var(--s2)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s2)}
+.vacio{padding:var(--s4) 0;color:var(--gris)}
+
+/* ===== modal ===== */
+.modal{position:fixed;inset:0;background:rgba(13,25,38,.72);z-index:100;display:none;
+  align-items:center;justify-content:center;padding:20px}
+.modal.on{display:flex}
+.modal-caja{background:var(--crema-2);max-width:860px;width:100%;max-height:92vh;overflow-y:auto;
+  display:grid;grid-template-columns:1fr 1fr}
+.modal .visor{background:#fff;padding:var(--s3);display:flex;flex-direction:column;gap:var(--s2);
+  border-right:1px solid var(--linea)}
+.modal .visor .grande{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.modal .visor .grande svg{width:78%;height:78%}
+.miniaturas{display:flex;gap:9px}
+.mini{width:56px;height:56px;border:1px solid var(--linea);background:#fff;display:flex;
+  align-items:center;justify-content:center;padding:6px}
+.mini[aria-pressed="true"]{border:2px solid var(--marino)}
+.mini svg{width:100%;height:100%}
+.modal .info{padding:var(--s3);position:relative}
+.modal .info h2{color:var(--marino);margin-bottom:8px}
+.modal .info .desc{font-size:.9rem;color:var(--gris);margin:12px 0 var(--s2)}
+.especs{width:100%;font-size:.85rem;border-top:1px solid var(--linea)}
+.especs tr{border-bottom:1px solid var(--linea)}
+.especs th{text-align:left;padding:9px 0;color:var(--gris);font-weight:500;width:48%}
+.especs td{text-align:right;padding:9px 0;color:var(--marino);font-weight:600}
+.cerrar{position:absolute;top:10px;right:12px;font-size:1.5rem;color:var(--gris);line-height:1;padding:4px 8px}
+.cerrar:hover{color:var(--alerta)}
+.modal .add{margin-top:var(--s2)}
+
+/* ===== lista cotización ===== */
+.lista{background:var(--marino);color:#fff;padding:var(--s4) 0;display:none}
+.lista.on{display:block}
+.lista h2{color:#fff;margin-bottom:var(--s2)}
+.litem{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid #2B4463;font-size:.92rem}
+.litem .nom{flex:1}
+.litem input{width:92px;padding:7px 9px;border:1px solid #3C536B;background:var(--marino-3);color:#fff;font-family:inherit}
+.litem button{color:#E8A99B;font-size:.84rem;padding:4px}
+.lista .seguir{display:inline-block;background:var(--ambar);color:var(--marino-3);padding:12px 24px;
+  font-weight:700;margin-top:var(--s2);font-size:.92rem}
+
+/* ===== proceso ===== */
+.pasos{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--linea);border:1px solid var(--linea)}
+.p{background:var(--crema-2);padding:var(--s2) 14px}
+.p .n{color:var(--ambar);font-weight:800;font-size:1.4rem;letter-spacing:-.04em}
+.p h3{margin:5px 0 3px;color:var(--marino);font-size:.92rem}
+.p span{font-size:.79rem;color:var(--gris)}
+
+/* ===== públicos ===== */
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:var(--s2)}
+.blq{padding:var(--s3);border:1px solid var(--linea);background:var(--crema-2)}
+.blq.osc{background:var(--marino);border-color:var(--marino);color:#fff}
+.blq.osc h2{color:#fff}.blq.osc p{color:#B9C7D6}
+.blq h2{color:var(--marino);margin-bottom:8px;font-size:1.2rem}
+.blq p{font-size:.9rem;color:var(--gris);margin-bottom:14px}
+.blq .go{font-size:.87rem;font-weight:700;border-bottom:2px solid var(--ambar);padding-bottom:2px}
+
+/* ===== sourcing ===== */
+.src{background:var(--oliva);color:#fff;padding:var(--s4) 0}
+.src .env{display:flex;gap:var(--s4);align-items:center;flex-wrap:wrap}
+.src h2{color:#fff}
+.src p{font-size:.92rem;color:#E9EEE0;max-width:50ch;margin-top:8px}
+.src .caja{background:#fff;color:var(--tinta);padding:var(--s3);border-left:5px solid var(--ambar);min-width:236px}
+.src .caja .m{font-size:1.7rem;font-weight:800;color:var(--marino);letter-spacing:-.03em}
+.src .caja .s{font-size:.82rem;color:var(--gris);margin-top:5px}
+
+/* ===== form ===== */
+.fg{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.fg .w2{grid-column:span 2}.fg .w4{grid-column:1/-1}
+.fg label{display:block;font-size:.78rem;color:var(--gris);margin-bottom:5px;font-weight:600}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px;border:1px solid var(--linea-2);
+  background:#fff;font-family:inherit;font-size:.92rem}
+.enviar{background:var(--marino);color:#fff;padding:13px 28px;font-size:.94rem;font-weight:700}
+.enviar:hover{background:var(--marino-2)}
+.msg{font-size:.87rem;margin-top:10px}
+.msg.err{color:var(--alerta)}.msg.ok{color:var(--ok)}
+
+/* ===== footer ===== */
+footer{background:var(--marino-3);color:#93A3B4;padding:var(--s4) 0 var(--s3);font-size:.87rem;margin-top:var(--s5)}
+footer .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:var(--s3)}
+footer h4{color:#fff;font-size:.83rem;margin-bottom:12px;letter-spacing:.05em}
+footer ul{list-style:none}
+footer li{margin-bottom:7px}
+footer a:hover{color:var(--ambar-2)}
+.legal{margin-top:var(--s3);padding-top:var(--s2);border-top:1px solid #23384F;font-size:.79rem;
+  display:flex;justify-content:space-between;gap:var(--s2);flex-wrap:wrap}
+.wa{position:fixed;right:18px;bottom:18px;z-index:90;background:var(--oliva);color:#fff;
+  padding:13px 20px;font-size:.9rem;font-weight:700;box-shadow:0 3px 14px rgba(0,0,0,.24)}
+.wa:hover{background:var(--oliva-2)}
+.arriba{position:fixed;right:18px;bottom:74px;z-index:90;background:var(--marino);color:#fff;
+  width:42px;height:42px;font-size:1rem;display:none}
+.arriba.on{display:block}
+
+@media (max-width:1080px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .mosaico{grid-template-columns:repeat(2,1fr)}
+  .pasos{grid-template-columns:repeat(3,1fr)}
+  .fg{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:860px){
+  .menu{display:none;position:absolute;top:100%;left:0;right:0;background:var(--marino-2);
+    flex-direction:column;padding:var(--s1) 0;align-items:stretch}
+  .menu.abierto{display:flex}
+  .menu>li{display:block}
+  .menu>li>a,.menu>li>button{min-height:0;padding:13px 20px;width:100%;justify-content:flex-start}
+  .drop{position:static;box-shadow:none;background:var(--marino-3);border:0}
+  .drop a{color:#B9C7D6;padding-left:36px}
+  .hamb{display:block}
+  .acciones{margin-left:0}
+  .slide{grid-template-columns:1fr;gap:var(--s3);padding:var(--s4) 20px var(--s5)}
+  .slide .art{order:-1;min-height:150px}
+  .slide .art svg{width:180px}
+  .modal-caja{grid-template-columns:1fr}
+  .modal .visor{border-right:0;border-bottom:1px solid var(--linea)}
+}
+@media (max-width:640px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .mosaico,.dos,.pasos,.fg{grid-template-columns:1fr}
+  .fg .w2{grid-column:auto}
+  .tile.grande{grid-column:auto}
+  .val select,.val input{min-width:0;width:100%}
+  .val .c{width:100%}
+  .val .out{border-left:0;border-top:4px solid var(--linea-2);padding:10px 0 0}
+  footer .cols{grid-template-columns:1fr 1fr}
+  .car-prev{left:-6px}.car-next{right:-6px}
+}
+@media (max-width:400px){.grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+:focus-visible{outline:3px solid var(--ambar);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="env">
+    <span>Importación aérea desde China · Entrega en Lima y provincias</span>
+    <span><a href="#cotizar"><span class="ph">[PH teléfono]</span></a> · <a href="#cotizar"><span class="ph">[PH correo]</span></a></span>
+  </div>
+</div>
+
+<header>
+  <nav class="nav">
+    <a href="#" class="marca">ARDY <span>Import</span></a>
+    <button class="hamb" id="hamb" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">☰</button>
+    <ul class="menu" id="menu">
+      <li class="tiene-drop">
+        <button aria-expanded="false">Catálogo <span class="caret"></span></button>
+        <div class="drop">
+          <a href="#catalogo" data-jump="metal">Metal y reconocimiento</a>
+          <a href="#catalogo" data-jump="tecnologia">Tecnología</a>
+          <a href="#catalogo" data-jump="audio">Audio cableado</a>
+          <a href="#catalogo" data-jump="premium">Premium ejecutivo</a>
+          <a href="#catalogo" data-jump="mascotas">Mascotas</a>
+          <a href="#catalogo" data-jump="todas">Ver todo el catálogo</a>
+        </div>
+      </li>
+      <li><a href="#nuevos">Nuevos modelos</a></li>
+      <li><a href="#proceso">Cómo funciona</a></li>
+      <li><a href="#publicos">Agencias y revendedores</a></li>
+      <li><a href="#sourcing">Sourcing</a></li>
+    </ul>
+    <div class="acciones">
+      <button class="cot-btn" id="btnCot">Mi cotización <span class="n" id="contador">0</span></button>
+    </div>
+  </nav>
+</header>
+
+<!-- ===== slider ===== -->
+<div class="slider" id="slider">
+  <div class="slides" id="slides">
+    <div class="slide">
+      <div class="txt">
+        <span class="eti">IMPORTACIÓN AÉREA</span>
+        <h2>Cuando el evento no puede esperar al próximo contenedor</h2>
+        <p>Tres semanas en blanco, cuatro con tu logo grabado. El contenedor tarda dos meses.</p>
+        <a href="#catalogo" class="cta">Ver catálogo</a>
+      </div>
+      <div class="art" id="art1"></div>
+    </div>
+    <div class="slide">
+      <div class="txt">
+        <span class="eti">EN BLANCO O MARCADO</span>
+        <h2>La marca se pone acá, no en China</h2>
+        <p>Como el grabado es en Lima, tu arte se aprueba mientras el producto vuela. No frenas el pedido esperando el diseño.</p>
+        <a href="#publicos" class="cta">Cómo trabajamos</a>
+      </div>
+      <div class="art" id="art2"></div>
+    </div>
+    <div class="slide">
+      <div class="txt">
+        <span class="eti">NUEVOS MODELOS</span>
+        <h2>Lo que todavía no está en todos los catálogos</h2>
+        <p>Tarjetas NFC, sets metálicos, cables multipuerto. La razón por la que una agencia no repite el llavero del año pasado.</p>
+        <a href="#nuevos" class="cta">Ver novedades</a>
+      </div>
+      <div class="art" id="art3"></div>
+    </div>
+  </div>
+  <button class="sl-btn sl-prev" id="slPrev" aria-label="Anterior">‹</button>
+  <button class="sl-btn sl-next" id="slNext" aria-label="Siguiente">›</button>
+  <div class="dots" id="dots"></div>
+</div>
+
+<!-- ===== validador ===== -->
+<div class="val-wrap">
+  <div class="env val">
+    <div class="c">
+      <label for="vstock">Disponibilidad</label>
+      <select id="vstock">
+        <option value="stock">En stock de fábrica</option>
+        <option value="produccion">Bajo producción</option>
+      </select>
+    </div>
+    <div class="c"><label for="vfecha">Fecha del evento</label><input type="date" id="vfecha"></div>
+    <div class="c"><label for="vmarc">Marcado</label>
+      <select id="vmarc"><option value="no">En blanco</option><option value="si">Con grabado en Lima</option></select></div>
+    <button class="go" id="vbtn">¿Llego a tiempo?</button>
+    <p class="out" id="vout" role="status" aria-live="polite">Ingresa tu fecha y te digo si es viable por vía aérea.</p>
+  </div>
+</div>
+
+<!-- ===== mosaicos ===== -->
+<section class="env" style="padding-top:var(--s4)">
+  <div class="tit-sec"><h2>Por dónde empezar</h2><a class="link" href="#catalogo">Ver todo el catálogo</a></div>
+  <div class="mosaico" id="mosaico"></div>
+</section>
+
+<!-- ===== destacados ===== -->
+<section class="env" style="padding-top:var(--s5)">
+  <div class="tit-sec"><h2>Destacados</h2><a class="link" href="#catalogo">Ver todos</a></div>
+  <div class="car-wrap">
+    <div class="car" id="carDest"></div>
+    <button class="car-btn car-prev" data-car="carDest" data-dir="-1" aria-label="Anterior">‹</button>
+    <button class="car-btn car-next" data-car="carDest" data-dir="1" aria-label="Siguiente">›</button>
+  </div>
+</section>
+
+<!-- ===== nuevos ===== -->
+<section class="env" id="nuevos" style="padding-top:var(--s5)">
+  <div class="tit-sec"><h2>Nuevos modelos</h2><span class="link">Actualizamos esta selección cada temporada</span></div>
+  <div class="car-wrap">
+    <div class="car" id="carNuevo"></div>
+    <button class="car-btn car-prev" data-car="carNuevo" data-dir="-1" aria-label="Anterior">‹</button>
+    <button class="car-btn car-next" data-car="carNuevo" data-dir="1" aria-label="Siguiente">›</button>
+  </div>
+</section>
+
+<!-- ===== catálogo ===== -->
+<section class="env" id="catalogo" style="padding-top:var(--s5)">
+  <div class="tit-sec"><h2>Catálogo</h2><span class="link" id="conteo"></span></div>
+  <div class="filtros">
+    <div class="fgrupo">
+      <span class="tit">CATEGORÍA</span>
+      <button class="chip" data-cat="todas" aria-pressed="true">Todas</button>
+      <button class="chip" data-cat="metal" aria-pressed="false">Metal</button>
+      <button class="chip" data-cat="tecnologia" aria-pressed="false">Tecnología</button>
+      <button class="chip" data-cat="audio" aria-pressed="false">Audio</button>
+      <button class="chip" data-cat="premium" aria-pressed="false">Premium</button>
+      <button class="chip" data-cat="mascotas" aria-pressed="false">Mascotas</button>
+    </div>
+    <div class="fgrupo">
+      <span class="tit">MODALIDAD</span>
+      <button class="chip" data-mod="todas" aria-pressed="true">Todas</button>
+      <button class="chip" data-mod="aerea" aria-pressed="false">Importación aérea</button>
+      <button class="chip" data-mod="local" aria-pressed="false">Disponible en Perú</button>
+    </div>
+    <div class="fgrupo">
+      <span class="tit">MARCADO</span>
+      <button class="chip" data-marc="todas" aria-pressed="true">Todo</button>
+      <button class="chip" data-marc="blanco" aria-pressed="false">En blanco</button>
+      <button class="chip" data-marc="marcado" aria-pressed="false">Con marcado</button>
+    </div>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="vacio" id="vacio" style="display:none">Ningún producto con esos filtros. Prueba quitando uno, o pídenos la búsqueda de sourcing.</p>
+</section>
+
+<!-- ===== lista ===== -->
+<section class="lista" id="lista" style="margin-top:var(--s5)">
+  <div class="env">
+    <h2>Mi cotización</h2>
+    <div id="litems"></div>
+    <p style="font-size:.85rem;color:#93A3B4;margin-top:14px">No es una compra. Es una solicitud de cotización con tu fecha.</p>
+    <a href="#cotizar" class="seguir">Continuar al formulario</a>
+  </div>
+</section>
+
+<!-- ===== proceso ===== -->
+<section class="env" id="proceso" style="padding-top:var(--s5)">
+  <div class="tit-sec"><h2>Cómo funciona</h2><span class="link">En blanco: 15 a 17 días hábiles · Con grabado: 19 a 21</span></div>
+  <div class="pasos">
+    <div class="p"><span class="n">01</span><h3>Pago y formato aprobado</h3><span>3 días hábiles</span></div>
+    <div class="p"><span class="n">02</span><h3>Almacén en China</h3><span>3 días hábiles</span></div>
+    <div class="p"><span class="n">03</span><h3>Vuelo</h3><span>10 días calendario</span></div>
+    <div class="p"><span class="n">04</span><h3>Nacionalización</h3><span>1 día · 3 en canal rojo</span></div>
+    <div class="p"><span class="n">05</span><h3>Grabado y entrega</h3><span>4 días · solo con marcado</span></div>
+  </div>
+</section>
+
+<!-- ===== públicos ===== -->
+<section class="env dos" id="publicos" style="padding-top:var(--s5)">
+  <div class="blq osc">
+    <h2>Agencias y activaciones</h2>
+    <p>Producto entregado con la marca puesta y fecha límite de confirmación clara desde la primera cotización.</p>
+    <a href="#cotizar" class="go" style="color:#fff">Tengo un evento próximo</a>
+  </div>
+  <div class="blq">
+    <h2>Revendedores e imprentas</h2>
+    <p>Producto en blanco, precio por volumen y modelos que no rotan en el mercado local. Tú le pones la marca.</p>
+    <a href="#cotizar" class="go">Ver condiciones por volumen</a>
+  </div>
+</section>
+
+<!-- ===== sourcing ===== -->
+<section class="src" id="sourcing" style="margin-top:var(--s5)">
+  <div class="env">
+    <div style="flex:1;min-width:290px">
+      <h2>¿No lo encuentras? Lo buscamos en China</h2>
+      <p>Cotizar el catálogo es gratis y siempre lo será. La búsqueda de un producto que nadie tiene acá tiene un costo, y se descuenta íntegro si la importación se ejecuta.</p>
+    </div>
+    <div class="caja">
+      <p class="m">S/ <span class="ph">[PH]</span></p>
+      <p class="s">Incluye 3 opciones de proveedor con ficha técnica y costo puesto en Lima. Si ya nos compraste, va incluida.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== form ===== -->
+<section class="env" id="cotizar" style="padding-top:var(--s5)">
+  <div class="tit-sec"><h2>Cuéntanos el proyecto</h2><span class="link">Respondemos con fecha límite de confirmación</span></div>
+  <form class="fg" id="form">
+    <div><label for="f1">Fecha del evento</label><input type="date" id="f1"></div>
+    <div><label for="f2">Presupuesto</label><select id="f2"><option value="">Selecciona</option><option>Aprobado</option><option>En aprobación</option><option>Explorando</option></select></div>
+    <div><label for="f3">Quién aprueba la OC</label><input type="text" id="f3" placeholder="Cargo o área"></div>
+    <div><label for="f4">Cantidad</label><input type="number" id="f4" min="1" placeholder="500"></div>
+    <div class="w2"><label for="f5">Empresa</label><input type="text" id="f5"></div>
+    <div class="w2"><label for="f6">Correo o WhatsApp</label><input type="text" id="f6"></div>
+    <div class="w4"><label for="f7">Productos y detalle</label><textarea id="f7" rows="2" placeholder="Se completa solo con tu lista de cotización"></textarea></div>
+    <div class="w4"><button type="submit" class="enviar">Evaluar mi proyecto</button><p class="msg" id="fmsg"></p></div>
+  </form>
+</section>
+
+<!-- ===== modal ===== -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTit">
+  <div class="modal-caja">
+    <div class="visor">
+      <div class="grande" id="mGrande"></div>
+      <div class="miniaturas" id="mMinis"></div>
+    </div>
+    <div class="info">
+      <button class="cerrar" id="mCerrar" aria-label="Cerrar">×</button>
+      <p class="cat-eti" id="mCat"></p>
+      <h2 id="mTit"></h2>
+      <div class="badges" style="position:static;flex-direction:row;margin-top:10px" id="mBadges"></div>
+      <p class="desc" id="mDesc"></p>
+      <table class="especs">
+        <tr><th>Cantidad mínima</th><td><span class="ph">[PH]</span></td></tr>
+        <tr><th>Precio referencial en blanco</th><td>S/ <span class="ph">[PH]</span></td></tr>
+        <tr><th>Plazo estimado puerta a puerta</th><td id="mPlazo"></td></tr>
+        <tr><th>Técnicas de marcado</th><td id="mMarc"></td></tr>
+        <tr><th>Permiso de internamiento MTC</th><td id="mMtc"></td></tr>
+      </table>
+      <button class="add" id="mAdd"></button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="env">
+    <div class="cols">
+      <div>
+        <h4>ARDY IMPORT</h4>
+        <p>Sourcing y verificación de calidad en China. Merchandising para proyectos con fecha.</p>
+        <p style="margin-top:10px">Registro de casa comercializadora ante el MTC.</p>
+      </div>
+      <div><h4>CATÁLOGO</h4><ul>
+        <li><a href="#catalogo">Metal y reconocimiento</a></li>
+        <li><a href="#catalogo">Tecnología</a></li>
+        <li><a href="#catalogo">Audio cableado</a></li>
+        <li><a href="#catalogo">Premium ejecutivo</a></li>
+        <li><a href="#catalogo">Mascotas</a></li>
+        <li><a href="#nuevos">Nuevos modelos</a></li>
+      </ul></div>
+      <div><h4>SERVICIOS</h4><ul>
+        <li><a href="#proceso">Importación aérea</a></li>
+        <li><a href="#sourcing">Búsqueda de producto</a></li>
+        <li><a href="#publicos">Marcado en Lima</a></li>
+        <li><a href="#publicos">Venta a revendedores</a></li>
+      </ul></div>
+      <div><h4>CONTACTO</h4><ul>
+        <li><span class="ph">[PH teléfono]</span></li>
+        <li><span class="ph">[PH WhatsApp]</span></li>
+        <li><span class="ph">[PH correo]</span></li>
+        <li>Lima, Perú</li>
+      </ul></div>
+    </div>
+    <div class="legal">
+      <span>© <span id="anio"></span> ARDY Import. Todos los derechos reservados.</span>
+      <span>Precios y plazos referenciales. Se confirman por proyecto.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="arriba" id="arriba" aria-label="Volver arriba">↑</button>
+<a class="wa" href="#cotizar">WhatsApp</a>
+
+<script>
+(function(){
+document.getElementById('anio').textContent=new Date().getFullYear();
+
+/* ---------- figuras de producto (reemplazables por fotos reales) ---------- */
+var TONOS={niquel:'#B9BFC4',dorado:'#C9A227',negro:'#33373B',marino:'#16283C',oliva:'#6B7A4F',plata:'#D6D9DC'};
+function fig(tipo,color){
+  var c=TONOS[color]||'#B9BFC4', o='rgba(0,0,0,.16)';
+  var s='<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">';
+  if(tipo==='pin') s+='<circle cx="50" cy="46" r="30" fill="'+c+'"/><circle cx="50" cy="46" r="20" fill="none" stroke="'+o+'" stroke-width="3"/><rect x="47" y="72" width="6" height="18" rx="3" fill="'+c+'"/>';
+  else if(tipo==='medalla') s+='<path d="M35 8 L50 38 L65 8" stroke="'+o+'" stroke-width="9" fill="none"/><circle cx="50" cy="60" r="26" fill="'+c+'"/><circle cx="50" cy="60" r="17" fill="none" stroke="'+o+'" stroke-width="3"/>';
+  else if(tipo==='moneda') s+='<circle cx="50" cy="50" r="33" fill="'+c+'"/><circle cx="50" cy="50" r="25" fill="none" stroke="'+o+'" stroke-width="2"/><rect x="40" y="44" width="20" height="12" rx="2" fill="'+o+'"/>';
+  else if(tipo==='llavero') s+='<circle cx="50" cy="24" r="13" fill="none" stroke="'+c+'" stroke-width="6"/><rect x="34" y="38" width="32" height="44" rx="6" fill="'+c+'"/><rect x="42" y="52" width="16" height="4" rx="2" fill="'+o+'"/>';
+  else if(tipo==='usb') s+='<rect x="20" y="38" width="46" height="24" rx="4" fill="'+c+'"/><rect x="66" y="43" width="18" height="14" rx="2" fill="'+o+'"/><rect x="28" y="46" width="18" height="3" rx="1.5" fill="'+o+'"/>';
+  else if(tipo==='power') s+='<rect x="28" y="18" width="44" height="64" rx="8" fill="'+c+'"/><rect x="38" y="30" width="24" height="6" rx="3" fill="'+o+'"/><circle cx="50" cy="68" r="6" fill="'+o+'"/>';
+  else if(tipo==='cable') s+='<path d="M20 70 Q40 20 60 50 T84 34" stroke="'+c+'" stroke-width="8" fill="none" stroke-linecap="round"/><rect x="12" y="62" width="14" height="16" rx="3" fill="'+o+'"/>';
+  else if(tipo==='nfc') s+='<rect x="18" y="30" width="64" height="40" rx="5" fill="'+c+'"/><rect x="26" y="40" width="16" height="12" rx="2" fill="'+o+'"/><path d="M58 42 q8 8 0 16 M66 36 q14 14 0 28" stroke="'+o+'" stroke-width="3" fill="none"/>';
+  else if(tipo==='parlante') s+='<rect x="26" y="26" width="48" height="48" rx="8" fill="'+c+'"/><circle cx="50" cy="50" r="15" fill="none" stroke="'+o+'" stroke-width="4"/><circle cx="50" cy="50" r="5" fill="'+o+'"/>';
+  else if(tipo==='audifono') s+='<path d="M24 58 V46 a26 26 0 0 1 52 0 v12" stroke="'+c+'" stroke-width="7" fill="none"/><rect x="16" y="54" width="16" height="24" rx="6" fill="'+c+'"/><rect x="68" y="54" width="16" height="24" rx="6" fill="'+c+'"/>';
+  else if(tipo==='pluma') s+='<path d="M22 78 L70 22 l10 8 L34 84 z" fill="'+c+'"/><path d="M22 78 l12 6" stroke="'+o+'" stroke-width="4"/><rect x="58" y="30" width="14" height="5" rx="2" fill="'+o+'" transform="rotate(-40 65 32)"/>';
+  else if(tipo==='tarjetero') s+='<rect x="20" y="34" width="60" height="38" rx="5" fill="'+c+'"/><rect x="26" y="26" width="48" height="10" rx="3" fill="'+o+'"/>';
+  else if(tipo==='set') s+='<rect x="18" y="52" width="64" height="30" rx="4" fill="'+c+'"/><path d="M30 50 L52 24 l7 6 L37 56z" fill="'+o+'"/><rect x="60" y="38" width="16" height="16" rx="3" fill="'+o+'"/>';
+  else s+='<path d="M50 18 l26 16 v34 l-26 16 -26-16 V34z" fill="'+c+'"/><circle cx="50" cy="50" r="9" fill="'+o+'"/>';
+  return s+'</svg>';
+}
+
+/* ---------- CATÁLOGO: editar precios, MOQ y plazos ---------- */
+var PRODUCTOS=[
+ {id:1,n:"Pin metálico esmaltado",f:"pin",c:"metal",cn:"Metal",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:true,
+  t:["dorado","niquel","negro"],d:"Esmalte suave o duro sobre base troquelada. Cierre mariposa o magnético.",m:"Esmalte, grabado láser"},
+ {id:2,n:"Medalla de reconocimiento",f:"medalla",c:"metal",cn:"Metal",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:true,
+  t:["dorado","plata","negro"],d:"Aleación de zinc con cinta incluida. Relieve a dos caras.",m:"Relieve, esmalte"},
+ {id:3,n:"Moneda conmemorativa",f:"moneda",c:"metal",cn:"Metal",mod:"aerea",marc:true,blanco:true,nuevo:true,mtc:false,dest:true,
+  t:["dorado","niquel","negro"],d:"Doble cara con acabado antiguo o pulido. Estuche individual opcional.",m:"Relieve, esmalte"},
+ {id:4,n:"Llavero metálico",f:"llavero",c:"metal",cn:"Metal",mod:"local",marc:true,blanco:true,nuevo:false,mtc:false,dest:false,
+  t:["niquel","dorado","negro"],d:"Metal macizo con argolla reforzada. Hay stock local.",m:"Grabado láser"},
+ {id:5,n:"Insignia metálica de solapa",f:"pin",c:"metal",cn:"Metal",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:false,
+  t:["dorado","niquel","marino"],d:"Formato pequeño para uniforme corporativo y protocolo.",m:"Esmalte, relieve"},
+ {id:6,n:"Memoria USB metálica",f:"usb",c:"tecnologia",cn:"Tecnología",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:true,
+  t:["niquel","negro","dorado"],d:"Carcasa de metal con capucha. Varias capacidades.",m:"Grabado láser, tampografía"},
+ {id:7,n:"Power bank slim",f:"power",c:"tecnologia",cn:"Tecnología",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:true,
+  t:["negro","plata","marino"],d:"Cuerpo de aluminio, carga por cable. Sin conectividad inalámbrica.",m:"Grabado láser"},
+ {id:8,n:"Cable multipuerto 3 en 1",f:"cable",c:"tecnologia",cn:"Tecnología",mod:"aerea",marc:true,blanco:true,nuevo:true,mtc:false,dest:false,
+  t:["negro","marino","oliva"],d:"USB-C, Lightning y micro USB en un solo cable trenzado.",m:"Tampografía en conector"},
+ {id:9,n:"Tarjeta NFC personalizable",f:"nfc",c:"tecnologia",cn:"Tecnología",mod:"aerea",marc:true,blanco:true,nuevo:true,mtc:false,dest:true,
+  t:["negro","dorado","marino"],d:"PVC o metal con chip programable. Para tarjeta de presentación digital.",m:"Grabado láser, impresión"},
+ {id:10,n:"Parlante Bluetooth compacto",f:"parlante",c:"tecnologia",cn:"Tecnología",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:true,dest:false,
+  t:["negro","marino","oliva"],d:"Lleva radio: requiere permiso de internamiento y suma días al plazo.",m:"Tampografía"},
+ {id:11,n:"Audífonos cableados",f:"audifono",c:"audio",cn:"Audio",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:false,
+  t:["negro","marino","plata"],d:"Con cable, sin radio. No requiere permiso de internamiento.",m:"Tampografía"},
+ {id:12,n:"Parlante cableado de escritorio",f:"parlante",c:"audio",cn:"Audio",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:false,
+  t:["negro","plata","marino"],d:"Conexión por cable. Entra con el plazo estándar de aduana.",m:"Tampografía"},
+ {id:13,n:"Pluma metálica premium",f:"pluma",c:"premium",cn:"Premium",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:true,
+  t:["dorado","negro","plata"],d:"Cuerpo de latón con estuche individual. Regalo de directorio.",m:"Grabado láser"},
+ {id:14,n:"Tarjetero de metal",f:"tarjetero",c:"premium",cn:"Premium",mod:"aerea",marc:true,blanco:true,nuevo:false,mtc:false,dest:false,
+  t:["plata","negro","dorado"],d:"Aluminio anodizado con apertura automática.",m:"Grabado láser"},
+ {id:15,n:"Set de escritorio metálico",f:"set",c:"premium",cn:"Premium",mod:"aerea",marc:true,blanco:true,nuevo:true,mtc:false,dest:true,
+  t:["marino","negro","dorado"],d:"Pluma, portanotas y organizador en caja rígida.",m:"Grabado láser"},
+ {id:16,n:"Placa identificadora para mascota",f:"llavero",c:"mascotas",cn:"Mascotas",mod:"aerea",marc:true,blanco:true,nuevo:true,mtc:false,dest:false,
+  t:["plata","dorado","oliva"],d:"Acero inoxidable con grabado a dos caras. Para campañas pet.",m:"Grabado láser"}
+];
+
+/* ---------- PLAZOS REALES, en días hábiles. Editar acá y en ningún otro lado. ----------
+   Cadena: formato aprobado por el agente 3 + almacén China 3 + vuelo 7 (10 días calendario)
+   + nacionalización 1 en canal verde a 3 en canal rojo + entrega 1.
+   El grabado en Lima suma 4 y solo aplica si el cliente pide marcado.
+   PRODUCCION_EXTRA es un [PLACEHOLDER]: pon los días de fabricación cuando la fábrica no tiene stock. */
+var EN_BLANCO={min:15,max:17};
+var GRABADO=4;
+var PRODUCCION_EXTRA=10;   /* [PLACEHOLDER] días hábiles de fabricación si no hay stock */
+var HOLGURA=5;
+
+var cot={}, f={cat:'todas',mod:'todas',marc:'todas'};
+var grid=document.getElementById('grid'), vacio=document.getElementById('vacio'), conteo=document.getElementById('conteo');
+
+function badges(p){
+  var b = p.mod==='aerea' ? '<span class="badge b-aerea">Aérea</span>' : '<span class="badge b-local">En Perú</span>';
+  if(p.nuevo) b+='<span class="badge b-nuevo">Nuevo</span>';
+  if(p.mtc)   b+='<span class="badge b-mtc">Permiso MTC</span>';
+  return b;
+}
+function tarjeta(p){
+  var tonos=p.t.map(function(t,i){
+    return '<button class="tono" style="background:'+TONOS[t]+'" data-tono="'+p.id+':'+t+'" aria-pressed="'+(i===0)+'" aria-label="Tono '+t+'"></button>';
+  }).join('');
+  return '<article class="card" data-card="'+p.id+'">'
+   +'<div class="foto" data-ver="'+p.id+'" role="button" tabindex="0" aria-label="Ver ficha de '+p.n+'">'
+     +'<div class="badges">'+badges(p)+'</div>'
+     +'<div class="fig-slot" data-slot="'+p.id+'">'+fig(p.f,p.t[0])+'</div>'
+     +'<div class="tonos">'+tonos+'</div>'
+     +'<span class="lupa">Ver ficha</span>'
+   +'</div>'
+   +'<div class="cuerpo"><p class="cat-eti">'+p.cn.toUpperCase()+'</p><h3>'+p.n+'</h3>'
+   +'<p class="meta">'+p.d+'</p>'
+   +'<div class="datos"><span>MOQ <b><span class="ph">[PH]</span></b></span><span>Desde <b>S/<span class="ph">[PH]</span></b></span></div>'
+   +'<button class="add'+(cot[p.id]?' puesto':'')+'" data-add="'+p.id+'">'+(cot[p.id]?'En tu cotización':'Agregar a cotización')+'</button>'
+   +'</div></article>';
+}
+function pinta(){
+  var l=PRODUCTOS.filter(function(p){
+    if(f.cat!=='todas'&&p.c!==f.cat) return false;
+    if(f.mod!=='todas'&&p.mod!==f.mod) return false;
+    if(f.marc==='blanco'&&!p.blanco) return false;
+    if(f.marc==='marcado'&&!p.marc) return false;
+    return true;
+  });
+  grid.innerHTML=l.map(tarjeta).join('');
+  vacio.style.display=l.length?'none':'block';
+  conteo.textContent=l.length+(l.length===1?' producto':' productos');
+}
+document.getElementById('carDest').innerHTML=PRODUCTOS.filter(function(p){return p.dest}).map(tarjeta).join('');
+document.getElementById('carNuevo').innerHTML=PRODUCTOS.filter(function(p){return p.nuevo}).map(tarjeta).join('');
+
+/* mosaicos */
+var TILES=[
+ {t:'t1',cls:'grande',h:'Metal y reconocimiento',p:'Pines, medallas, monedas e insignias con molde de troquel.',cat:'metal',f:'medalla'},
+ {t:'t2',cls:'',h:'Tecnología',p:'USB, power banks, cables y NFC.',cat:'tecnologia',f:'usb'},
+ {t:'t3',cls:'',h:'Premium ejecutivo',p:'Plumas, tarjeteros y sets metálicos.',cat:'premium',f:'pluma'},
+ {t:'t4',cls:'',h:'Audio cableado',p:'Sin radio, sin permiso MTC.',cat:'audio',f:'audifono'},
+ {t:'t1',cls:'',h:'Mascotas',p:'Placas y accesorios para campañas pet.',cat:'mascotas',f:'llavero'},
+ {t:'t2',cls:'grande',h:'Nuevos modelos',p:'Lo que todavía no está en todos los catálogos de Lima.',cat:'todas',f:'nfc'}
+];
+document.getElementById('mosaico').innerHTML=TILES.map(function(x){
+  return '<a class="tile '+x.t+' '+x.cls+'" href="#catalogo" data-jump="'+x.cat+'">'
+   +'<div><h3>'+x.h+'</h3><p>'+x.p+'</p></div><span class="ver">Ver productos</span>'
+   +'<span class="fig">'+fig(x.f,'plata')+'</span></a>';
+}).join('');
+
+/* filtros */
+document.querySelectorAll('.chip').forEach(function(c){
+  c.addEventListener('click',function(){
+    var g=c.dataset.cat?'cat':(c.dataset.mod?'mod':'marc');
+    f[g]=c.dataset.cat||c.dataset.mod||c.dataset.marc;
+    document.querySelectorAll('.chip').forEach(function(o){
+      var og=o.dataset.cat?'cat':(o.dataset.mod?'mod':'marc');
+      if(og===g) o.setAttribute('aria-pressed',o===c?'true':'false');
+    });
+    pinta();
+  });
+});
+function saltar(cat){
+  f.cat=cat;
+  document.querySelectorAll('.chip[data-cat]').forEach(function(o){o.setAttribute('aria-pressed',o.dataset.cat===cat?'true':'false')});
+  pinta();
+  document.getElementById('catalogo').scrollIntoView();
+}
+document.addEventListener('click',function(e){
+  var j=e.target.closest('[data-jump]'); if(!j) return;
+  saltar(j.dataset.jump);
+  document.getElementById('menu').classList.remove('abierto');
+  document.querySelectorAll('.tiene-drop').forEach(function(l){l.classList.remove('on')});
+});
+
+/* tonos + agregar + ficha (delegado global) */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-tono]');
+  if(t){ e.stopPropagation();
+    var q=t.dataset.tono.split(':'), id=+q[0], tono=q[1];
+    var p=PRODUCTOS.find(function(x){return x.id===id});
+    document.querySelectorAll('[data-slot="'+id+'"]').forEach(function(s){s.innerHTML=fig(p.f,tono)});
+    document.querySelectorAll('[data-tono^="'+id+':"]').forEach(function(b){
+      b.setAttribute('aria-pressed', b===t || b.dataset.tono===t.dataset.tono ? 'true':'false')});
+    return;
+  }
+  var a=e.target.closest('[data-add]');
+  if(a){ var id2=+a.dataset.add;
+    if(cot[id2]) delete cot[id2]; else cot[id2]={cant:500};
+    refrescarTodo(); return;
+  }
+  var v=e.target.closest('[data-ver]');
+  if(v){ abrir(+v.dataset.ver); }
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){
+    var v=e.target.closest&&e.target.closest('[data-ver]');
+    if(v){ e.preventDefault(); abrir(+v.dataset.ver); }
+  }
+  if(e.key==='Escape') cerrar();
+});
+
+/* modal ficha */
+var modal=document.getElementById('modal'), actual=null;
+function abrir(id){
+  var p=PRODUCTOS.find(function(x){return x.id===id}); actual=p;
+  document.getElementById('mCat').textContent=p.cn.toUpperCase();
+  document.getElementById('mTit').textContent=p.n;
+  document.getElementById('mDesc').textContent=p.d;
+  document.getElementById('mBadges').innerHTML=badges(p);
+  document.getElementById('mMarc').textContent=p.m;
+  document.getElementById('mMtc').textContent=p.mtc?'Sí, incluido en el plazo':'No requiere';
+  document.getElementById('mPlazo').textContent=EN_BLANCO.min+' a '+EN_BLANCO.max+' días hábiles en blanco · +'+GRABADO+' con grabado';
+  verTono(p.t[0]);
+  document.getElementById('mMinis').innerHTML=p.t.map(function(t,i){
+    return '<button class="mini" data-mini="'+t+'" aria-pressed="'+(i===0)+'" aria-label="Tono '+t+'">'+fig(p.f,t)+'</button>';
+  }).join('');
+  botonModal();
+  modal.classList.add('on');
+  document.getElementById('mCerrar').focus();
+}
+function verTono(t){ document.getElementById('mGrande').innerHTML=fig(actual.f,t); }
+function botonModal(){
+  var b=document.getElementById('mAdd');
+  var puesto=!!cot[actual.id];
+  b.textContent=puesto?'Quitar de mi cotización':'Agregar a cotización';
+  b.className='add'+(puesto?' puesto':'');
+}
+document.getElementById('mMinis').addEventListener('click',function(e){
+  var b=e.target.closest('[data-mini]'); if(!b) return;
+  verTono(b.dataset.mini);
+  this.querySelectorAll('.mini').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false')});
+});
+document.getElementById('mAdd').addEventListener('click',function(){
+  if(cot[actual.id]) delete cot[actual.id]; else cot[actual.id]={cant:500};
+  botonModal(); refrescarTodo();
+});
+function cerrar(){ modal.classList.remove('on'); }
+document.getElementById('mCerrar').addEventListener('click',cerrar);
+modal.addEventListener('click',function(e){ if(e.target===modal) cerrar(); });
+
+/* lista */
+function pintaLista(){
+  var ids=Object.keys(cot);
+  document.getElementById('contador').textContent=ids.length;
+  document.getElementById('lista').classList.toggle('on',ids.length>0);
+  document.getElementById('litems').innerHTML=ids.map(function(id){
+    var p=PRODUCTOS.find(function(x){return x.id==id});
+    return '<div class="litem"><span class="nom">'+p.n+'</span>'
+     +'<label class="sr" for="q'+id+'">Cantidad de '+p.n+'</label>'
+     +'<input id="q'+id+'" type="number" min="1" value="'+cot[id].cant+'" data-q="'+id+'">'
+     +'<button data-del="'+id+'">Quitar</button></div>';
+  }).join('');
+  document.getElementById('f7').value=ids.map(function(id){
+    var p=PRODUCTOS.find(function(x){return x.id==id});
+    return p.n+' — '+cot[id].cant+' unidades';
+  }).join('\n');
+}
+function refrescarTodo(){
+  pinta();
+  document.getElementById('carDest').innerHTML=PRODUCTOS.filter(function(p){return p.dest}).map(tarjeta).join('');
+  document.getElementById('carNuevo').innerHTML=PRODUCTOS.filter(function(p){return p.nuevo}).map(tarjeta).join('');
+  pintaLista();
+}
+document.getElementById('litems').addEventListener('input',function(e){
+  if(e.target.dataset.q){ cot[e.target.dataset.q].cant=e.target.value||1; pintaLista(); }
+});
+document.getElementById('litems').addEventListener('click',function(e){
+  if(e.target.dataset.del){ delete cot[e.target.dataset.del]; refrescarTodo(); }
+});
+document.getElementById('btnCot').addEventListener('click',function(){
+  var l=document.getElementById('lista');
+  (l.classList.contains('on')?l:document.getElementById('catalogo')).scrollIntoView();
+});
+
+/* carruseles */
+document.querySelectorAll('.car-btn').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.getElementById(b.dataset.car).scrollBy({left:252*(+b.dataset.dir),behavior:'smooth'});
+  });
+});
+
+/* slider */
+var idx=0, total=3, slides=document.getElementById('slides'), dots=document.getElementById('dots');
+document.getElementById('art1').innerHTML=fig('medalla','dorado');
+document.getElementById('art2').innerHTML=fig('pluma','plata');
+document.getElementById('art3').innerHTML=fig('nfc','dorado');
+for(var i=0;i<total;i++){ dots.innerHTML+='<button class="dot" data-i="'+i+'" aria-current="'+(i===0)+'" aria-label="Ir al banner '+(i+1)+'"></button>'; }
+function ir(n){ idx=(n+total)%total; slides.style.transform='translateX(-'+(idx*100)+'%)';
+  dots.querySelectorAll('.dot').forEach(function(d,j){d.setAttribute('aria-current',j===idx?'true':'false')}); }
+document.getElementById('slNext').addEventListener('click',function(){ir(idx+1);reinicia()});
+document.getElementById('slPrev').addEventListener('click',function(){ir(idx-1);reinicia()});
+dots.addEventListener('click',function(e){ var d=e.target.closest('.dot'); if(d){ir(+d.dataset.i);reinicia()} });
+var auto=null;
+function reinicia(){ if(auto)clearInterval(auto);
+  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) auto=setInterval(function(){ir(idx+1)},7000); }
+reinicia();
+
+/* menú */
+document.getElementById('hamb').addEventListener('click',function(){
+  var a=document.getElementById('menu').classList.toggle('abierto');
+  this.setAttribute('aria-expanded',a?'true':'false');
+});
+document.querySelectorAll('.tiene-drop>button').forEach(function(b){
+  b.addEventListener('click',function(e){
+    e.stopPropagation();
+    var li=b.parentElement, on=li.classList.toggle('on');
+    b.setAttribute('aria-expanded',on?'true':'false');
+  });
+});
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.tiene-drop')) document.querySelectorAll('.tiene-drop').forEach(function(l){
+    l.classList.remove('on'); l.querySelector('button').setAttribute('aria-expanded','false');
+  });
+});
+
+/* validador */
+function habiles(a,b){var d=new Date(a);d.setHours(0,0,0,0);var e=new Date(b);e.setHours(0,0,0,0);var n=0;
+  while(d<e){d.setDate(d.getDate()+1);var x=d.getDay();if(x!==0&&x!==6)n++}return n}
+document.getElementById('vbtn').addEventListener('click',function(){
+  var out=document.getElementById('vout'), fv=document.getElementById('vfecha').value;
+  out.className='out';
+  if(!fv){ out.textContent='Ingresa la fecha del evento para calcular.'; return; }
+  var q=fv.split('-'), ev=new Date(+q[0],+q[1]-1,+q[2]), disp=habiles(new Date(),ev);
+  if(disp<=0){ out.textContent='Esa fecha ya pasó. Revisa el dato.'; return; }
+  var extra=document.getElementById('vstock').value==='produccion'?PRODUCCION_EXTRA:0;
+  var conGrabado=document.getElementById('vmarc').value==='si';
+  var minTot=EN_BLANCO.min+extra+(conGrabado?GRABADO:0);
+  var nec=EN_BLANCO.max+extra+(conGrabado?GRABADO:0);
+  var margen=disp-nec;
+  var rango=minTot+' a '+nec+' días hábiles';
+  var reloj=' El plazo corre desde el pago confirmado.';
+  var arte=conGrabado?' El arte puede aprobarse mientras el producto vuela.':'';
+  if(margen>=HOLGURA){ out.className='out ok';
+    out.textContent='Llegas con margen. Estimado '+rango+' y tienes '+disp+'. Confirma el pedido dentro de los próximos '+margen+' días hábiles.'+reloj+arte; }
+  else if(margen>=0){ out.className='out aj';
+    out.textContent='Llegas ajustado. Estimado '+rango+' contra '+disp+' disponibles. Sin espacio para canal rojo ni demoras.'+reloj+arte; }
+  else { out.className='out no';
+    out.textContent='Así no llega: faltan '+Math.abs(margen)+' días hábiles sobre un estimado de '+rango+'.'+(conGrabado?' Sin grabado se ahorran '+GRABADO+' días hábiles.':' Mira producto disponible en Perú o mueve la fecha.'); }
+});
+
+/* form */
+document.getElementById('form').addEventListener('submit',function(e){
+  e.preventDefault();
+  var msg=document.getElementById('fmsg');
+  var falta=['f1','f2','f3','f4','f5','f6'].filter(function(id){return !document.getElementById(id).value.trim()});
+  if(falta.length){ msg.className='msg err'; msg.textContent='Faltan datos por completar.'; document.getElementById(falta[0]).focus(); return; }
+  msg.className='msg ok'; msg.textContent='Formulario validado. Falta conectarlo al correo o al CRM para que el envío llegue de verdad.';
+});
+
+/* volver arriba */
+var arriba=document.getElementById('arriba');
+window.addEventListener('scroll',function(){ arriba.classList.toggle('on', window.scrollY>700) });
+arriba.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}) });
+
+pinta(); pintaLista();
+})();
+</script>
+</body>
+</html>
