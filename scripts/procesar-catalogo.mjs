@@ -10,16 +10,34 @@
  * - Sin duplicados. Cada producto existe una sola vez.
  * - Después de procesar, renombra el JSON a _DONE_ para no reprocesarlo.
  *
+ * FOTOS: cada URL de "Foto N" se re-sube a Cloudinary (requiere la variable de
+ * entorno CLOUDINARY_URL) y se guarda la URL de Cloudinary en vez de la
+ * original del proveedor. Esto evita depender de un CDN de terceros que
+ * puede bloquear hotlinking o desaparecer las imágenes en cualquier momento.
+ * Si CLOUDINARY_URL no está configurada, se usa la URL original tal cual
+ * (útil para pruebas locales sin credenciales).
+ *
  * Uso: node scripts/procesar-catalogo.mjs src/data/raw/productos_procesados_xxx.json
  */
 
 import { readFileSync, writeFileSync, renameSync, existsSync } from "fs";
 import { resolve, dirname, basename } from "path";
 import { fileURLToPath } from "url";
+import { v2 as cloudinary } from "cloudinary";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, "..");
 const OUTPUT_PATH = resolve(ROOT, "src/data/productos.ts");
+
+// cloudinary lee CLOUDINARY_URL de process.env automáticamente al llamar config().
+const CLOUDINARY_ACTIVO = Boolean(process.env.CLOUDINARY_URL);
+if (CLOUDINARY_ACTIVO) {
+  cloudinary.config({ secure: true });
+} else {
+  console.warn(
+    "⚠ CLOUDINARY_URL no está configurada: las fotos se guardarán con la URL original del proveedor (sin re-subir)."
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -248,13 +266,43 @@ function generarAltTexts(p) {
 
 const EXT_VIDEO = /\.(mp4|mov|avi|webm|m4v)(\?.*)?$/i;
 
-function parseFotos(p) {
-  const fotos = [];
+/**
+ * Re-sube una foto de proveedor a Cloudinary. Cloudinary hace el fetch desde
+ * sus propios servidores (no manda Referer de navegador), así que no lo
+ * bloquea el hotlink protection de CDNs tipo Alicdn/1688. public_id es
+ * determinístico (slug + índice) con overwrite:true, así reprocesar el mismo
+ * producto actualiza la misma imagen en vez de acumular duplicados.
+ * Si la subida falla o Cloudinary no está configurado, devuelve la URL
+ * original tal cual (nunca rompe el pipeline por una sola foto).
+ */
+async function subirFotoACloudinary(url, { slug, index }) {
+  if (!CLOUDINARY_ACTIVO) return url;
+  try {
+    const resultado = await cloudinary.uploader.upload(url, {
+      public_id: `ardy-import/productos/${slug}/foto-${index}`,
+      overwrite: true,
+      resource_type: "image",
+    });
+    return resultado.secure_url;
+  } catch (err) {
+    console.warn(`  ⚠ No se pudo subir a Cloudinary (${slug}, foto ${index}): ${err.message}. Se usa la URL original.`);
+    return url;
+  }
+}
+
+async function parseFotos(p, slug) {
   const alts = generarAltTexts(p);
+  const candidatas = [];
   for (let i = 1; i <= 4; i++) {
     const url = p[`Foto ${i}`];
     // Se descartan videos: el visor de producto renderiza <img>, no <video>.
-    if (url && !EXT_VIDEO.test(url)) fotos.push({ url, alt: alts[i - 1] });
+    if (url && !EXT_VIDEO.test(url)) candidatas.push({ url, alt: alts[i - 1], index: i });
+  }
+
+  const fotos = [];
+  for (const c of candidatas) {
+    const urlFinal = await subirFotoACloudinary(c.url, { slug, index: c.index });
+    fotos.push({ url: urlFinal, alt: c.alt });
   }
   return fotos;
 }
@@ -278,7 +326,7 @@ function limpiarNombre(nombreRaw) {
 // Procesamiento
 // ---------------------------------------------------------------------------
 
-function procesarProducto(pOriginal) {
+async function procesarProducto(pOriginal) {
   // Nombre saneado (recortado si venía como texto tipo SEO larguísimo). Se usa
   // una copia de p con el Nombre ya limpio para que TODOS los generadores de
   // abajo (descripciones, SEO, alt text) trabajen sobre el mismo nombre corto,
@@ -311,7 +359,7 @@ function procesarProducto(pOriginal) {
     disponibilidad: p.Disponibilidad || "En stock",
     permisoMtc: toBool(p["Permiso MTC"]),
     esNovedad: toBool(p.Novedad),
-    fotos: parseFotos(p),
+    fotos: await parseFotos(p, slug),
     seoTitle: generarSeoTitle(p),
     seoMeta: generarSeoMeta(p),
     palabraClave: generarPalabraClave(p),
@@ -498,7 +546,12 @@ const productosArray = Array.isArray(productosRaw) ? productosRaw : [productosRa
 
 console.log(`\nProcesando ${productosArray.length} producto(s) desde ${basename(inputPath)}...\n`);
 
-const nuevos = productosArray.map((p) => procesarProducto(p));
+// Secuencial (no Promise.all) a propósito: evita saturar la API de Cloudinary
+// con decenas de subidas en paralelo en una sola corrida.
+const nuevos = [];
+for (const p of productosArray) {
+  nuevos.push(await procesarProducto(p));
+}
 
 // Merge con existentes (preservando el encabezado/interfaz del archivo actual)
 const { encabezado, existentes } = leerEncabezadoYProductosExistentes();

@@ -24,6 +24,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: "npm"
+
+      - name: Instalar dependencias
+        run: npm ci
 
       - name: Buscar JSONs pendientes (sin _DONE_)
         id: find
@@ -45,6 +49,8 @@ jobs:
 
       - name: Procesar cada JSON pendiente
         if: steps.find.outputs.found == 'true'
+        env:
+          CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
         run: |
           echo "${{ steps.find.outputs.files }}" | while IFS= read -r FILE; do
             [ -z "$FILE" ] && continue
