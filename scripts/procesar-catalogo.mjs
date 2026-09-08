@@ -246,26 +246,49 @@ function generarAltTexts(p) {
   ];
 }
 
+const EXT_VIDEO = /\.(mp4|mov|avi|webm|m4v)(\?.*)?$/i;
+
 function parseFotos(p) {
   const fotos = [];
   const alts = generarAltTexts(p);
   for (let i = 1; i <= 4; i++) {
     const url = p[`Foto ${i}`];
-    if (url) fotos.push({ url, alt: alts[i - 1] });
+    // Se descartan videos: el visor de producto renderiza <img>, no <video>.
+    if (url && !EXT_VIDEO.test(url)) fotos.push({ url, alt: alts[i - 1] });
   }
   return fotos;
+}
+
+/**
+ * Algunos títulos de proveedor vienen como texto tipo SEO/keyword-stuffing
+ * ("Botella de agua para mascotas, vaso portátil, dispensador plegable...").
+ * Si el nombre es muy largo, se recorta en la primera coma (el nombre real
+ * suele ir al inicio); si no hay coma útil, se recorta a 80 caracteres.
+ * No inventa texto nuevo: solo usa un límite ya presente en el original.
+ */
+function limpiarNombre(nombreRaw) {
+  const nombre = nombreRaw.trim();
+  if (nombre.length <= 80) return nombre;
+  const primeraComa = nombre.indexOf(",");
+  if (primeraComa > 10) return nombre.slice(0, primeraComa).trim();
+  return nombre.slice(0, 80).trim();
 }
 
 // ---------------------------------------------------------------------------
 // Procesamiento
 // ---------------------------------------------------------------------------
 
-function procesarProducto(p) {
-  const nombreOriginal = p.Nombre || "[SIN_DATO]";
-  const slug = toSlug(nombreOriginal);
+function procesarProducto(pOriginal) {
+  // Nombre saneado (recortado si venía como texto tipo SEO larguísimo). Se usa
+  // una copia de p con el Nombre ya limpio para que TODOS los generadores de
+  // abajo (descripciones, SEO, alt text) trabajen sobre el mismo nombre corto,
+  // no sobre el original de 200 caracteres.
+  const p = { ...pOriginal, Nombre: limpiarNombre(pOriginal.Nombre || "[SIN_DATO]") };
+
+  const slug = toSlug(p.Nombre);
   // Normaliza a sentence-case (ej. "BANDANA PARA MASCOTAS" -> "Bandana para mascotas")
   // para que el nombre se vea bien como <h1>/<h3> sin importar cómo se escribió en el sheet.
-  const nombre = toSentenceCase(nombreOriginal);
+  const nombre = toSentenceCase(p.Nombre);
 
   return {
     slug,
@@ -394,9 +417,14 @@ function mergeProductos(existentes, nuevos) {
 
   console.log(`\nResumen merge: ${reemplazados} reemplazados, ${agregados} nuevos.`);
 
-  // Convertir a array, reasignar IDs secuenciales
-  const resultado = [...mapa.values()];
-  resultado.forEach((p, i) => { p.id = i + 1; });
+  // Convertir a array, reasignar IDs secuenciales.
+  // Se reconstruye el objeto con "id" primero (en vez de asignarlo encima) para
+  // que quede como primera propiedad sin importar si el producto es nuevo o
+  // reemplazado; si no, "id" termina al final del objeto generado.
+  const resultado = [...mapa.values()].map((p, i) => {
+    const { id: _idViejo, ...resto } = p;
+    return { id: i + 1, ...resto };
+  });
   return resultado;
 }
 
