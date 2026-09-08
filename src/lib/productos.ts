@@ -46,6 +46,20 @@ export function formatPrecio(valor: number): string {
   return `S/ ${valor.toLocaleString("es-PE", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+/**
+ * Precio unitario más barato realmente disponible para un producto: la
+ * cantidad más alta que cumple el MOQ y tiene precio cargado (> 0). Nunca
+ * devuelve un tier por debajo del MOQ ni un precio en S/ 0.00; si ningún
+ * tier tiene precio válido, devuelve null (mostrar "a consultar").
+ */
+export function getPrecioDesde(producto: Producto): number | null {
+  const cantidades = [1000, 500, 300, 100] as const;
+  for (const c of cantidades) {
+    if (c >= producto.moq && producto.precios[c] > 0) return producto.precios[c];
+  }
+  return null;
+}
+
 export function getProductoPorSlug(slug: string): Producto | undefined {
   return productos.find((p) => p.slug === slug);
 }

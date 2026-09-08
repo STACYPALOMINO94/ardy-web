@@ -40,18 +40,22 @@ export function productoJsonLd(producto: Producto) {
     sku: String(producto.id),
     material: producto.material,
     url: `${SITE_URL}/productos/${producto.slug}`,
-    offers: (Object.keys(producto.precios) as unknown as Array<keyof typeof producto.precios>).map((cantidad) => ({
-      "@type": "Offer",
-      priceCurrency: "PEN",
-      price: producto.precios[cantidad],
-      eligibleQuantity: {
-        "@type": "QuantitativeValue",
-        value: Number(cantidad),
-      },
-      availability:
-        producto.disponibilidad === "En stock" ? "https://schema.org/InStock" : "https://schema.org/PreOrder",
-      url: `${SITE_URL}/productos/${producto.slug}`,
-    })),
+    // Solo cantidades que cumplen el MOQ y tienen precio cargado (> 0): nunca
+    // se publica un precio en S/ 0.00 en datos estructurados que Google puede indexar.
+    offers: (Object.keys(producto.precios) as unknown as Array<keyof typeof producto.precios>)
+      .filter((cantidad) => Number(cantidad) >= producto.moq && producto.precios[cantidad] > 0)
+      .map((cantidad) => ({
+        "@type": "Offer",
+        priceCurrency: "PEN",
+        price: producto.precios[cantidad],
+        eligibleQuantity: {
+          "@type": "QuantitativeValue",
+          value: Number(cantidad),
+        },
+        availability:
+          producto.disponibilidad === "En stock" ? "https://schema.org/InStock" : "https://schema.org/PreOrder",
+        url: `${SITE_URL}/productos/${producto.slug}`,
+      })),
   };
 }
 

@@ -20,26 +20,36 @@ export function FichaProducto({ producto }: { producto: Producto }) {
   const { estaEnCotizacion, agregar, quitar, items } = useCotizacion();
   const [color, setColor] = useState(producto.colores[0] ?? "");
   const [talla, setTalla] = useState(producto.tallas[0] ?? "");
-  const [cantidad, setCantidad] = useState<(typeof CANTIDADES)[number]>(100);
+
+  // Solo cantidades que cumplen el MOQ del producto y tienen un precio real
+  // cargado. Nunca se muestra una cantidad por debajo del MOQ ni un precio en S/ 0.00.
+  const cantidadesDisponibles = CANTIDADES.filter((c) => c >= producto.moq && producto.precios[c] > 0);
+  const hayPrecio = cantidadesDisponibles.length > 0;
+
+  const [cantidad, setCantidad] = useState<number>(cantidadesDisponibles[0] ?? producto.moq);
 
   const enCotizacion = estaEnCotizacion(producto.slug);
   const cantidadEnCarrito = items[producto.slug]?.cantidad;
 
-  const precioUnitario = producto.precios[cantidad];
+  const precioUnitario = hayPrecio ? producto.precios[cantidad as (typeof CANTIDADES)[number]] : 0;
   const precioTotal = precioUnitario * cantidad;
 
   const plazoBlanco = `${EN_BLANCO.min} a ${EN_BLANCO.max} días hábiles`;
   const plazoGrabado = `${EN_BLANCO.min + GRABADO_DIAS} a ${EN_BLANCO.max + GRABADO_DIAS} días hábiles`;
 
   const mensajeWhatsApp = useMemo(() => {
-    const partes = [
-      `Hola, quiero cotizar: ${producto.nombre}.`,
-      `Cantidad: ${cantidad} unidades (S/ ${precioUnitario.toFixed(2)} c/u, total ${formatPrecio(precioTotal)}).`,
-    ];
+    const partes = [`Hola, quiero cotizar: ${producto.nombre}.`];
+    if (hayPrecio) {
+      partes.push(
+        `Cantidad: ${cantidad} unidades (S/ ${precioUnitario.toFixed(2)} c/u, total ${formatPrecio(precioTotal)}).`
+      );
+    } else {
+      partes.push(`Cantidad estimada: ${cantidad} unidades. Necesito precio, el catálogo no lo tiene cargado aún.`);
+    }
     if (color) partes.push(`Color: ${color}.`);
     if (talla) partes.push(`Talla: ${talla}.`);
     return partes.join(" ");
-  }, [producto.nombre, cantidad, precioUnitario, precioTotal, color, talla]);
+  }, [producto.nombre, cantidad, precioUnitario, precioTotal, hayPrecio, color, talla]);
 
   function onAgregar() {
     agregar(producto.slug, cantidad);
@@ -117,35 +127,50 @@ export function FichaProducto({ producto }: { producto: Producto }) {
 
         <div className="mb-2">
           <p className="text-[0.78rem] text-gris font-semibold mb-2">Cantidad</p>
-          <div className="flex gap-2 flex-wrap">
-            {CANTIDADES.map((c) => (
-              <button
-                key={c}
-                type="button"
-                aria-pressed={c === cantidad}
-                onClick={() => setCantidad(c)}
-                className={`px-4 py-2 border text-[0.85rem] font-semibold ${
-                  c === cantidad ? "bg-marino text-white border-marino" : "border-linea-2 text-marino"
-                }`}
-              >
-                {c}
-              </button>
-            ))}
-          </div>
+          {hayPrecio ? (
+            <div className="flex gap-2 flex-wrap">
+              {cantidadesDisponibles.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  aria-pressed={c === cantidad}
+                  onClick={() => setCantidad(c)}
+                  className={`px-4 py-2 border text-[0.85rem] font-semibold ${
+                    c === cantidad ? "bg-marino text-white border-marino" : "border-linea-2 text-marino"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p className="text-[0.85rem] text-marino font-semibold">
+              Mínimo {producto.moq} unidades. Precio a confirmar por proyecto.
+            </p>
+          )}
           <p className="text-[0.76rem] text-gris mt-1.5">
             La cantidad entre 100 y 1000 unidades casi no cambia el plazo de entrega.
           </p>
         </div>
 
         <div className="border-t border-linea py-4 mb-5 flex items-baseline justify-between">
-          <span className="text-[0.85rem] text-gris">Precio a {cantidad} unidades</span>
-          <span className="text-right">
-            <span className="block text-[1.6rem] font-extrabold text-marino tracking-[-0.02em]">
-              {formatPrecio(precioUnitario)}
-              <span className="text-[0.9rem] font-normal text-gris"> / unidad</span>
-            </span>
-            <span className="block text-[0.82rem] text-gris">Total: {formatPrecio(precioTotal)}</span>
-          </span>
+          {hayPrecio ? (
+            <>
+              <span className="text-[0.85rem] text-gris">Precio a {cantidad} unidades</span>
+              <span className="text-right">
+                <span className="block text-[1.6rem] font-extrabold text-marino tracking-[-0.02em]">
+                  {formatPrecio(precioUnitario)}
+                  <span className="text-[0.9rem] font-normal text-gris"> / unidad</span>
+                </span>
+                <span className="block text-[0.82rem] text-gris">Total: {formatPrecio(precioTotal)}</span>
+              </span>
+            </>
+          ) : (
+            <>
+              <span className="text-[0.85rem] text-gris">Precio</span>
+              <span className="text-[1rem] font-bold text-marino">A confirmar por proyecto</span>
+            </>
+          )}
         </div>
 
         <table className="w-full text-[0.85rem] border-t border-linea mb-6">

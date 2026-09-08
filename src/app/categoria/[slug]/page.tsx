@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { productos } from "@/data/productos";
-import { getCategorias, getProductosPorCategoriaSlug, formatPrecio } from "@/lib/productos";
+import { getCategorias, getProductosPorCategoriaSlug, getPrecioDesde, formatPrecio } from "@/lib/productos";
 import { EN_BLANCO, GRABADO_DIAS } from "@/lib/plazos";
 import { CatalogoExplorer } from "@/components/catalogo/CatalogoExplorer";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -39,7 +39,10 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
   const productosCategoria = getProductosPorCategoriaSlug(slug);
 
   const moqMin = Math.min(...productosCategoria.map((p) => p.moq));
-  const precioDesde = Math.min(...productosCategoria.map((p) => p.precios[1000]));
+  const preciosValidos = productosCategoria
+    .map(getPrecioDesde)
+    .filter((p): p is number => p !== null);
+  const precioDesde = preciosValidos.length > 0 ? Math.min(...preciosValidos) : null;
   const tecnicas = [...new Set(productosCategoria.flatMap((p) => p.tecnicas))];
 
   const preguntas = [
@@ -62,7 +65,10 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
     },
     {
       pregunta: `¿Cuál es el precio referencial de ${categoria.nombre.toLowerCase()}?`,
-      respuesta: `Desde ${formatPrecio(precioDesde)} por unidad al comprar 1000 unidades. El precio exacto depende del modelo y la cantidad; se confirma por proyecto.`,
+      respuesta:
+        precioDesde !== null
+          ? `Desde ${formatPrecio(precioDesde)} por unidad, comprando en volumen. El precio exacto depende del modelo y la cantidad; se confirma por proyecto.`
+          : "El precio depende del modelo y la cantidad; se confirma por proyecto.",
     },
   ];
 

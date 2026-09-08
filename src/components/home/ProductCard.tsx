@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { Producto } from "@/data/productos";
-import { formatPrecio } from "@/lib/productos";
+import { formatPrecio, getPrecioDesde } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
 import { useCotizacion } from "@/components/cotizacion/CotizacionContext";
 import { IconoCategoria } from "./IconoCategoria";
@@ -12,6 +12,7 @@ export function ProductCard({ producto }: { producto: Producto }) {
   const { estaEnCotizacion, alternar } = useCotizacion();
   const [tonoActivo, setTonoActivo] = useState(producto.colores[0] ?? "");
   const enCotizacion = estaEnCotizacion(producto.slug);
+  const precioDesde = getPrecioDesde(producto);
 
   return (
     <article className="bg-white border border-linea flex flex-col transition-[border-color,transform] hover:border-linea-2 hover:-translate-y-0.5">
@@ -81,7 +82,13 @@ export function ProductCard({ producto }: { producto: Producto }) {
             MOQ <b className="text-marino">{producto.moq}</b>
           </span>
           <span>
-            Desde <b className="text-marino">{formatPrecio(producto.precios[1000])}</b>
+            {precioDesde !== null ? (
+              <>
+                Desde <b className="text-marino">{formatPrecio(precioDesde)}</b>
+              </>
+            ) : (
+              <b className="text-marino">Precio a consultar</b>
+            )}
           </span>
         </div>
         <button
