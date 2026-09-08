@@ -359,6 +359,9 @@ async function procesarProducto(pOriginal) {
     disponibilidad: p.Disponibilidad || "En stock",
     permisoMtc: toBool(p["Permiso MTC"]),
     esNovedad: toBool(p.Novedad),
+    // Campo editorial: solo se activa si el sheet trae una columna "Destacado".
+    // Sin esa columna, el producto entra como no destacado por defecto.
+    destacado: toBool(p.Destacado),
     fotos: await parseFotos(p, slug),
     seoTitle: generarSeoTitle(p),
     seoMeta: generarSeoMeta(p),
@@ -403,6 +406,7 @@ export interface Producto {
   disponibilidad: string;
   permisoMtc: boolean;
   esNovedad: boolean;
+  destacado: boolean;
   fotos: Array<{ url: string; alt: string }>;
   seoTitle: string;
   seoMeta: string;

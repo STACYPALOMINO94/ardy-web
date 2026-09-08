@@ -40,7 +40,7 @@ export default function Home() {
       </section>
 
       <SeccionCarrusel
-        titulo="Destacados"
+        titulo="Productos destacados"
         paddingTop={64}
         accion={
           <Link href="/productos" className="text-[0.87rem] text-gris whitespace-nowrap hover:text-marino">
@@ -52,7 +52,7 @@ export default function Home() {
 
       <SeccionCarrusel
         id="nuevos"
-        titulo="Nuevos modelos"
+        titulo="Productos nuevos"
         paddingTop={64}
         accion={<span className="text-[0.87rem] text-gris whitespace-nowrap">Actualizamos esta selección cada temporada</span>}
         productos={nuevos}

@@ -13,7 +13,9 @@ const ENLACES = [
 ];
 
 export function SiteHeader() {
-  const categorias = getCategorias();
+  // Solo categorías con productos: de las 28 oficiales, mostrar las 17 vacías
+  // en el menú principal sería mala UX. Siguen existiendo como rutas reales.
+  const categorias = getCategorias().filter((c) => c.cantidad > 0);
   const { cantidadItems } = useCotizacion();
   const [menuAbierto, setMenuAbierto] = useState(false);
   const [dropAbierto, setDropAbierto] = useState(false);
@@ -70,7 +72,7 @@ export function SiteHeader() {
             <div
               className={`${
                 dropAbierto ? "block" : "hidden"
-              } md:absolute md:top-full md:left-0 bg-marino-3 md:bg-crema-2 border-0 md:border md:border-linea min-w-[230px] py-2.5 shadow-[0_8px_24px_rgba(13,25,38,.16)]`}
+              } md:absolute md:top-full md:left-0 bg-marino-3 md:bg-crema-2 border-0 md:border md:border-linea min-w-[230px] py-2.5 shadow-[0_8px_24px_rgba(13,25,38,.16)] max-h-[70vh] overflow-y-auto`}
             >
               {categorias.map((cat) => (
                 <Link

@@ -37,40 +37,43 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
 
   const categorias = getCategorias();
   const productosCategoria = getProductosPorCategoriaSlug(slug);
+  const hayProductos = productosCategoria.length > 0;
 
-  const moqMin = Math.min(...productosCategoria.map((p) => p.moq));
+  const moqMin = hayProductos ? Math.min(...productosCategoria.map((p) => p.moq)) : null;
   const preciosValidos = productosCategoria
     .map(getPrecioDesde)
     .filter((p): p is number => p !== null);
   const precioDesde = preciosValidos.length > 0 ? Math.min(...preciosValidos) : null;
   const tecnicas = [...new Set(productosCategoria.flatMap((p) => p.tecnicas))];
 
-  const preguntas = [
-    {
-      pregunta: `¿Cuál es el mínimo de compra para ${categoria.nombre.toLowerCase()}?`,
-      respuesta: `El mínimo de compra parte en ${moqMin} unidades. Entre 100 y 1000 unidades el plazo de entrega casi no cambia.`,
-    },
-    {
-      pregunta: `¿Cuánto demora la entrega de ${categoria.nombre.toLowerCase()}?`,
-      respuesta: `En blanco, entre ${EN_BLANCO.min} y ${EN_BLANCO.max} días hábiles puerta a puerta desde el pago confirmado. Con grabado en Lima, entre ${
-        EN_BLANCO.min + GRABADO_DIAS
-      } y ${EN_BLANCO.max + GRABADO_DIAS} días hábiles: el arte se aprueba mientras el producto vuela.`,
-    },
-    {
-      pregunta: `¿Qué técnicas de marcado se usan en ${categoria.nombre.toLowerCase()}?`,
-      respuesta:
-        tecnicas.length > 0
-          ? `Según el modelo: ${tecnicas.map((t) => t.toLowerCase()).join(", ")}.`
-          : "Depende del modelo específico; se confirma en la ficha de cada producto.",
-    },
-    {
-      pregunta: `¿Cuál es el precio referencial de ${categoria.nombre.toLowerCase()}?`,
-      respuesta:
-        precioDesde !== null
-          ? `Desde ${formatPrecio(precioDesde)} por unidad, comprando en volumen. El precio exacto depende del modelo y la cantidad; se confirma por proyecto.`
-          : "El precio depende del modelo y la cantidad; se confirma por proyecto.",
-    },
-  ];
+  const preguntas = hayProductos
+    ? [
+        {
+          pregunta: `¿Cuál es el mínimo de compra para ${categoria.nombre.toLowerCase()}?`,
+          respuesta: `El mínimo de compra parte en ${moqMin} unidades. Entre 100 y 1000 unidades el plazo de entrega casi no cambia.`,
+        },
+        {
+          pregunta: `¿Cuánto demora la entrega de ${categoria.nombre.toLowerCase()}?`,
+          respuesta: `En blanco, entre ${EN_BLANCO.min} y ${EN_BLANCO.max} días hábiles puerta a puerta desde el pago confirmado. Con grabado en Lima, entre ${
+            EN_BLANCO.min + GRABADO_DIAS
+          } y ${EN_BLANCO.max + GRABADO_DIAS} días hábiles: el arte se aprueba mientras el producto vuela.`,
+        },
+        {
+          pregunta: `¿Qué técnicas de marcado se usan en ${categoria.nombre.toLowerCase()}?`,
+          respuesta:
+            tecnicas.length > 0
+              ? `Según el modelo: ${tecnicas.map((t) => t.toLowerCase()).join(", ")}.`
+              : "Depende del modelo específico; se confirma en la ficha de cada producto.",
+        },
+        {
+          pregunta: `¿Cuál es el precio referencial de ${categoria.nombre.toLowerCase()}?`,
+          respuesta:
+            precioDesde !== null
+              ? `Desde ${formatPrecio(precioDesde)} por unidad, comprando en volumen. El precio exacto depende del modelo y la cantidad; se confirma por proyecto.`
+              : "El precio depende del modelo y la cantidad; se confirma por proyecto.",
+        },
+      ]
+    : [];
 
   return (
     <main className="mx-auto max-w-[1240px] px-5" style={{ paddingTop: 40, paddingBottom: 64 }}>
@@ -81,7 +84,7 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
           { nombre: categoria.nombre, url: `/categoria/${categoria.slug}` },
         ])}
       />
-      <JsonLd data={faqJsonLd(preguntas)} />
+      {hayProductos && <JsonLd data={faqJsonLd(preguntas)} />}
 
       <nav className="text-[0.82rem] text-gris mb-5" aria-label="Ruta de navegación">
         <Link href="/" className="hover:text-marino">
@@ -100,21 +103,34 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
           {categoria.cantidad} {categoria.cantidad === 1 ? "modelo" : "modelos"}
         </span>
       </div>
+      {!hayProductos && (
+        <p className="text-gris max-w-[60ch] mb-8">
+          Todavía no tenemos modelos cargados en {categoria.nombre.toLowerCase()}, pero es parte de nuestro catálogo
+          y suma modelos regularmente.{" "}
+          <Link href="/sourcing-importacion-china" className="text-marino font-semibold hover:underline">
+            ¿Buscas algo específico? Lo conseguimos en China
+          </Link>
+          .
+        </p>
+      )}
+
       <CatalogoExplorer productos={productos} categorias={categorias} categoriaInicial={slug} />
 
-      <section className="mt-16 max-w-[760px]" aria-labelledby="faq-categoria">
-        <h2 id="faq-categoria" className="mb-4">
-          Preguntas frecuentes sobre {categoria.nombre.toLowerCase()}
-        </h2>
-        <div className="space-y-4">
-          {preguntas.map((p) => (
-            <div key={p.pregunta} className="border-t border-linea pt-4">
-              <h3 className="text-marino mb-1.5">{p.pregunta}</h3>
-              <p className="text-[0.9rem] text-gris">{p.respuesta}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      {hayProductos && (
+        <section className="mt-16 max-w-[760px]" aria-labelledby="faq-categoria">
+          <h2 id="faq-categoria" className="mb-4">
+            Preguntas frecuentes sobre {categoria.nombre.toLowerCase()}
+          </h2>
+          <div className="space-y-4">
+            {preguntas.map((p) => (
+              <div key={p.pregunta} className="border-t border-linea pt-4">
+                <h3 className="text-marino mb-1.5">{p.pregunta}</h3>
+                <p className="text-[0.9rem] text-gris">{p.respuesta}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }

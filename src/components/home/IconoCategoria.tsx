@@ -13,19 +13,33 @@ const FORMAS: Record<string, (c: string, o: string) => string> = {
     `<path d="M22 78 L70 22 l10 8 L34 84 z" fill="${c}"/><path d="M22 78 l12 6" stroke="${o}" stroke-width="4"/>`,
   mascotas: (c, o) =>
     `<circle cx="50" cy="24" r="13" fill="none" stroke="${c}" stroke-width="6"/><rect x="34" y="38" width="32" height="44" rx="6" fill="${c}"/><circle cx="50" cy="60" r="8" fill="${o}"/>`,
+  bolso: (c, o) =>
+    `<path d="M30 40 a20 20 0 0 1 40 0" fill="none" stroke="${c}" stroke-width="6"/><rect x="22" y="38" width="56" height="44" rx="8" fill="${c}"/><rect x="40" y="54" width="20" height="4" rx="2" fill="${o}"/>`,
+  deporte: (c, o) =>
+    `<rect x="18" y="41" width="14" height="18" rx="3" fill="${c}"/><rect x="68" y="41" width="14" height="18" rx="3" fill="${c}"/><rect x="30" y="47" width="40" height="6" rx="3" fill="${c}"/><rect x="30" y="47" width="40" height="6" rx="3" fill="${o}" opacity=".3"/>`,
   default: (c, o) =>
     `<path d="M50 18 l26 16 v34 l-26 16 -26-16 V34z" fill="${c}"/><circle cx="50" cy="50" r="9" fill="${o}"/>`,
 };
 
 function elegirForma(categoria: string): (c: string, o: string) => string {
   const k = categoria.toLowerCase();
-  if (k.includes("pin") || k.includes("medalla") || k.includes("moneda")) return FORMAS.pin;
+  if (k.includes("pin") || k.includes("medalla") || k.includes("moneda") || k.includes("reconocimiento") || k.includes("premio"))
+    return FORMAS.pin;
   if (k.includes("llavero")) return FORMAS.llaveros;
   if (k.includes("usb")) return FORMAS.usb;
   if (k.includes("tecnolog") || k.includes("nfc") || k.includes("cable") || k.includes("power")) return FORMAS.tecnologia;
   if (k.includes("audio") || k.includes("parlante") || k.includes("audifono")) return FORMAS.audio;
-  if (k.includes("ejecutiv") || k.includes("pluma") || k.includes("tarjetero") || k.includes("escritorio")) return FORMAS.ejecutivos;
+  if (
+    k.includes("ejecutiv") ||
+    k.includes("pluma") ||
+    k.includes("tarjetero") ||
+    k.includes("escritorio") ||
+    k.includes("escritura")
+  )
+    return FORMAS.ejecutivos;
   if (k.includes("mascota")) return FORMAS.mascotas;
+  if (k.includes("bolso") || k.includes("organizador")) return FORMAS.bolso;
+  if (k.includes("deporte") || k.includes("fitness")) return FORMAS.deporte;
   return FORMAS.default;
 }
 

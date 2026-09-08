@@ -3,7 +3,8 @@ import { getCategorias } from "@/lib/productos";
 import { CONTACTO_CORREO, WHATSAPP_NUMERO } from "@/lib/config";
 
 export function Footer() {
-  const categorias = getCategorias();
+  // Igual que en el nav: solo categorías con productos, de las 28 oficiales.
+  const categorias = getCategorias().filter((c) => c.cantidad > 0);
 
   return (
     <footer className="bg-marino-3 text-[#93A3B4] pt-16 pb-6 text-[0.87rem] mt-16">

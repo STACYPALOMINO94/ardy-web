@@ -1,4 +1,5 @@
 import { productos, type Producto } from "@/data/productos";
+import { CATEGORIAS_OFICIALES } from "./categorias";
 
 export function toSlug(texto: string): string {
   return texto
@@ -16,26 +17,27 @@ export interface Categoria {
   cantidad: number;
 }
 
-/** Categorías únicas leídas dinámicamente de productos.ts. Nunca hardcodear. */
+/**
+ * Las 28 categorías oficiales (ver lib/categorias.ts), con la cantidad de
+ * productos que caen en cada una. Se listan TODAS, incluidas las que todavía
+ * tienen 0 productos: la taxonomía es fija, no se deriva de los datos.
+ */
 export function getCategorias(): Categoria[] {
-  const mapa = new Map<string, number>();
+  const conteos = new Map<string, number>();
   for (const p of productos) {
-    mapa.set(p.categoria, (mapa.get(p.categoria) ?? 0) + 1);
+    const slug = toSlug(p.categoria);
+    conteos.set(slug, (conteos.get(slug) ?? 0) + 1);
   }
-  return [...mapa.entries()].map(([nombre, cantidad]) => ({
-    nombre,
-    slug: toSlug(nombre),
-    cantidad,
+  return CATEGORIAS_OFICIALES.map((c) => ({
+    nombre: c.nombre,
+    slug: c.slug,
+    cantidad: conteos.get(c.slug) ?? 0,
   }));
 }
 
-/**
- * Selección de destacados. El esquema de datos aún no trae un flag "destacado"
- * dedicado (ver PROMPT.md); mientras tanto se muestran los primeros N productos
- * en stock, en el orden que llegan del catálogo.
- */
-export function getDestacados(n = 8): Producto[] {
-  return productos.filter((p) => p.disponibilidad === "En stock").slice(0, n);
+/** Productos marcados como destacados (campo editorial `destacado` en productos.ts). */
+export function getDestacados(): Producto[] {
+  return productos.filter((p) => p.destacado);
 }
 
 export function getNuevos(): Producto[] {

@@ -20,6 +20,10 @@ export function CatalogoExplorer({
   const [disponibilidad, setDisponibilidad] = useState<"todas" | (typeof DISPONIBILIDADES)[number]>("todas");
   const [busqueda, setBusqueda] = useState("");
 
+  // De las 28 categorías oficiales, solo se listan como chip las que ya tienen
+  // productos: mostrar 17 chips que llevan a "0 productos" es puro ruido.
+  const categoriasConProductos = useMemo(() => categorias.filter((c) => c.cantidad > 0), [categorias]);
+
   const categoriaPorSlug = useMemo(() => {
     const mapa = new Map<string, string>();
     for (const c of categorias) mapa.set(c.slug, c.nombre);
@@ -47,7 +51,7 @@ export function CatalogoExplorer({
           <Chip activo={categoria === "todas"} onClick={() => setCategoria("todas")}>
             Todas
           </Chip>
-          {categorias.map((cat) => (
+          {categoriasConProductos.map((cat) => (
             <Chip key={cat.slug} activo={categoria === cat.slug} onClick={() => setCategoria(cat.slug)}>
               {cat.nombre} ({cat.cantidad})
             </Chip>

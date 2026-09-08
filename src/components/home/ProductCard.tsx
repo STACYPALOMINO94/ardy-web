@@ -15,7 +15,7 @@ export function ProductCard({ producto }: { producto: Producto }) {
   const precioDesde = getPrecioDesde(producto);
 
   return (
-    <article className="bg-white border border-linea flex flex-col transition-[border-color,transform] hover:border-linea-2 hover:-translate-y-0.5">
+    <article className="bg-white border border-linea rounded-2xl overflow-hidden flex flex-col transition-[border-color,transform] hover:border-linea-2 hover:-translate-y-0.5">
       <Link
         href={`/productos/${producto.slug}`}
         className="group relative h-[240px] w-full bg-white flex items-center justify-center overflow-hidden border-b border-linea cursor-zoom-in"
@@ -104,17 +104,25 @@ export function ProductCard({ producto }: { producto: Producto }) {
             )}
           </span>
         </div>
-        <button
-          type="button"
-          onClick={() => alternar(producto.slug)}
-          className={`mt-2.5 border px-2.5 py-2.5 text-[0.85rem] font-semibold w-full ${
-            enCotizacion
-              ? "bg-oliva border-oliva text-white"
-              : "border-marino text-marino bg-transparent hover:bg-marino hover:text-white"
-          }`}
-        >
-          {enCotizacion ? "En tu cotización" : "Agregar a cotización"}
-        </button>
+        <div className="flex flex-col gap-2 mt-2.5">
+          <Link
+            href={`/productos/${producto.slug}`}
+            className="flex items-center justify-center border border-marino text-marino px-2.5 py-2.5 text-[0.85rem] font-semibold hover:bg-marino hover:text-white"
+          >
+            Ver ficha
+          </Link>
+          <button
+            type="button"
+            onClick={() => alternar(producto.slug)}
+            className={`border px-2.5 py-2.5 text-[0.85rem] font-semibold w-full ${
+              enCotizacion
+                ? "bg-oliva border-oliva text-white"
+                : "border-transparent text-marino bg-crema-2 hover:bg-crema"
+            }`}
+          >
+            {enCotizacion ? "En tu cotización" : "Agregar a cotización"}
+          </button>
+        </div>
       </div>
     </article>
   );
