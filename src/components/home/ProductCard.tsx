@@ -39,11 +39,24 @@ export function ProductCard({ producto }: { producto: Producto }) {
           )}
         </div>
 
-        <IconoCategoria
-          categoria={producto.categoria}
-          color={getColorHex(tonoActivo)}
-          className="w-[64%] h-[64%] transition-transform duration-300 group-hover:scale-[1.07]"
-        />
+        {producto.fotos.length > 0 ? (
+          // referrerPolicy="no-referrer": Alicdn bloquea por Referer ACL (403) cuando
+          // la petición trae el dominio de origen; sin Referer la sirve normal.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={producto.fotos[0].url}
+            alt={producto.fotos[0].alt}
+            loading="lazy"
+            referrerPolicy="no-referrer"
+            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.07]"
+          />
+        ) : (
+          <IconoCategoria
+            categoria={producto.categoria}
+            color={getColorHex(tonoActivo)}
+            className="w-[64%] h-[64%] transition-transform duration-300 group-hover:scale-[1.07]"
+          />
+        )}
 
         {producto.colores.length > 0 && (
           <div className="absolute bottom-2.5 left-2.5 flex gap-1.5 z-[3]">

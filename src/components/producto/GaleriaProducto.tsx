@@ -105,8 +105,19 @@ function ImagenGaleria({
   className: string;
 }) {
   if (item.url) {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={item.url} alt={item.alt} loading="lazy" className={`${className} object-contain`} />;
+    // referrerPolicy="no-referrer": los CDN de Alicdn (1688/Alibaba) bloquean por
+    // Referer ACL cuando la petición viene con el dominio de origen (403). Sin
+    // enviar Referer, la sirven normal.
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={item.url}
+        alt={item.alt}
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        className={`${className} object-contain`}
+      />
+    );
   }
   return <IconoCategoria categoria={categoria} color={getColorHex(item.tono ?? "")} className={className} />;
 }
