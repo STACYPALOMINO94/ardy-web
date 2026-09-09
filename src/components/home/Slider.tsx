@@ -33,6 +33,7 @@ const SLIDES = [
 
 export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | null> }) {
   const [idx, setIdx] = useState(0);
+  const [reduceMotion, setReduceMotion] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   function ir(n: number) {
@@ -40,14 +41,17 @@ export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | 
   }
 
   useEffect(() => {
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  }, []);
+
+  useEffect(() => {
+    if (reduceMotion) return;
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => setIdx((v) => (v + 1) % SLIDES.length), 7000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [idx]);
+  }, [idx, reduceMotion]);
 
   return (
     <div className="relative overflow-hidden bg-marino-2">
@@ -57,6 +61,7 @@ export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | 
       >
         {SLIDES.map((s, i) => {
           const media = mediaBanner[i] ?? null;
+          const activo = i === idx;
           return (
             <div key={s.titulo} className="relative min-w-full overflow-hidden">
               {media &&
@@ -80,15 +85,33 @@ export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | 
                 />
               )}
               <div className="relative z-[2] min-h-[320px] md:min-h-[440px] grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 px-5 py-10 md:py-16 max-w-[1240px] mx-auto">
-                <div>
+                <div key={activo ? `activo-${idx}` : `idle-${i}`}>
                   <span className="inline-block bg-ambar text-marino-3 text-[0.74rem] font-bold tracking-[0.06em] px-[11px] py-[5px] mb-3.5">
                     {s.eyebrow}
                   </span>
-                  <h2 className="text-white text-[clamp(1.8rem,3.6vw,2.7rem)] leading-[1.08]">{s.titulo}</h2>
-                  <p className="text-[#B9C7D6] mt-3 text-[1.02rem] max-w-[44ch]">{s.texto}</p>
+                  <h2
+                    className={`text-white text-[clamp(1.8rem,3.6vw,2.7rem)] leading-[1.08] ${
+                      activo && !reduceMotion ? "animate-[banner-titulo-in_600ms_ease-out_both]" : ""
+                    }`}
+                  >
+                    {s.titulo}
+                  </h2>
+                  <p
+                    className={`text-[#B9C7D6] mt-3 text-[1.02rem] max-w-[44ch] ${
+                      activo && !reduceMotion
+                        ? "animate-[banner-subtitulo-in_600ms_ease-out_both] [animation-delay:150ms]"
+                        : ""
+                    }`}
+                  >
+                    {s.texto}
+                  </p>
                   <Link
                     href={s.cta.href}
-                    className="inline-block mt-[22px] bg-white text-marino px-[26px] py-[13px] font-bold text-[0.93rem] hover:bg-ambar-2"
+                    className={`inline-block mt-[22px] bg-white text-marino px-[26px] py-[13px] font-bold text-[0.93rem] hover:bg-ambar-2 ${
+                      activo && !reduceMotion
+                        ? "animate-[banner-boton-in_600ms_ease-out_both] [animation-delay:300ms]"
+                        : ""
+                    }`}
                   >
                     {s.cta.texto}
                   </Link>
