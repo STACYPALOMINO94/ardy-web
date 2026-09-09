@@ -3,6 +3,11 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+export interface MediaSlide {
+  tipo: "video" | "imagen";
+  src: string;
+}
+
 const SLIDES = [
   {
     eyebrow: "IMPORTACIÓN AÉREA",
@@ -26,7 +31,7 @@ const SLIDES = [
   },
 ];
 
-export function Slider() {
+export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | null> }) {
   const [idx, setIdx] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -50,29 +55,53 @@ export function Slider() {
         className="flex transition-transform duration-500 ease-out"
         style={{ transform: `translateX(-${idx * 100}%)` }}
       >
-        {SLIDES.map((s) => (
-          <div
-            key={s.titulo}
-            className="min-w-full grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 px-5 py-10 md:py-16 max-w-[1240px] mx-auto"
-          >
-            <div>
-              <span className="inline-block bg-ambar text-marino-3 text-[0.74rem] font-bold tracking-[0.06em] px-[11px] py-[5px] mb-3.5">
-                {s.eyebrow}
-              </span>
-              <h2 className="text-white text-[clamp(1.8rem,3.6vw,2.7rem)] leading-[1.08]">{s.titulo}</h2>
-              <p className="text-[#B9C7D6] mt-3 text-[1.02rem] max-w-[44ch]">{s.texto}</p>
-              <Link
-                href={s.cta.href}
-                className="inline-block mt-[22px] bg-white text-marino px-[26px] py-[13px] font-bold text-[0.93rem] hover:bg-ambar-2"
-              >
-                {s.cta.texto}
-              </Link>
+        {SLIDES.map((s, i) => {
+          const media = mediaBanner[i] ?? null;
+          return (
+            <div key={s.titulo} className="relative min-w-full overflow-hidden">
+              {media &&
+                (media.tipo === "video" ? (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover z-0"
+                    src={media.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img className="absolute inset-0 w-full h-full object-cover z-0" src={media.src} alt="" />
+                ))}
+              {media && (
+                <div
+                  className="absolute inset-0 z-[1] bg-gradient-to-r from-marino-3/85 via-marino-3/55 to-marino-3/15"
+                  aria-hidden
+                />
+              )}
+              <div className="relative z-[2] min-h-[320px] md:min-h-[440px] grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 px-5 py-10 md:py-16 max-w-[1240px] mx-auto">
+                <div>
+                  <span className="inline-block bg-ambar text-marino-3 text-[0.74rem] font-bold tracking-[0.06em] px-[11px] py-[5px] mb-3.5">
+                    {s.eyebrow}
+                  </span>
+                  <h2 className="text-white text-[clamp(1.8rem,3.6vw,2.7rem)] leading-[1.08]">{s.titulo}</h2>
+                  <p className="text-[#B9C7D6] mt-3 text-[1.02rem] max-w-[44ch]">{s.texto}</p>
+                  <Link
+                    href={s.cta.href}
+                    className="inline-block mt-[22px] bg-white text-marino px-[26px] py-[13px] font-bold text-[0.93rem] hover:bg-ambar-2"
+                  >
+                    {s.cta.texto}
+                  </Link>
+                </div>
+                {!media && (
+                  <div className="flex justify-center items-center min-h-[150px] md:min-h-[230px] order-first md:order-none">
+                    <SlideArt seed={s.titulo.length} />
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="flex justify-center items-center min-h-[150px] md:min-h-[230px] order-first md:order-none">
-              <SlideArt seed={s.titulo.length} />
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <button
