@@ -11,21 +11,22 @@ import { IconoCategoria } from "./IconoCategoria";
  * a propósito, para que el grid 2 grandes + 4 pequeñas nunca quede con huecos.
  * Las 2 primeras del orden son las tarjetas grandes.
  *
- * La tarjeta se divide en dos franjas que nunca se pisan: arriba la foto sola
- * (sin texto encima), abajo una franja marino sólida de 80px con título,
- * contador y "Ver productos". Grandes: foto 200px + franja 80px = 280px total.
- * Pequeñas: foto 88px + franja 80px = 168px total.
+ * Título, contador y "Ver productos" van DENTRO del recuadro, arriba a la
+ * izquierda, sobre la foto — sin overlay. Legibilidad de título y contador vía
+ * text-shadow fuerte (0 1px 4px rgba(0,0,0,.8)), no oscureciendo la foto.
  *
- * En las 2 tarjetas grandes la foto usa object-position "right center" (el
- * producto se ve completo a la derecha); en las pequeñas, "center".
+ * En las 2 tarjetas grandes la foto usa object-position "bottom" (centrado,
+ * pegado abajo) para que el producto se vea completo y el texto arriba quede
+ * libre; en las pequeñas, "center".
  *
  * Foto opcional por categoría: si existe public/img/categorias/<slug>.jpg se usa
- * en la franja de foto; si no existe, color sólido + ícono centrado. Se detecta
- * en build time (Server Component), así que basta con dejar el archivo ahí — no
+ * de fondo; si no existe, color sólido + ícono decorativo. Se detecta en build
+ * time (Server Component), así que basta con dejar el archivo ahí — no
  * requiere tocar código.
  */
 const CLASES_TILE = ["bg-marino", "bg-oliva", "bg-marino-2", "bg-oliva-2", "bg-marino", "bg-oliva-2"];
 const DIR_IMAGENES_CATEGORIAS = join(process.cwd(), "public", "img", "categorias");
+const SOMBRA_TEXTO = "[text-shadow:0_1px_4px_rgba(0,0,0,.8)]";
 
 function rutaImagen(slug: string): string | null {
   return existsSync(join(DIR_IMAGENES_CATEGORIAS, `${slug}.jpg`)) ? `/img/categorias/${slug}.jpg` : null;
@@ -59,37 +60,35 @@ export function Mosaico() {
         <Link
           key={t.slug}
           href={t.href}
-          className={`group block overflow-hidden rounded-2xl transition-transform hover:-translate-y-[3px] ${
-            t.grande ? "md:col-span-2" : ""
-          }`}
+          className={`group relative overflow-hidden rounded-2xl p-6 flex flex-col justify-between text-white transition-transform hover:-translate-y-[3px] ${
+            t.imagen ? "" : t.clase
+          } ${t.grande ? "md:col-span-2 h-[280px]" : "h-[168px]"}`}
         >
-          {/* Franja de foto: sin texto encima */}
-          <div className={`relative w-full ${t.grande ? "h-[200px]" : "h-[88px]"} ${t.imagen ? "" : t.clase}`}>
-            {t.imagen ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={t.imagen}
-                alt={t.titulo}
-                className={`absolute inset-0 w-full h-full object-cover ${
-                  t.grande ? "object-[right_center]" : "object-center"
-                } transition-transform duration-300 group-hover:scale-[1.04]`}
-              />
-            ) : (
-              <IconoCategoria
-                categoria={t.titulo}
-                color="#ffffff"
-                sombra="rgba(0,0,0,.2)"
-                className="absolute inset-0 m-auto w-[42%] h-[42%]"
-              />
-            )}
+          {t.imagen && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={t.imagen}
+              alt=""
+              className={`absolute inset-0 w-full h-full object-cover ${
+                t.grande ? "object-bottom" : "object-center"
+              } z-0 transition-transform duration-300 group-hover:scale-[1.04]`}
+            />
+          )}
+          <div>
+            <h3 className={`text-[1.15rem] text-white relative z-[2] ${SOMBRA_TEXTO}`}>{t.titulo}</h3>
+            <p className={`text-[0.85rem] text-white/90 mt-1.5 relative z-[2] max-w-[26ch] ${SOMBRA_TEXTO}`}>
+              {t.texto}
+            </p>
           </div>
-
-          {/* Franja de texto: fondo marino sólido, 80px fijos, nunca se pisa con la foto */}
-          <div className="h-[80px] bg-marino px-4 py-2 flex flex-col justify-center gap-0.5">
-            <h3 className="text-white text-[1rem] leading-tight truncate">{t.titulo}</h3>
-            <p className="text-white/80 text-[0.76rem] leading-tight truncate">{t.texto}</p>
-            <span className="text-ambar-2 font-bold text-[0.76rem] leading-tight">Ver productos</span>
-          </div>
+          <span className="text-[0.83rem] font-bold text-ambar-2 relative z-[2] mt-3.5">Ver productos</span>
+          {!t.imagen && (
+            <IconoCategoria
+              categoria={t.titulo}
+              color="#ffffff"
+              sombra="rgba(0,0,0,.2)"
+              className={`absolute -right-[18px] -bottom-[18px] opacity-20 z-[1] ${t.grande ? "w-[170px]" : "w-[120px]"}`}
+            />
+          )}
         </Link>
       ))}
     </div>
