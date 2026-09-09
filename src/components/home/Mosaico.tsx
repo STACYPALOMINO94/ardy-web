@@ -11,10 +11,13 @@ import { IconoCategoria } from "./IconoCategoria";
  * a propósito, para que el grid 2 grandes + 4 pequeñas nunca quede con huecos.
  * Las 2 primeras del orden son las tarjetas grandes.
  *
- * Foto de fondo opcional por categoría: si existe public/img/categorias/<slug>.jpg
- * se usa como fondo (con overlay oscuro para legibilidad); si no existe, se usa el
- * color sólido + ícono decorativo de siempre. Se detecta en build time (Server
- * Component), así que basta con dejar el archivo ahí — no requiere tocar código.
+ * Misma estructura que ProductCard: recuadro de foto arriba (sin overlay, foto
+ * limpia) + contenido (título, contador, "Ver productos") debajo sobre blanco.
+ *
+ * Foto opcional por categoría: si existe public/img/categorias/<slug>.jpg se usa
+ * en el recuadro; si no existe, se usa color sólido + ícono decorativo. Se
+ * detecta en build time (Server Component), así que basta con dejar el archivo
+ * ahí — no requiere tocar código.
  */
 const CLASES_TILE = ["bg-marino", "bg-oliva", "bg-marino-2", "bg-oliva-2", "bg-marino", "bg-oliva-2"];
 const DIR_IMAGENES_CATEGORIAS = join(process.cwd(), "public", "img", "categorias");
@@ -51,34 +54,34 @@ export function Mosaico() {
         <Link
           key={t.slug}
           href={t.href}
-          className={`relative overflow-hidden rounded-2xl p-6 flex flex-col justify-between text-white transition-transform hover:-translate-y-[3px] ${
-            t.clase
-          } ${t.grande ? "md:col-span-2 min-h-[220px]" : "min-h-[168px]"}`}
+          className={`group block rounded-2xl overflow-hidden border border-linea bg-white transition-transform hover:-translate-y-[3px] ${
+            t.grande ? "md:col-span-2" : ""
+          }`}
         >
-          {t.imagen && (
-            <>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+          <div className={`relative w-full ${t.grande ? "h-[280px]" : "h-[168px]"} ${t.imagen ? "bg-white" : t.clase}`}>
+            {t.imagen ? (
+              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={t.imagen}
-                alt=""
-                className="absolute inset-0 w-full h-full object-cover z-0"
+                alt={t.titulo}
+                className={`absolute inset-0 w-full h-full object-cover ${
+                  t.grande ? "object-[center_top]" : "object-center"
+                } transition-transform duration-300 group-hover:scale-[1.04]`}
               />
-              <div className="absolute inset-0 bg-marino-3/55 z-[1]" aria-hidden />
-            </>
-          )}
-          <div>
-            <h3 className="text-[1.15rem] text-white relative z-[2]">{t.titulo}</h3>
-            <p className="text-[0.85rem] text-white/[.78] mt-1.5 relative z-[2] max-w-[26ch]">{t.texto}</p>
+            ) : (
+              <IconoCategoria
+                categoria={t.titulo}
+                color="#ffffff"
+                sombra="rgba(0,0,0,.2)"
+                className="absolute inset-0 m-auto w-[46%] h-[46%]"
+              />
+            )}
           </div>
-          <span className="text-[0.83rem] font-bold text-ambar-2 relative z-[2] mt-3.5">Ver productos</span>
-          {!t.imagen && (
-            <IconoCategoria
-              categoria={t.titulo}
-              color="#ffffff"
-              sombra="rgba(0,0,0,.2)"
-              className={`absolute -right-[18px] -bottom-[18px] opacity-20 z-[1] ${t.grande ? "w-[170px]" : "w-[120px]"}`}
-            />
-          )}
+          <div className="p-4">
+            <h3 className="text-[1.05rem] text-marino">{t.titulo}</h3>
+            <p className="text-[0.85rem] text-gris mt-1">{t.texto}</p>
+            <span className="text-[0.83rem] font-bold text-ambar mt-2.5 inline-block">Ver productos</span>
+          </div>
         </Link>
       ))}
     </div>
