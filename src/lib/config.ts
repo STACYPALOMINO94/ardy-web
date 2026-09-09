@@ -2,7 +2,7 @@
  * Datos de contacto reales de ARDY Import.
  * El número de WhatsApp va en formato internacional sin "+" ni espacios.
  */
-export const WHATSAPP_NUMERO = "51942577659";
+export const WHATSAPP_NUMERO = "51942577650";
 export const CONTACTO_CORREO = "ardyimport@gmail.com";
 export const SOURCING_PRECIO_PH = "[PH]";
 
