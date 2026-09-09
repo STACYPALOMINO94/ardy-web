@@ -11,16 +11,18 @@ import { IconoCategoria } from "./IconoCategoria";
  * a propósito, para que el grid 2 grandes + 4 pequeñas nunca quede con huecos.
  * Las 2 primeras del orden son las tarjetas grandes.
  *
- * Misma estructura que ProductCard: recuadro de foto arriba (sin overlay, foto
- * limpia) + contenido (título, contador, "Ver productos") debajo sobre blanco.
+ * Título, contador y "Ver productos" van DENTRO del recuadro, sobre la foto.
+ * Legibilidad: overlay muy sutil (máx 15% de opacidad) + text-shadow suave en el
+ * texto, en vez de un overlay oscuro fuerte — la foto se sigue viendo clara.
  *
  * Foto opcional por categoría: si existe public/img/categorias/<slug>.jpg se usa
- * en el recuadro; si no existe, se usa color sólido + ícono decorativo. Se
- * detecta en build time (Server Component), así que basta con dejar el archivo
- * ahí — no requiere tocar código.
+ * de fondo; si no existe, color sólido + ícono decorativo (sin overlay, ya es
+ * legible sobre color plano). Se detecta en build time (Server Component), así
+ * que basta con dejar el archivo ahí — no requiere tocar código.
  */
 const CLASES_TILE = ["bg-marino", "bg-oliva", "bg-marino-2", "bg-oliva-2", "bg-marino", "bg-oliva-2"];
 const DIR_IMAGENES_CATEGORIAS = join(process.cwd(), "public", "img", "categorias");
+const SOMBRA_TEXTO = "[text-shadow:0_1px_4px_rgba(0,0,0,.55)]";
 
 function rutaImagen(slug: string): string | null {
   return existsSync(join(DIR_IMAGENES_CATEGORIAS, `${slug}.jpg`)) ? `/img/categorias/${slug}.jpg` : null;
@@ -54,34 +56,41 @@ export function Mosaico() {
         <Link
           key={t.slug}
           href={t.href}
-          className={`group block rounded-2xl overflow-hidden border border-linea bg-white transition-transform hover:-translate-y-[3px] ${
-            t.grande ? "md:col-span-2" : ""
-          }`}
+          className={`group relative overflow-hidden rounded-2xl p-6 flex flex-col justify-between text-white transition-transform hover:-translate-y-[3px] ${
+            t.imagen ? "" : t.clase
+          } ${t.grande ? "md:col-span-2 h-[280px]" : "h-[168px]"}`}
         >
-          <div className={`relative w-full ${t.grande ? "h-[280px]" : "h-[168px]"} ${t.imagen ? "bg-white" : t.clase}`}>
-            {t.imagen ? (
-              // eslint-disable-next-line @next/next/no-img-element
+          {t.imagen && (
+            <>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={t.imagen}
-                alt={t.titulo}
+                alt=""
                 className={`absolute inset-0 w-full h-full object-cover ${
                   t.grande ? "object-[center_top]" : "object-center"
-                } transition-transform duration-300 group-hover:scale-[1.04]`}
+                } z-0 transition-transform duration-300 group-hover:scale-[1.04]`}
               />
-            ) : (
-              <IconoCategoria
-                categoria={t.titulo}
-                color="#ffffff"
-                sombra="rgba(0,0,0,.2)"
-                className="absolute inset-0 m-auto w-[46%] h-[46%]"
-              />
-            )}
+              {/* Overlay muy sutil (12%) solo de apoyo — la legibilidad la da el text-shadow */}
+              <div className="absolute inset-0 bg-marino-3/[.12] z-[1]" aria-hidden />
+            </>
+          )}
+          <div>
+            <h3 className={`text-[1.15rem] text-white relative z-[2] ${SOMBRA_TEXTO}`}>{t.titulo}</h3>
+            <p className={`text-[0.85rem] text-white/90 mt-1.5 relative z-[2] max-w-[26ch] ${SOMBRA_TEXTO}`}>
+              {t.texto}
+            </p>
           </div>
-          <div className="p-4">
-            <h3 className="text-[1.05rem] text-marino">{t.titulo}</h3>
-            <p className="text-[0.85rem] text-gris mt-1">{t.texto}</p>
-            <span className="text-[0.83rem] font-bold text-ambar mt-2.5 inline-block">Ver productos</span>
-          </div>
+          <span className={`text-[0.83rem] font-bold text-ambar-2 relative z-[2] mt-3.5 ${SOMBRA_TEXTO}`}>
+            Ver productos
+          </span>
+          {!t.imagen && (
+            <IconoCategoria
+              categoria={t.titulo}
+              color="#ffffff"
+              sombra="rgba(0,0,0,.2)"
+              className={`absolute -right-[18px] -bottom-[18px] opacity-20 z-[1] ${t.grande ? "w-[170px]" : "w-[120px]"}`}
+            />
+          )}
         </Link>
       ))}
     </div>
