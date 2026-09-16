@@ -1,17 +1,12 @@
 import type { Metadata } from "next";
-import { existsSync } from "fs";
-import { join } from "path";
 import Link from "next/link";
-import { Slider, type MediaSlide } from "@/components/home/Slider";
-import { Validador } from "@/components/home/Validador";
+import { Slider } from "@/components/home/Slider";
+import { BarraBusqueda } from "@/components/home/BarraBusqueda";
 import { Mosaico } from "@/components/home/Mosaico";
-import { SeccionCarrusel } from "@/components/home/SeccionCarrusel";
-import { Proceso } from "@/components/home/Proceso";
-import { Publicos } from "@/components/home/Publicos";
-import { Sourcing } from "@/components/home/Sourcing";
-import { ListaCotizacion } from "@/components/home/ListaCotizacion";
-import { FormularioCotizacion } from "@/components/home/FormularioCotizacion";
-import { getDestacados, getNuevos } from "@/lib/productos";
+import { TendenciasHome } from "@/components/home/TendenciasHome";
+import { SolucionesHome } from "@/components/home/SolucionesHome";
+import { PasosCompacto } from "@/components/home/PasosCompacto";
+import { CtaFinal } from "@/components/home/CtaFinal";
 
 export const metadata: Metadata = {
   // Título exacto de PROMPT.md — absoluto para no depender del template del layout raíz
@@ -21,64 +16,39 @@ export const metadata: Metadata = {
     "Importación aérea de merchandising de alto valor para eventos con fecha fija. Producto en blanco o marcado en Lima, entregado en 3 a 4 semanas puerta a puerta.",
 };
 
-const DIR_BANNER = join(process.cwd(), "public", "img", "banner");
-
-/**
- * Detecta en build time si hay video o foto propia para el slide N del banner
- * (public/img/banner/slide-N.mp4 o .jpg). Video tiene prioridad sobre foto si
- * ambos existen. Si no hay ninguno, Slider usa el ícono decorativo de siempre.
- */
-function mediaDelSlide(n: number): MediaSlide | null {
-  if (existsSync(join(DIR_BANNER, `slide-${n}.mp4`))) return { tipo: "video", src: `/img/banner/slide-${n}.mp4` };
-  if (existsSync(join(DIR_BANNER, `slide-${n}.jpg`))) return { tipo: "imagen", src: `/img/banner/slide-${n}.jpg` };
-  return null;
-}
-
 export default function Home() {
-  const destacados = getDestacados();
-  const nuevos = getNuevos();
-  const mediaBanner: Array<MediaSlide | null> = [1, 2, 3].map(mediaDelSlide);
-
   return (
-    <main>
+    <main className="w-full overflow-x-hidden text-marino">
       <h1 className="sr-only">Merchandising importado por vía aérea para eventos con fecha</h1>
-      <Slider mediaBanner={mediaBanner} />
-      <Validador />
+      <Slider />
 
-      <section className="mx-auto max-w-[1240px] px-5" style={{ paddingTop: 40 }}>
-        <div className="flex items-baseline justify-between gap-4 border-b-2 border-marino pb-2.5 mb-6">
-          <h2>Por dónde empezar</h2>
-          <Link href="/productos" className="text-[0.87rem] text-gris whitespace-nowrap hover:text-marino">
-            Ver todo el catálogo
-          </Link>
+      <section style={{ padding: "0 0 clamp(56px,7vw,88px)" }}>
+        <div className="mx-auto max-w-[1240px]" style={{ padding: "0 clamp(20px,4vw,60px)" }}>
+          <BarraBusqueda />
         </div>
-        <Mosaico />
       </section>
 
-      <SeccionCarrusel
-        titulo="Productos destacados"
-        paddingTop={64}
-        accion={
-          <Link href="/productos" className="text-[0.87rem] text-gris whitespace-nowrap hover:text-marino">
-            Ver todos
-          </Link>
-        }
-        productos={destacados}
-      />
+      <section id="categorias" style={{ padding: "0 0 clamp(56px,7vw,88px)" }}>
+        <div className="mx-auto max-w-[1240px]" style={{ padding: "0 clamp(20px,4vw,60px)" }}>
+          <div className="flex items-end justify-between gap-5 flex-wrap mb-8">
+            <div>
+              <p className="text-[11.5px] font-bold tracking-[.18em] text-oliva mb-2.5">EXPLORA NUESTRO CATÁLOGO</p>
+              <h2 className="text-marino font-extrabold tracking-[-0.02em]" style={{ fontSize: "clamp(28px,3.2vw,40px)" }}>
+                Categorías
+              </h2>
+            </div>
+            <Link href="/productos" className="text-[14.5px] font-semibold text-marino whitespace-nowrap">
+              Ver todas las categorías →
+            </Link>
+          </div>
+          <Mosaico />
+        </div>
+      </section>
 
-      <SeccionCarrusel
-        id="nuevos"
-        titulo="Productos nuevos"
-        paddingTop={64}
-        accion={<span className="text-[0.87rem] text-gris whitespace-nowrap">Actualizamos esta selección cada temporada</span>}
-        productos={nuevos}
-      />
-
-      <ListaCotizacion />
-      <Proceso />
-      <Publicos />
-      <Sourcing />
-      <FormularioCotizacion />
+      <TendenciasHome />
+      <SolucionesHome />
+      <PasosCompacto />
+      <CtaFinal />
     </main>
   );
 }

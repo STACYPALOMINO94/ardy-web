@@ -1,36 +1,29 @@
-import { existsSync } from "fs";
-import { join } from "path";
 import Link from "next/link";
 import { getCategorias } from "@/lib/productos";
 import { CATEGORIAS_MOSAICO_HOME } from "@/lib/categorias";
-import { IconoCategoria } from "./IconoCategoria";
 
 /**
  * Mosaico del Home: exactamente 6 categorías fijas (ver CATEGORIAS_MOSAICO_HOME),
  * en este orden — no se deriva dinámicamente de todas las categorías del catálogo,
- * a propósito, para que el grid 2 grandes + 4 pequeñas nunca quede con huecos.
- * Las 2 primeras del orden son las tarjetas grandes.
+ * a propósito, para que el grid de 2 tarjetas grandes + 4 pequeñas nunca quede
+ * con huecos. Las 2 primeras del orden son las tarjetas grandes.
  *
- * Título, contador y "Ver productos" van DENTRO del recuadro, arriba a la
- * izquierda, sobre la foto — sin overlay. Legibilidad de título y contador vía
- * text-shadow fuerte (0 1px 4px rgba(0,0,0,.8)), no oscureciendo la foto.
+ * Tarjeta horizontal: texto a la izquierda (título/contador/link), foto a la
+ * derecha en un recuadro redondeado — no es texto-sobre-foto.
  *
- * En las 2 tarjetas grandes la foto usa object-position "bottom" (centrado,
- * pegado abajo) para que el producto se vea completo y el texto arriba quede
- * libre; en las pequeñas, "center".
- *
- * Foto opcional por categoría: si existe public/img/categorias/<slug>.jpg se usa
- * de fondo; si no existe, color sólido + ícono decorativo. Se detecta en build
- * time (Server Component), así que basta con dejar el archivo ahí — no
- * requiere tocar código.
+ * Foto por categoría: son los assets aprobados del Handoff (image-slots
+ * ardy-cat-*, exportados a public/img/home/cat-<slug>.webp) — producto recortado
+ * sobre fondo blanco. Las fotos antiguas de public/img/categorias/ (producto
+ * sobre fondo azul) NO pertenecen a este diseño y ya no se usan aquí.
  */
-const CLASES_TILE = ["bg-marino", "bg-oliva", "bg-marino-2", "bg-oliva-2", "bg-marino", "bg-oliva-2"];
-const DIR_IMAGENES_CATEGORIAS = join(process.cwd(), "public", "img", "categorias");
-const SOMBRA_TEXTO = "[text-shadow:0_1px_4px_rgba(0,0,0,.8)]";
-
-function rutaImagen(slug: string): string | null {
-  return existsSync(join(DIR_IMAGENES_CATEGORIAS, `${slug}.jpg`)) ? `/img/categorias/${slug}.jpg` : null;
-}
+const IMAGENES_CATEGORIAS: Record<string, { src: string; alt: string }> = {
+  tecnologia: { src: "/img/home/cat-tecnologia.webp", alt: "Cargador inalámbrico de bambú" },
+  escritura: { src: "/img/home/cat-escritura.webp", alt: "Lapiceros premium" },
+  "llaveros-accesorios": { src: "/img/home/cat-llaveros-accesorios.webp", alt: "Llaveros corporativos" },
+  "bolsos-organizadores": { src: "/img/home/cat-bolsos-organizadores.webp", alt: "Organizador de viaje" },
+  "deporte-fitness": { src: "/img/home/cat-deporte-fitness.webp", alt: "Tomatodo deportivo" },
+  mascotas: { src: "/img/home/cat-mascotas.webp", alt: "Accesorio para mascotas" },
+};
 
 export function Mosaico() {
   const categorias = getCategorias();
@@ -48,49 +41,73 @@ export function Mosaico() {
         cantidad > 0
           ? `${cantidad} ${cantidad === 1 ? "modelo disponible" : "modelos disponibles"}.`
           : "Próximamente en el catálogo.",
-      clase: CLASES_TILE[i % CLASES_TILE.length],
       grande: i < 2,
-      imagen: rutaImagen(slug),
+      imagen: IMAGENES_CATEGORIAS[slug] ?? null,
     };
   });
 
+  const grandes = tiles.filter((t) => t.grande);
+  const pequenas = tiles.filter((t) => !t.grande);
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-      {tiles.map((t) => (
-        <Link
-          key={t.slug}
-          href={t.href}
-          className={`group relative overflow-hidden rounded-2xl p-6 flex flex-col justify-between text-white transition-transform hover:-translate-y-[3px] ${
-            t.imagen ? "" : t.clase
-          } ${t.grande ? "md:col-span-2 h-[280px]" : "h-[168px]"}`}
-        >
-          {t.imagen && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={t.imagen}
-              alt=""
-              className={`absolute inset-0 w-full h-full object-cover ${
-                t.grande ? "object-bottom" : "object-center"
-              } z-0 transition-transform duration-300 group-hover:scale-[1.04]`}
-            />
-          )}
-          <div>
-            <h3 className={`text-[1.15rem] text-white relative z-[2] ${SOMBRA_TEXTO}`}>{t.titulo}</h3>
-            <p className={`text-[0.85rem] text-white/90 mt-1.5 relative z-[2] max-w-[26ch] ${SOMBRA_TEXTO}`}>
-              {t.texto}
-            </p>
-          </div>
-          <span className="text-[0.83rem] font-bold text-ambar-2 relative z-[2] mt-3.5">Ver productos</span>
-          {!t.imagen && (
-            <IconoCategoria
-              categoria={t.titulo}
-              color="#ffffff"
-              sombra="rgba(0,0,0,.2)"
-              className={`absolute -right-[18px] -bottom-[18px] opacity-20 z-[1] ${t.grande ? "w-[170px]" : "w-[120px]"}`}
-            />
-          )}
-        </Link>
-      ))}
+    <div>
+      <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(380px,1fr))" }}>
+        {grandes.map((t) => (
+          <Tarjeta key={t.slug} tile={t} />
+        ))}
+      </div>
+      <div className="grid gap-6 mt-6" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(250px,1fr))" }}>
+        {pequenas.map((t) => (
+          <Tarjeta key={t.slug} tile={t} />
+        ))}
+      </div>
     </div>
+  );
+}
+
+interface Tile {
+  slug: string;
+  href: string;
+  titulo: string;
+  texto: string;
+  grande: boolean;
+  imagen: { src: string; alt: string } | null;
+}
+
+function Tarjeta({ tile: t }: { tile: Tile }) {
+  return (
+    <Link
+      href={t.href}
+      className={`group flex items-stretch bg-white border border-[#F0EDE5] rounded-2xl shadow-[0_2px_14px_rgba(22,40,60,.04)] hover:shadow-card-hover transition-shadow ${
+        t.grande ? "gap-5 p-[34px] min-h-[280px]" : "gap-4 p-[22px] min-h-[170px]"
+      }`}
+    >
+      <div className={`${t.grande ? "flex-[1_1_44%]" : "flex-[1_1_50%]"} min-w-0 flex flex-col justify-between`}>
+        <div>
+          <h3 className={`font-bold text-marino ${t.grande ? "text-2xl mb-2" : "text-base leading-tight mb-1.5"}`}>
+            {t.titulo}
+          </h3>
+          <p className={`text-gris ${t.grande ? "text-[14.5px]" : "text-[13px]"}`}>{t.texto}</p>
+        </div>
+        <span className={`font-semibold text-ambar ${t.grande ? "text-sm mt-6" : "text-[13px] mt-4"}`}>
+          Ver productos →
+        </span>
+      </div>
+      <div
+        className={`${
+          t.grande ? "flex-[1_1_52%] min-h-[200px] rounded-xl" : "flex-[1_1_46%] min-h-[110px] rounded-[10px]"
+        } min-w-0 overflow-hidden bg-fog relative`}
+      >
+        {t.imagen && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={t.imagen.src}
+            alt={t.imagen.alt}
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+          />
+        )}
+      </div>
+    </Link>
   );
 }

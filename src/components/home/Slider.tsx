@@ -2,36 +2,48 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { construirLinkWhatsApp } from "@/lib/config";
 
-export interface MediaSlide {
-  tipo: "video" | "imagen";
-  src: string;
-}
-
+/**
+ * Fotografía de cada slide: son los assets aprobados del Handoff (image-slot
+ * ardy-hero-1/2/3, exportados a public/img/home/hero-N.webp). Van con
+ * object-contain sobre fondo transparente, igual que fit="contain" en el
+ * diseño — no sustituir por fotos de escena con fondo de color.
+ */
 const SLIDES = [
   {
-    eyebrow: "IMPORTACIÓN AÉREA",
-    titulo: "Cuando el evento no puede esperar al próximo contenedor",
-    texto: "Tres semanas en blanco, cuatro con tu logo grabado. El contenedor tarda dos meses.",
-    cta: { href: "/productos", texto: "Ver catálogo" },
+    eyebrow: "IMPORTACIÓN · MERCHANDISING · SOLUCIONES PARA EMPRESAS",
+    titulo: "Merchandising corporativo que llega a tiempo",
+    texto:
+      "Importamos, personalizamos y entregamos soluciones de merchandising para tu marca, con la rapidez de la importación aérea.",
+    ctaPrincipal: { href: "/productos", texto: "Ver productos" },
+    mensajeWhatsApp: "Hola, quiero cotizar merchandising corporativo para mi empresa.",
+    imagen: "/img/home/hero-1.webp",
+    alt: "Set corporativo ARDY: botella térmica, taza, cuadernos, USB y lapicero",
   },
   {
-    eyebrow: "EN BLANCO O MARCADO",
-    titulo: "La marca se pone acá, no en China",
+    eyebrow: "SOURCING · PROVEEDORES · CHINA",
+    titulo: "Buscamos el producto que tu proyecto necesita",
     texto:
-      "Como el grabado es en Lima, tu arte se aprueba mientras el producto vuela. No frenas el pedido esperando el diseño.",
-    cta: { href: "/#publicos", texto: "Cómo trabajamos" },
+      "Si no está en el catálogo, lo encontramos. Trabajamos con proveedores verificados y te entregamos una propuesta clara.",
+    ctaPrincipal: { href: "/sourcing-importacion-china", texto: "Ver sourcing" },
+    mensajeWhatsApp: "Hola, necesito un producto que no veo en el catálogo. ¿Pueden ayudarme a buscarlo?",
+    imagen: "/img/home/hero-2.webp",
+    alt: "Búsqueda de productos: gorro, power bank, taza, llavero y tarjetas NFC",
   },
   {
-    eyebrow: "NUEVOS MODELOS",
-    titulo: "Lo que todavía no está en todos los catálogos",
+    eyebrow: "AGENCIAS · EVENTOS · CAMPAÑAS",
+    titulo: "Kits corporativos listos para tu activación",
     texto:
-      "Tarjetas NFC, sets metálicos, cables multipuerto. La razón por la que una agencia no repite el llavero del año pasado.",
-    cta: { href: "/#nuevos", texto: "Ver novedades" },
+      "Producción, personalización y entrega coordinada para ferias, lanzamientos y campañas con fechas ajustadas.",
+    ctaPrincipal: { href: "/soluciones-corporativas", texto: "Ver soluciones" },
+    mensajeWhatsApp: "Hola, quiero cotizar un kit corporativo para un evento.",
+    imagen: "/img/home/hero-3.webp",
+    alt: "Kit corporativo ARDY: caja, tomatodo y cuaderno",
   },
 ];
 
-export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | null> }) {
+export function Slider() {
   const [idx, setIdx] = useState(0);
   const [reduceMotion, setReduceMotion] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -47,57 +59,42 @@ export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | 
   useEffect(() => {
     if (reduceMotion) return;
     if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setIdx((v) => (v + 1) % SLIDES.length), 7000);
+    timerRef.current = setInterval(() => setIdx((v) => (v + 1) % SLIDES.length), 5000);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [idx, reduceMotion]);
 
   return (
-    <div className="relative overflow-hidden bg-marino-2">
-      <div
-        className="flex transition-transform duration-500 ease-out"
-        style={{ transform: `translateX(-${idx * 100}%)` }}
-      >
-        {SLIDES.map((s, i) => {
-          const media = mediaBanner[i] ?? null;
-          const activo = i === idx;
-          return (
-            <div key={s.titulo} className="relative min-w-full overflow-hidden">
-              {media &&
-                (media.tipo === "video" ? (
-                  <video
-                    className="absolute inset-0 w-full h-full object-cover z-0"
-                    src={media.src}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                  />
-                ) : (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img className="absolute inset-0 w-full h-full object-cover z-0" src={media.src} alt="" />
-                ))}
-              {media && (
-                <div
-                  className="absolute inset-0 z-[1] bg-gradient-to-r from-marino-3/85 via-marino-3/55 to-marino-3/15"
-                  aria-hidden
-                />
-              )}
-              <div className="relative z-[2] min-h-[320px] md:min-h-[440px] grid grid-cols-1 md:grid-cols-2 items-center gap-6 md:gap-10 px-5 py-10 md:py-16 max-w-[1240px] mx-auto">
+    <section className="bg-white" style={{ padding: "clamp(36px,5vw,64px) 0 clamp(28px,4vw,48px)" }}>
+      <div className="max-w-[1240px] mx-auto" style={{ padding: "0 clamp(20px,11vw,220px)" }}>
+        <div className="grid">
+          {SLIDES.map((s, i) => {
+            const activo = i === idx;
+            return (
+              <div
+                key={s.titulo}
+                className="[grid-area:1/1] grid items-center transition-[opacity,transform] duration-700 ease-out"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+                  gap: "clamp(28px,4vw,56px)",
+                  minHeight: "clamp(320px,34vw,440px)",
+                  opacity: activo ? 1 : 0,
+                  transform: activo ? "translateY(0)" : "translateY(14px)",
+                  pointerEvents: activo ? "auto" : "none",
+                }}
+              >
                 <div key={activo ? `activo-${idx}` : `idle-${i}`}>
-                  <span className="inline-block bg-ambar text-marino-3 text-[0.74rem] font-bold tracking-[0.06em] px-[11px] py-[5px] mb-3.5">
-                    {s.eyebrow}
-                  </span>
+                  <p className="mb-[22px] text-[11.5px] font-bold tracking-[.18em] text-oliva">{s.eyebrow}</p>
                   <h2
-                    className={`text-white text-[clamp(1.8rem,3.6vw,2.7rem)] leading-[1.08] ${
+                    className={`text-[clamp(2.125rem,4.4vw,3.5rem)] leading-[1.06] font-extrabold tracking-[-.02em] text-marino text-balance ${
                       activo && !reduceMotion ? "animate-[banner-titulo-in_600ms_ease-out_both]" : ""
                     }`}
                   >
                     {s.titulo}
                   </h2>
                   <p
-                    className={`text-[#B9C7D6] mt-3 text-[1.02rem] max-w-[44ch] ${
+                    className={`mt-[22px] max-w-[480px] text-[17px] leading-[1.6] text-gris text-pretty ${
                       activo && !reduceMotion
                         ? "animate-[banner-subtitulo-in_600ms_ease-out_both] [animation-delay:150ms]"
                         : ""
@@ -105,67 +102,56 @@ export function Slider({ mediaBanner = [] }: { mediaBanner?: Array<MediaSlide | 
                   >
                     {s.texto}
                   </p>
-                  <Link
-                    href={s.cta.href}
-                    className={`inline-block mt-[22px] bg-white text-marino px-[26px] py-[13px] font-bold text-[0.93rem] hover:bg-ambar-2 ${
+                  <div
+                    className={`flex gap-3.5 flex-wrap mt-8 ${
                       activo && !reduceMotion
                         ? "animate-[banner-boton-in_600ms_ease-out_both] [animation-delay:300ms]"
                         : ""
                     }`}
                   >
-                    {s.cta.texto}
-                  </Link>
-                </div>
-                {!media && (
-                  <div className="flex justify-center items-center min-h-[150px] md:min-h-[230px] order-first md:order-none">
-                    <SlideArt seed={s.titulo.length} />
+                    <Link
+                      href={s.ctaPrincipal.href}
+                      className="bg-marino text-white font-bold text-[15px] px-7 py-[15px] rounded-[8px] hover:bg-marino-press"
+                    >
+                      {s.ctaPrincipal.texto}
+                    </Link>
+                    <a
+                      href={construirLinkWhatsApp(s.mensajeWhatsApp)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border border-marino text-marino font-semibold text-[15px] px-7 py-3.5 rounded-[8px] hover:bg-marino hover:text-white"
+                    >
+                      Cotizar por WhatsApp
+                    </a>
                   </div>
-                )}
+                </div>
+                <div className="w-full h-[clamp(300px,32vw,420px)] overflow-hidden flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className="w-full h-full object-contain"
+                    src={s.imagen}
+                    alt={s.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchPriority={i === 0 ? "high" : "auto"}
+                  />
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      <button
-        className="absolute top-1/2 -translate-y-1/2 left-0 bg-white/[.13] text-white w-11 h-[60px] text-[1.3rem] z-[5] hover:bg-white/[.28]"
-        aria-label="Anterior"
-        onClick={() => ir(idx - 1)}
-      >
-        ‹
-      </button>
-      <button
-        className="absolute top-1/2 -translate-y-1/2 right-0 bg-white/[.13] text-white w-11 h-[60px] text-[1.3rem] z-[5] hover:bg-white/[.28]"
-        aria-label="Siguiente"
-        onClick={() => ir(idx + 1)}
-      >
-        ›
-      </button>
-      <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-[5]">
-        {SLIDES.map((s, i) => (
-          <button
-            key={s.titulo}
-            className={`h-[9px] rounded-full transition-all ${
-              i === idx ? "bg-ambar-2 w-[26px]" : "bg-white/[.35] w-[9px]"
-            }`}
-            aria-current={i === idx}
-            aria-label={`Ir al banner ${i + 1}`}
-            onClick={() => ir(i)}
-          />
-        ))}
+        <div className="flex gap-2 justify-center mt-9">
+          {SLIDES.map((s, i) => (
+            <button
+              key={s.titulo}
+              className={`h-2 rounded-full transition-all ${i === idx ? "bg-ambar w-[26px]" : "bg-[#D8D3C6] w-2"}`}
+              aria-current={i === idx}
+              aria-label={`Ir al banner ${i + 1}`}
+              onClick={() => ir(i)}
+            />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
-
-/** Figura abstracta de relleno, en lo que hay fotografía real de producto en el banner. */
-function SlideArt({ seed }: { seed: number }) {
-  const color = seed % 2 === 0 ? "var(--color-ambar-2)" : "#fff";
-  return (
-    <svg viewBox="0 0 100 100" className="w-[180px] md:w-[280px]" aria-hidden>
-      <circle cx="50" cy="50" r="34" fill="none" stroke={color} strokeWidth="3" opacity="0.5" />
-      <path d="M50 8 L84 30 V70 L50 92 L16 70 V30 Z" fill="none" stroke={color} strokeWidth="3" />
-      <circle cx="50" cy="50" r="10" fill={color} />
-    </svg>
+    </section>
   );
 }

@@ -1,69 +1,108 @@
 @import "tailwindcss";
 
 /*
-  Escala de espaciado del proyecto: 8, 16, 24, 40, 64, 88px.
-  Con el spacing por defecto de Tailwind (1 unidad = 4px) equivale a:
-  8px=2  16px=4  24px=6  40px=10  64px=16  88px=22
-  No usar valores fuera de esta escala.
+  Sistema de diseño (rediseño 2026, ver /diseños): paleta de marca sin cambios
+  (marino/ambar/oliva = navy/gold/olive del sistema exportado de Claude Design),
+  con tonos intermedios nuevos para superficies/bordes/texto, más esquinas
+  redondeadas y sombras suaves — el sitio deja de ser de esquina recta.
+
+  La escala de espaciado ya no está limitada a 8/16/24/40/64/88px: se adopta la
+  escala más fina del sistema nuevo (4/8/12/16/24/32/48/64/96/128), que además
+  coincide con la escala por defecto de Tailwind (1 unidad = 4px), así que se
+  usan las utilidades estándar (p-1, p-2, p-3, p-4, p-6, p-8, p-12, p-16...)
+  sin necesidad de tokens de espaciado propios.
 */
 
 @theme {
   --color-marino: #16283c;
   --color-marino-2: #1f3854;
   --color-marino-3: #0d1926;
+  --color-marino-press: #0e1b29;
+  --color-marino-70: #5a6b7b;
+  --color-marino-40: #a2adb7;
+  --color-marino-12: #e3e7ea;
+  --color-marino-06: #f1f3f5;
   --color-oliva: #6b7a4f;
   --color-oliva-2: #5a6842;
+  --color-oliva-12: #eef0e8;
   --color-ambar: #b8842a;
   --color-ambar-2: #e3b65c;
+  --color-ambar-accent: #a5751f;
+  --color-ambar-12: #f7efe0;
   --color-crema: #f4efe2;
   --color-crema-2: #fbf8f1;
+  /* Único fondo alternativo de sección aprobado en los diseños nuevos — no usar otros tonos crema/beige. */
+  --color-sand: #fffdf9;
+  --color-fog: #f7f7f5;
   --color-tinta: #1b1b18;
-  --color-gris: #6c6a61;
+  --color-gris: #6b6b6b;
+  --color-gris-light: #8e8e8e;
   --color-linea: #ded6c4;
   --color-linea-2: #c9bea5;
+  --color-linea-soft: #f0ede5;
+  --color-linea-fuerte: #e2ded2;
   --color-ok: #3e6b41;
   --color-alerta: #8e3b2e;
 
-  --font-sans: "Helvetica Neue", Helvetica, -apple-system, Arial, sans-serif;
-}
+  --font-sans: var(--font-manrope), "Helvetica Neue", Helvetica, -apple-system, Arial, sans-serif;
 
-html {
-  scroll-behavior: smooth;
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-hairline: 0 1px 2px rgba(22, 40, 60, 0.04);
+  --shadow-card: 0 2px 10px rgba(22, 40, 60, 0.05);
+  --shadow-card-hover: 0 6px 22px rgba(22, 40, 60, 0.08);
+  --shadow-overlay: 0 14px 40px rgba(22, 40, 60, 0.12);
 }
 
 /*
-  Fondo base del sitio: blanco puro. --crema/--crema-2 quedan reservados para
-  secciones puntuales de contraste (franjas alternas, bloques), nunca como
-  fondo general de página.
+  Tipografía base dentro de @layer base a propósito: son selectores de elemento
+  (h1..h4) y, fuera de una capa, CSS plano gana contra CUALQUIER utilidad de
+  Tailwind — pisaba text-2xl, text-[19px], text-[clamp(...)] en todo el sitio y
+  encogía los títulos respecto al diseño aprobado. Dentro de @layer base solo
+  actúan como valor por defecto y cualquier utilidad las sobreescribe.
 */
-body {
-  background: #ffffff;
-  color: var(--color-tinta);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
-}
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
 
-h1,
-h2,
-h3,
-h4 {
-  line-height: 1.12;
-  letter-spacing: -0.025em;
-  font-weight: 700;
-}
+  /*
+    Fondo base del sitio: blanco puro. --crema/--crema-2 quedan reservados para
+    secciones puntuales de contraste (franjas alternas, bloques), nunca como
+    fondo general de página.
+  */
+  body {
+    background: #ffffff;
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1 {
-  font-size: clamp(1.9rem, 4.2vw, 3.1rem);
-}
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+  }
 
-h2 {
-  font-size: clamp(1.35rem, 2.4vw, 1.85rem);
-}
+  h1 {
+    font-size: clamp(1.9rem, 4.2vw, 3.1rem);
+  }
 
-h3 {
-  font-size: 1rem;
-  letter-spacing: -0.01em;
-  font-weight: 600;
+  h2 {
+    font-size: clamp(1.35rem, 2.4vw, 1.85rem);
+  }
+
+  h3 {
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
 }
 
 .sr-only {
