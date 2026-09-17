@@ -29,6 +29,8 @@ export interface Producto {
   areaMarcado: string;
   colores: string[];
   tallas: string[];
+  /** Opcional: formatos de presentación del producto (ej. "Estuche individual", "Caja x12"). No todos los productos lo tienen cargado todavía. */
+  presentaciones?: string[];
   disponibilidad: string;
   permisoMtc: boolean;
   esNovedad: boolean;

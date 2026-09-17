@@ -62,6 +62,22 @@ export function getPrecioDesde(producto: Producto): number | null {
   return null;
 }
 
+const PLACEHOLDERS_DATO_FALTANTE = new Set(["[sin_dato]", "n/a", "undefined", "null", "-", "—"]);
+
+/**
+ * Un campo público sin dato real nunca se renderiza (ni etiqueta, ni valor,
+ * ni fila, ni tarjeta) — el pipeline (procesar-catalogo.mjs) puede dejar
+ * "[SIN_DATO]" como valor real en productos.ts cuando el CSV de origen no
+ * traía el campo; esto detecta ese y otros placeholders equivalentes para
+ * que la UI los trate como ausentes, sin tocar el dato guardado.
+ */
+export function datoValido(valor: unknown): valor is string {
+  if (typeof valor !== "string") return false;
+  const limpio = valor.trim();
+  if (!limpio) return false;
+  return !PLACEHOLDERS_DATO_FALTANTE.has(limpio.toLowerCase());
+}
+
 export function getProductoPorSlug(slug: string): Producto | undefined {
   return productos.find((p) => p.slug === slug);
 }
