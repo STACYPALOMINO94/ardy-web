@@ -3,14 +3,15 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { Producto } from "@/data/productos";
-import { datoValido, formatPrecio, getPrecioDesde, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
+import { datoValido, formatPrecio, getPrecioDesdeImportacion, getPrecioDesdeNacionalizado, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
 import { EN_BLANCO } from "@/lib/plazos";
 import { construirLinkWhatsApp } from "@/lib/config";
 import { GaleriaProducto } from "./GaleriaProducto";
 import { IconoCategoria } from "@/components/home/IconoCategoria";
 
-const CANTIDADES = [100, 300, 500, 1000] as const;
+const CANTIDADES_IMP = [100, 500, 1000] as const;
+const CANTIDADES_NAC = [50, 100, 500] as const;
 
 function formatearTecnica(t: string): string {
   const s = t.toLowerCase();
@@ -20,31 +21,52 @@ function formatearTecnica(t: string): string {
 export function FichaProducto({ producto }: { producto: Producto }) {
   const [color, setColor] = useState(producto.colores[0] ?? "");
   const [presentacion, setPresentacion] = useState(producto.presentaciones?.[0] ?? "");
-  const [mostrarPrecios, setMostrarPrecios] = useState(false);
 
-  const cantidadesDisponibles = CANTIDADES.filter((c) => c >= producto.moq && producto.precios[c] > 0);
-  const hayPrecio = cantidadesDisponibles.length > 0;
-  const precioDesde = getPrecioDesde(producto);
-  const [cantidad, setCantidad] = useState<number>(cantidadesDisponibles[0] ?? producto.moq);
+  // Estado por modalidad — importación
+  const cantImpDisp = CANTIDADES_IMP.filter((c) => {
+    const v = producto.modalidades.importacion?.precios[c];
+    return v !== null && v !== undefined && v > 0;
+  });
+  const [cantImp, setCantImp] = useState<number>(cantImpDisp[0] ?? producto.moq);
+  const precioDesdeImp = getPrecioDesdeImportacion(producto);
+  const precioUnitImp = producto.modalidades.importacion?.precios[cantImp as (typeof CANTIDADES_IMP)[number]] ?? null;
+  const precioTotalImp = precioUnitImp !== null ? precioUnitImp * cantImp : null;
 
-  const precioUnitario = hayPrecio ? producto.precios[cantidad as (typeof CANTIDADES)[number]] : 0;
-  const precioTotal = precioUnitario * cantidad;
+  // Estado por modalidad — nacionalizado
+  const cantNacDisp = CANTIDADES_NAC.filter((c) => {
+    const v = producto.modalidades.nacionalizado?.precios[c];
+    return v !== null && v !== undefined && v > 0;
+  });
+  const [cantNac, setCantNac] = useState<number>(cantNacDisp[0] ?? 50);
+  const precioDesdeNac = getPrecioDesdeNacionalizado(producto);
+  const precioUnitNac = producto.modalidades.nacionalizado?.precios[cantNac as (typeof CANTIDADES_NAC)[number]] ?? null;
+  const precioTotalNac = precioUnitNac !== null ? precioUnitNac * cantNac : null;
 
   const bajoProduccion = producto.disponibilidad === "Bajo producción";
 
-  const mensajeWhatsApp = useMemo(() => {
-    const partes = [`Hola, quiero cotizar: ${producto.nombre}.`];
-    if (hayPrecio) {
-      partes.push(
-        `Cantidad: ${cantidad} unidades (S/ ${precioUnitario.toFixed(2)} c/u, total ${formatPrecio(precioTotal)}).`
-      );
+  const mensajeImp = useMemo(() => {
+    const partes = [`Hola, quiero cotizar (importación): ${producto.nombre}.`];
+    if (precioUnitImp !== null) {
+      partes.push(`Cantidad: ${cantImp} unidades (S/ ${precioUnitImp.toFixed(2)} c/u, total ${formatPrecio(precioTotalImp!)}).`);
     } else {
-      partes.push(`Cantidad estimada: ${cantidad} unidades. Necesito precio, el catálogo no lo tiene cargado aún.`);
+      partes.push(`Cantidad estimada: ${cantImp} unidades. Necesito precio de importación.`);
     }
     if (color) partes.push(`Color: ${color}.`);
     if (presentacion) partes.push(`Presentación: ${presentacion}.`);
     return partes.join(" ");
-  }, [producto.nombre, cantidad, precioUnitario, precioTotal, hayPrecio, color, presentacion]);
+  }, [producto.nombre, cantImp, precioUnitImp, precioTotalImp, color, presentacion]);
+
+  const mensajeNac = useMemo(() => {
+    const partes = [`Hola, quiero cotizar (nacionalizado): ${producto.nombre}.`];
+    if (precioUnitNac !== null) {
+      partes.push(`Cantidad: ${cantNac} unidades (S/ ${precioUnitNac.toFixed(2)} c/u, total ${formatPrecio(precioTotalNac!)}).`);
+    } else {
+      partes.push(`Cantidad estimada: ${cantNac} unidades. Necesito precio nacionalizado.`);
+    }
+    if (color) partes.push(`Color: ${color}.`);
+    if (presentacion) partes.push(`Presentación: ${presentacion}.`);
+    return partes.join(" ");
+  }, [producto.nombre, cantNac, precioUnitNac, precioTotalNac, color, presentacion]);
 
   const mensajeInfo = `Hola, quiero más información sobre: ${producto.nombre}.`;
 
@@ -52,6 +74,9 @@ export function FichaProducto({ producto }: { producto: Producto }) {
   const relacionados = getProductosPorCategoriaSlug(categoriaSlug)
     .filter((p) => p.slug !== producto.slug)
     .slice(0, 5);
+
+  const tieneImportacion = producto.modalidades.importacion !== null;
+  const tieneNacionalizado = producto.modalidades.nacionalizado !== null;
 
   return (
     <div>
@@ -115,76 +140,49 @@ export function FichaProducto({ producto }: { producto: Producto }) {
             </div>
           )}
 
-          <div className="flex flex-col gap-3 mt-1">
-            <span className="text-[15px] font-semibold text-marino">Cantidad mínima de compra:</span>
-            {hayPrecio ? (
-              <div className="grid grid-cols-4 gap-3">
-                {cantidadesDisponibles.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    aria-pressed={c === cantidad}
-                    onClick={() => setCantidad(c)}
-                    className={`h-12 rounded-sm text-[15px] font-bold border ${
-                      c === cantidad ? "bg-marino text-white border-marino" : "bg-white text-marino border-linea-2"
-                    }`}
-                  >
-                    {c.toLocaleString("es-PE")}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <p className="text-[15px] text-marino font-semibold">
-                Mínimo {producto.moq} unidades. Precio a confirmar por proyecto.
-              </p>
-            )}
-            <span className="text-[0.82rem] text-gris">Puedes combinar colores según disponibilidad.</span>
-          </div>
+          {/* ── IMPORTACIÓN (siempre primero si existe) ────────────────────── */}
+          {tieneImportacion && (
+            <BloqueModalidad
+              etiqueta="Importación"
+              cantidades={cantImpDisp}
+              cantidadActual={cantImp}
+              onCantidad={setCantImp}
+              precioDesde={precioDesdeImp}
+              precioUnitario={precioUnitImp}
+              mensajeCotizar={mensajeImp}
+              moq={producto.moq}
+            />
+          )}
 
-          {precioDesde !== null && (
-            <div className="flex flex-col gap-2 py-4 border-t border-linea-soft">
-              <span className="text-marino text-[1.35rem] font-extrabold tracking-[-0.01em]">
-                Desde {formatPrecio(precioDesde)} <span className="text-[0.9rem] font-normal text-gris">/ unidad</span>
-              </span>
-              {cantidadesDisponibles.length > 1 && (
-                <button
-                  type="button"
-                  onClick={() => setMostrarPrecios((v) => !v)}
-                  aria-expanded={mostrarPrecios}
-                  className="self-start text-[0.82rem] font-semibold text-ambar-accent hover:underline"
-                >
-                  {mostrarPrecios ? "Ocultar precios −" : "Ver precios por cantidad +"}
-                </button>
-              )}
-              {mostrarPrecios && cantidadesDisponibles.length > 1 && (
-                <div className="flex flex-col mt-1">
-                  {cantidadesDisponibles.map((c) => (
-                    <div key={c} className="flex justify-between gap-4 py-2 border-b border-linea-soft text-[15px]">
-                      <span className="text-gris">
-                        {c === cantidadesDisponibles[cantidadesDisponibles.length - 1]
-                          ? `Desde ${c.toLocaleString("es-PE")} unidades`
-                          : `${c.toLocaleString("es-PE")} unidades`}
-                      </span>
-                      <span className="font-semibold text-marino">{formatPrecio(producto.precios[c])}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <span className="text-[0.8rem] text-gris">
-                Precio referencial sin IGV según cantidad y personalización.
-              </span>
+          {/* ── NACIONALIZADO (después de importación si coexiste) ──────────── */}
+          {tieneNacionalizado && (
+            <BloqueModalidad
+              etiqueta="Nacionalizado"
+              cantidades={cantNacDisp}
+              cantidadActual={cantNac}
+              onCantidad={setCantNac}
+              precioDesde={precioDesdeNac}
+              precioUnitario={precioUnitNac}
+              mensajeCotizar={mensajeNac}
+              moq={50}
+            />
+          )}
+
+          {/* Botón de información general si no hay ninguna modalidad con precio */}
+          {!tieneImportacion && !tieneNacionalizado && (
+            <div className="flex flex-col gap-3 mt-2">
+              <a
+                href={construirLinkWhatsApp(mensajeInfo)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center h-14 rounded-sm bg-ambar text-white font-bold text-[17px] hover:bg-ambar-accent"
+              >
+                Cotizar por WhatsApp
+              </a>
             </div>
           )}
 
-          <div className="flex flex-col gap-3 mt-2">
-            <a
-              href={construirLinkWhatsApp(mensajeWhatsApp)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center h-14 rounded-sm bg-ambar text-white font-bold text-[17px] hover:bg-ambar-accent"
-            >
-              Cotizar por WhatsApp
-            </a>
+          <div className="flex flex-col gap-2 mt-1">
             <a
               href={construirLinkWhatsApp(mensajeInfo)}
               target="_blank"
@@ -300,6 +298,118 @@ export function FichaProducto({ producto }: { producto: Producto }) {
           Cotizar por WhatsApp
         </a>
       </section>
+    </div>
+  );
+}
+
+interface BloqueModalidadProps {
+  etiqueta: "Importación" | "Nacionalizado";
+  cantidades: number[];
+  cantidadActual: number;
+  onCantidad: (c: number) => void;
+  precioDesde: number | null;
+  precioUnitario: number | null;
+  mensajeCotizar: string;
+  moq: number;
+}
+
+function BloqueModalidad({
+  etiqueta,
+  cantidades,
+  cantidadActual,
+  onCantidad,
+  precioDesde,
+  precioUnitario,
+  mensajeCotizar,
+  moq,
+}: BloqueModalidadProps) {
+  const [mostrarPrecios, setMostrarPrecios] = useState(false);
+  const hayPrecio = cantidades.length > 0 && precioDesde !== null;
+
+  return (
+    <div className="flex flex-col gap-3 pt-4 border-t border-linea-soft">
+      <span className="text-[0.7rem] font-bold tracking-[0.12em] uppercase text-oliva">{etiqueta}</span>
+
+      {/* Selector de cantidades */}
+      <div className="flex flex-col gap-2">
+        <span className="text-[15px] font-semibold text-marino">Cantidad mínima de compra:</span>
+        {hayPrecio ? (
+          <div className={`grid gap-3 ${cantidades.length <= 3 ? "grid-cols-3" : "grid-cols-4"}`}>
+            {cantidades.map((c) => (
+              <button
+                key={c}
+                type="button"
+                aria-pressed={c === cantidadActual}
+                onClick={() => onCantidad(c)}
+                className={`h-12 rounded-sm text-[15px] font-bold border ${
+                  c === cantidadActual ? "bg-marino text-white border-marino" : "bg-white text-marino border-linea-2"
+                }`}
+              >
+                {c.toLocaleString("es-PE")}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <p className="text-[15px] text-marino font-semibold">
+            Mínimo {moq} unidades. Precio a confirmar por proyecto.
+          </p>
+        )}
+        <span className="text-[0.82rem] text-gris">Puedes combinar colores según disponibilidad.</span>
+      </div>
+
+      {/* Precio desde o Cotizar */}
+      {hayPrecio ? (
+        <div className="flex flex-col gap-2 py-3 bg-marino-06 rounded-md px-4">
+          <span className="text-marino text-[1.25rem] font-extrabold tracking-[-0.01em]">
+            Desde {formatPrecio(precioDesde!)} <span className="text-[0.85rem] font-normal text-gris">/ unidad</span>
+          </span>
+          {cantidades.length > 1 && (
+            <button
+              type="button"
+              onClick={() => setMostrarPrecios((v) => !v)}
+              aria-expanded={mostrarPrecios}
+              className="self-start text-[0.82rem] font-semibold text-ambar-accent hover:underline"
+            >
+              {mostrarPrecios ? "Ocultar precios −" : "Ver precios por cantidad +"}
+            </button>
+          )}
+          {mostrarPrecios && cantidades.length > 1 && (
+            <div className="flex flex-col mt-1">
+              {cantidades.map((c) => (
+                <div key={c} className="flex justify-between gap-4 py-2 border-b border-linea-soft text-[15px]">
+                  <span className="text-gris">
+                    {c === cantidades[cantidades.length - 1]
+                      ? `Desde ${c.toLocaleString("es-PE")} unidades`
+                      : `${c.toLocaleString("es-PE")} unidades`}
+                  </span>
+                  {precioUnitario !== null && (
+                    <span className="font-semibold text-marino">{formatPrecio(precioUnitario)}</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+          <span className="text-[0.8rem] text-gris">Precio referencial sin IGV según cantidad y personalización.</span>
+        </div>
+      ) : (
+        /* Sin precio → "Cotizar" destacado (decisión 5) */
+        <div className="flex flex-col gap-1 py-3 bg-marino-06 rounded-md px-4">
+          <span className="text-marino text-[1.1rem] font-extrabold">Cotizar</span>
+          <span className="text-[0.82rem] text-gris">
+            El precio de {etiqueta.toLowerCase()} está disponible bajo cotización. Escríbenos por WhatsApp.
+          </span>
+        </div>
+      )}
+
+      {/* Botón Cotizar por WhatsApp para esta modalidad */}
+      <a
+        href={construirLinkWhatsApp(mensajeCotizar)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center h-12 rounded-sm bg-ambar text-white font-bold text-[16px] hover:bg-ambar-accent"
+      >
+        Cotizar {etiqueta} por WhatsApp
+      </a>
     </div>
   );
 }

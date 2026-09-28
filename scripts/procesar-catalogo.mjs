@@ -371,6 +371,41 @@ async function procesarProducto(pOriginal) {
 }
 
 // ---------------------------------------------------------------------------
+// Fuente publicada por el Publisher de ARDY Operations
+// ---------------------------------------------------------------------------
+//
+// Si el JSON trae { formato: "ardy-operations/producto-web", productos: [...] }, cada producto
+// YA viene en el contrato Producto (contenido aprobado, slug definitivo, URLs Cloudinary
+// definitivas). Se fusiona por slug tal cual: sin regenerar slug, descripciones, SEO ni ALT,
+// y sin re-subir fotos. El id lo sigue asignando mergeProductos. Cualquier otro JSON se
+// procesa exactamente como antes.
+
+const FORMATO_FUENTE_PUBLICADA = "ardy-operations/producto-web";
+
+const CLAVES_PRODUCTO_V2_REQUERIDAS = [
+  "slug", "slugsAnteriores", "nombre", "categoria", "descripcionCorta", "descripcionLarga", "moq", "modalidades",
+  "material", "tecnicas", "areaMarcado", "colores", "tallas", "disponibilidad", "permisoMtc",
+  "esNovedad", "destacado", "fotos", "seoTitle", "seoMeta", "palabraClave", "fechaActualizacion",
+];
+// "presentaciones" es opcional — se incluye solo si el producto la trae.
+const CLAVE_OPCIONAL = "presentaciones";
+
+function productoPublicado(p) {
+  const faltan = CLAVES_PRODUCTO_V2_REQUERIDAS.filter((k) => !(k in p));
+  const clavesPermitidas = [...CLAVES_PRODUCTO_V2_REQUERIDAS, CLAVE_OPCIONAL];
+  const sobran = Object.keys(p).filter((k) => !clavesPermitidas.includes(k));
+  if (faltan.length || sobran.length || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.slug || "")) {
+    throw new Error(
+      `Fuente publicada inválida (${p.slug}): faltan [${faltan.join(", ")}], sobran [${sobran.join(", ")}].`
+    );
+  }
+  const resultado = Object.fromEntries(CLAVES_PRODUCTO_V2_REQUERIDAS.map((k) => [k, p[k]]));
+  if (CLAVE_OPCIONAL in p) resultado[CLAVE_OPCIONAL] = p[CLAVE_OPCIONAL];
+  return resultado;
+}
+
+
+// ---------------------------------------------------------------------------
 // Merge: lee productos.ts existente y combina por slug
 // ---------------------------------------------------------------------------
 
@@ -384,27 +419,47 @@ const ENCABEZADO_POR_DEFECTO = `/**
  * NUNCA EDITAR A MANO en producción.
  */
 
+export interface PreciosImportacion {
+  100: number | null;
+  500: number | null;
+  1000: number | null;
+}
+
+export interface PreciosNacionalizado {
+  50: number | null;
+  100: number | null;
+  500: number | null;
+}
+
+export interface ModalidadImportacion {
+  precios: PreciosImportacion;
+}
+
+export interface ModalidadNacionalizado {
+  precios: PreciosNacionalizado;
+}
+
 export interface Producto {
   id: number;
   slug: string;
+  slugsAnteriores: string[];
   nombre: string;
   categoria: string;
   descripcionCorta: string;
   descripcionLarga: string;
   moq: number;
-  precios: {
-    100: number;
-    300: number;
-    500: number;
-    1000: number;
+  modalidades: {
+    importacion: ModalidadImportacion | null;
+    nacionalizado: ModalidadNacionalizado | null;
   };
   material: string;
   tecnicas: string[];
   areaMarcado: string;
   colores: string[];
   tallas: string[];
+  presentaciones?: string[];
   disponibilidad: string;
-  permisoMtc: boolean;
+  permisoMtc: "Sí" | "No" | "Pendiente de validación" | null;
   esNovedad: boolean;
   destacado: boolean;
   fotos: Array<{ url: string; alt: string }>;
@@ -415,6 +470,7 @@ export interface Producto {
 }
 
 `;
+
 
 // Coincide con "export const productos = [...]" y también con la variante tipada
 // "export const productos: Producto[] = [...]" que usa el archivo real del proyecto.
@@ -545,6 +601,7 @@ const resolvedInput = resolve(inputPath);
 const raw = readFileSync(resolvedInput, "utf-8");
 const data = JSON.parse(raw);
 
+const esFuentePublicada = !Array.isArray(data) && data.formato === FORMATO_FUENTE_PUBLICADA;
 const productosRaw = data.productos || data;
 const productosArray = Array.isArray(productosRaw) ? productosRaw : [productosRaw];
 
@@ -554,7 +611,7 @@ console.log(`\nProcesando ${productosArray.length} producto(s) desde ${basename(
 // con decenas de subidas en paralelo en una sola corrida.
 const nuevos = [];
 for (const p of productosArray) {
-  nuevos.push(await procesarProducto(p));
+  nuevos.push(esFuentePublicada ? productoPublicado(p) : await procesarProducto(p));
 }
 
 // Merge con existentes (preservando el encabezado/interfaz del archivo actual)
@@ -567,6 +624,55 @@ const tsContent = encabezado + generarTS(merged);
 writeFileSync(OUTPUT_PATH, tsContent, "utf-8");
 console.log(`\nTotal en productos.ts: ${merged.length} producto(s)`);
 
+// ---------------------------------------------------------------------------
+// Decisión 18 — Redirects 301 desde slugsAnteriores → slug actual en vercel.json
+// ---------------------------------------------------------------------------
+const VERCEL_JSON_PATH = resolve(ROOT, "vercel.json");
+
+function actualizarRedirects(productosFinales) {
+  // Leer vercel.json existente (o crear estructura mínima)
+  let vercelConfig = { redirects: [] };
+  if (existsSync(VERCEL_JSON_PATH)) {
+    try {
+      vercelConfig = JSON.parse(readFileSync(VERCEL_JSON_PATH, "utf-8"));
+    } catch {
+      console.warn("No se pudo parsear vercel.json, se recrea.");
+    }
+  }
+  if (!Array.isArray(vercelConfig.redirects)) vercelConfig.redirects = [];
+
+  // Construir mapa source → destination de los redirects existentes (preservar)
+  const mapaRedirects = new Map();
+  for (const r of vercelConfig.redirects) {
+    mapaRedirects.set(r.source, r);
+  }
+
+  // Agregar/actualizar redirects de productos (slugsAnteriores)
+  let nuevosRedirects = 0;
+  for (const p of productosFinales) {
+    if (!Array.isArray(p.slugsAnteriores) || p.slugsAnteriores.length === 0) continue;
+    for (const slugAnterior of p.slugsAnteriores) {
+      const source = `/productos/${slugAnterior}`;
+      const destination = `/productos/${p.slug}`;
+      if (!mapaRedirects.has(source)) {
+        mapaRedirects.set(source, { source, destination, permanent: true });
+        nuevosRedirects++;
+        console.log(`  ↳ Redirect 301: ${source} → ${destination}`);
+      }
+    }
+  }
+
+  if (nuevosRedirects > 0) {
+    vercelConfig.redirects = [...mapaRedirects.values()];
+    writeFileSync(VERCEL_JSON_PATH, JSON.stringify(vercelConfig, null, 2) + "\n", "utf-8");
+    console.log(`\nvercel.json actualizado: ${nuevosRedirects} redirect(s) añadido(s).`);
+  } else {
+    console.log("\nvercel.json sin cambios (no hay slugsAnteriores nuevos).");
+  }
+}
+
+actualizarRedirects(merged);
+
 // Renombrar JSON a _DONE_
 const dir = dirname(resolvedInput);
 const name = basename(resolvedInput);
@@ -574,3 +680,4 @@ const doneName = name.replace("productos_procesados_", "productos_procesados_DON
 const donePath = resolve(dir, doneName);
 renameSync(resolvedInput, donePath);
 console.log(`JSON renombrado: ${name} → ${doneName}`);
+

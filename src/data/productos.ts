@@ -10,19 +10,39 @@
  * semilla (mismo formato exacto) para que el sitio tenga contenido real desde FASE 1.
  */
 
+export interface PreciosImportacion {
+  100: number | null;
+  500: number | null;
+  1000: number | null;
+}
+
+export interface PreciosNacionalizado {
+  50: number | null;
+  100: number | null;
+  500: number | null;
+}
+
+export interface ModalidadImportacion {
+  precios: PreciosImportacion;
+}
+
+export interface ModalidadNacionalizado {
+  precios: PreciosNacionalizado;
+}
+
 export interface Producto {
   id: number;
   slug: string;
+  /** Slugs anteriores de este producto. El pipeline genera un redirect 301 desde cada uno al slug actual. */
+  slugsAnteriores: string[];
   nombre: string;
   categoria: string;
   descripcionCorta: string;
   descripcionLarga: string;
   moq: number;
-  precios: {
-    100: number;
-    300: number;
-    500: number;
-    1000: number;
+  modalidades: {
+    importacion: ModalidadImportacion | null;
+    nacionalizado: ModalidadNacionalizado | null;
   };
   material: string;
   tecnicas: string[];
@@ -32,7 +52,8 @@ export interface Producto {
   /** Opcional: formatos de presentación del producto (ej. "Estuche individual", "Caja x12"). No todos los productos lo tienen cargado todavía. */
   presentaciones?: string[];
   disponibilidad: string;
-  permisoMtc: boolean;
+  /** "Sí" cuando el producto requiere permiso de internamiento MTC, "No" cuando no lo requiere, "Pendiente de validación" cuando está en trámite, null cuando no se ha determinado. */
+  permisoMtc: "Sí" | "No" | "Pendiente de validación" | null;
   esNovedad: boolean;
   destacado: boolean;
   fotos: Array<{ url: string; alt: string }>;
@@ -46,16 +67,15 @@ export const productos: Producto[] = [
   {
     id: 1,
     slug: "pin-metalico-esmaltado",
+    slugsAnteriores: [],
     nombre: "Pin metálico esmaltado",
     categoria: "Reconocimiento & Premios",
     descripcionCorta: "Pin metálico esmaltado, personalizable, ideal para eventos y activaciones de marca.",
     descripcionLarga: "Pin metálico esmaltado de zamak de alta calidad, disponible en 3 tonos. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite esmalte y grabado láser, con área de marcado de 3 x 3 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 9.9,
-      300: 8.4,
-      500: 7.6,
-      1000: 6.5,
+    modalidades: {
+      importacion: { precios: { 100: 9.9, 500: 7.6, 1000: 6.5 } },
+      nacionalizado: null,
     },
     material: "Zamak con esmalte",
     tecnicas: ["ESMALTE", "GRABADO LASER"],
@@ -63,7 +83,7 @@ export const productos: Producto[] = [
     colores: ["Dorado", "Níquel", "Negro"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: true,
     fotos: [],
@@ -75,16 +95,15 @@ export const productos: Producto[] = [
   {
     id: 2,
     slug: "medalla-de-reconocimiento",
+    slugsAnteriores: [],
     nombre: "Medalla de reconocimiento",
     categoria: "Reconocimiento & Premios",
     descripcionCorta: "Medalla de reconocimiento en aleación de zinc, con cinta incluida y relieve a dos caras.",
     descripcionLarga: "Medalla de reconocimiento de aleación de zinc de alta calidad, disponible en 3 tonos, con cinta incluida y relieve a dos caras. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite relieve y esmalte, con área de marcado de 5 x 5 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 14.9,
-      300: 12.9,
-      500: 11.5,
-      1000: 9.9,
+    modalidades: {
+      importacion: { precios: { 100: 14.9, 500: 11.5, 1000: 9.9 } },
+      nacionalizado: null,
     },
     material: "Aleación de zinc",
     tecnicas: ["RELIEVE", "ESMALTE"],
@@ -92,7 +111,7 @@ export const productos: Producto[] = [
     colores: ["Dorado", "Plata", "Negro"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -104,16 +123,15 @@ export const productos: Producto[] = [
   {
     id: 3,
     slug: "moneda-conmemorativa",
+    slugsAnteriores: [],
     nombre: "Moneda conmemorativa",
     categoria: "Reconocimiento & Premios",
     descripcionCorta: "Moneda conmemorativa a doble cara, acabado antiguo o pulido, estuche individual opcional.",
     descripcionLarga: "Moneda conmemorativa de zamak de alta calidad, disponible en 3 tonos, con acabado antiguo o pulido. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite relieve y esmalte, con área de marcado de 4 x 4 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 12.9,
-      300: 10.9,
-      500: 9.5,
-      1000: 7.9,
+    modalidades: {
+      importacion: { precios: { 100: 12.9, 500: 9.5, 1000: 7.9 } },
+      nacionalizado: null,
     },
     material: "Zamak",
     tecnicas: ["RELIEVE", "ESMALTE"],
@@ -121,7 +139,7 @@ export const productos: Producto[] = [
     colores: ["Dorado", "Níquel", "Negro"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [],
@@ -133,16 +151,15 @@ export const productos: Producto[] = [
   {
     id: 4,
     slug: "llavero-metalico",
+    slugsAnteriores: [],
     nombre: "Llavero metálico",
     categoria: "Llaveros & Accesorios",
     descripcionCorta: "Llavero de metal macizo con argolla reforzada, con stock disponible en Perú.",
     descripcionLarga: "Llavero metálico macizo de alta calidad, disponible en 3 tonos, con argolla reforzada. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser, con área de marcado de 3 x 2 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 8.9,
-      300: 7.4,
-      500: 6.5,
-      1000: 5.4,
+    modalidades: {
+      importacion: { precios: { 100: 8.9, 500: 6.5, 1000: 5.4 } },
+      nacionalizado: null,
     },
     material: "Metal macizo",
     tecnicas: ["GRABADO LASER"],
@@ -150,7 +167,7 @@ export const productos: Producto[] = [
     colores: ["Níquel", "Dorado", "Negro"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -162,16 +179,15 @@ export const productos: Producto[] = [
   {
     id: 5,
     slug: "insignia-metalica-de-solapa",
+    slugsAnteriores: [],
     nombre: "Insignia metálica de solapa",
     categoria: "Reconocimiento & Premios",
     descripcionCorta: "Insignia de formato pequeño para uniforme corporativo y protocolo institucional.",
     descripcionLarga: "Insignia metálica de solapa de zamak de alta calidad, disponible en 3 tonos, en formato pequeño. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite esmalte y relieve, con área de marcado de 2 x 2 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 8.4,
-      300: 7.1,
-      500: 6.3,
-      1000: 5.2,
+    modalidades: {
+      importacion: { precios: { 100: 8.4, 500: 6.3, 1000: 5.2 } },
+      nacionalizado: null,
     },
     material: "Zamak con esmalte",
     tecnicas: ["ESMALTE", "RELIEVE"],
@@ -179,7 +195,7 @@ export const productos: Producto[] = [
     colores: ["Dorado", "Níquel", "Azul marino"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -191,16 +207,15 @@ export const productos: Producto[] = [
   {
     id: 6,
     slug: "memoria-usb-metalica",
+    slugsAnteriores: [],
     nombre: "Memoria USB metálica",
     categoria: "Tecnología",
     descripcionCorta: "Memoria USB con carcasa de metal y capucha, en varias capacidades de almacenamiento.",
     descripcionLarga: "Memoria USB metálica de alta calidad, disponible en 3 tonos y varias capacidades. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser y tampografía, con área de marcado de 2 x 1 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 24.9,
-      300: 21.9,
-      500: 19.5,
-      1000: 16.9,
+    modalidades: {
+      importacion: { precios: { 100: 24.9, 500: 19.5, 1000: 16.9 } },
+      nacionalizado: null,
     },
     material: "Metal con capucha",
     tecnicas: ["GRABADO LASER", "TAMPOGRAFIA"],
@@ -208,7 +223,7 @@ export const productos: Producto[] = [
     colores: ["Níquel", "Negro", "Dorado"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: true,
     fotos: [],
@@ -220,16 +235,15 @@ export const productos: Producto[] = [
   {
     id: 7,
     slug: "power-bank-slim",
+    slugsAnteriores: [],
     nombre: "Power bank slim",
     categoria: "Tecnología",
     descripcionCorta: "Power bank de cuerpo de aluminio, carga por cable, sin conectividad inalámbrica.",
     descripcionLarga: "Power bank slim de aluminio de alta calidad, disponible en 3 tonos, sin conectividad inalámbrica. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser, con área de marcado de 4 x 2 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 54.9,
-      300: 48.9,
-      500: 43.5,
-      1000: 37.9,
+    modalidades: {
+      importacion: { precios: { 100: 54.9, 500: 43.5, 1000: 37.9 } },
+      nacionalizado: null,
     },
     material: "Aluminio",
     tecnicas: ["GRABADO LASER"],
@@ -237,7 +251,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Plata", "Azul marino"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -249,16 +263,15 @@ export const productos: Producto[] = [
   {
     id: 8,
     slug: "cable-multipuerto-3-en-1",
+    slugsAnteriores: [],
     nombre: "Cable multipuerto 3 en 1",
     categoria: "Tecnología",
     descripcionCorta: "Cable trenzado USB-C, Lightning y micro USB en un solo accesorio personalizable.",
     descripcionLarga: "Cable multipuerto 3 en 1 trenzado de alta calidad, disponible en 3 tonos. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite tampografía en el conector, con área de marcado de 1 x 1 cm. Bajo producción: consulta nuestros tiempos exactos de fabricación.",
     moq: 100,
-    precios: {
-      100: 19.9,
-      300: 16.9,
-      500: 14.9,
-      1000: 12.5,
+    modalidades: {
+      importacion: { precios: { 100: 19.9, 500: 14.9, 1000: 12.5 } },
+      nacionalizado: null,
     },
     material: "Nailon trenzado",
     tecnicas: ["TAMPOGRAFIA"],
@@ -266,7 +279,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Azul marino", "Verde oliva"],
     tallas: [],
     disponibilidad: "Bajo producción",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [],
@@ -278,16 +291,15 @@ export const productos: Producto[] = [
   {
     id: 9,
     slug: "tarjeta-nfc-personalizable",
+    slugsAnteriores: [],
     nombre: "Tarjeta NFC personalizable",
     categoria: "Tecnología",
     descripcionCorta: "Tarjeta NFC en PVC o metal con chip programable para presentación digital.",
     descripcionLarga: "Tarjeta NFC personalizable de PVC o metal de alta calidad, disponible en 3 tonos, con chip programable. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser e impresión, con área de marcado de 8 x 5 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 29.9,
-      300: 25.9,
-      500: 22.9,
-      1000: 18.9,
+    modalidades: {
+      importacion: { precios: { 100: 29.9, 500: 22.9, 1000: 18.9 } },
+      nacionalizado: null,
     },
     material: "PVC o metal",
     tecnicas: ["GRABADO LASER", "IMPRESION"],
@@ -295,7 +307,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Dorado", "Azul marino"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: true,
     fotos: [],
@@ -307,16 +319,15 @@ export const productos: Producto[] = [
   {
     id: 10,
     slug: "parlante-bluetooth-compacto",
+    slugsAnteriores: [],
     nombre: "Parlante Bluetooth compacto",
     categoria: "Tecnología",
     descripcionCorta: "Parlante Bluetooth compacto, sin cables, no requiere permiso MTC en Perú.",
     descripcionLarga: "Parlante Bluetooth compacto de alta calidad, disponible en 3 tonos. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite tampografía, con área de marcado de 4 x 2 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela. La conectividad es Bluetooth: no requiere permiso de internamiento MTC.",
     moq: 100,
-    precios: {
-      100: 34.9,
-      300: 29.9,
-      500: 26.5,
-      1000: 22.9,
+    modalidades: {
+      importacion: { precios: { 100: 34.9, 500: 26.5, 1000: 22.9 } },
+      nacionalizado: null,
     },
     material: "Plástico ABS",
     tecnicas: ["TAMPOGRAFIA"],
@@ -324,7 +335,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Azul marino", "Verde oliva"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -336,16 +347,15 @@ export const productos: Producto[] = [
   {
     id: 11,
     slug: "audifonos-cableados",
+    slugsAnteriores: [],
     nombre: "Audífonos cableados",
     categoria: "Tecnología",
     descripcionCorta: "Audífonos con cable, sin radio, no requieren permiso de internamiento MTC.",
     descripcionLarga: "Audífonos cableados de alta calidad, disponibles en 3 tonos, con cable y sin radio. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite tampografía, con área de marcado de 2 x 2 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 17.9,
-      300: 15.4,
-      500: 13.5,
-      1000: 11.4,
+    modalidades: {
+      importacion: { precios: { 100: 17.9, 500: 13.5, 1000: 11.4 } },
+      nacionalizado: null,
     },
     material: "Plástico ABS",
     tecnicas: ["TAMPOGRAFIA"],
@@ -353,7 +363,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Azul marino", "Plata"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -365,16 +375,15 @@ export const productos: Producto[] = [
   {
     id: 12,
     slug: "parlante-cableado-de-escritorio",
+    slugsAnteriores: [],
     nombre: "Parlante cableado de escritorio",
     categoria: "Tecnología",
     descripcionCorta: "Parlante de escritorio por cable, entra con el plazo estándar de aduana.",
     descripcionLarga: "Parlante cableado de escritorio de alta calidad, disponible en 3 tonos, con conexión por cable. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite tampografía, con área de marcado de 4 x 3 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 27.9,
-      300: 23.9,
-      500: 20.9,
-      1000: 17.5,
+    modalidades: {
+      importacion: { precios: { 100: 27.9, 500: 20.9, 1000: 17.5 } },
+      nacionalizado: null,
     },
     material: "Plástico ABS",
     tecnicas: ["TAMPOGRAFIA"],
@@ -382,7 +391,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Plata", "Azul marino"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -394,16 +403,15 @@ export const productos: Producto[] = [
   {
     id: 13,
     slug: "pluma-metalica-premium",
+    slugsAnteriores: [],
     nombre: "Pluma metálica premium",
     categoria: "Escritura",
     descripcionCorta: "Pluma de cuerpo de latón con estuche individual, regalo de directorio.",
     descripcionLarga: "Pluma metálica premium de latón de alta calidad, disponible en 3 tonos, con estuche individual. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser, con área de marcado de 4 x 0.5 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 22.9,
-      300: 19.4,
-      500: 17.5,
-      1000: 14.9,
+    modalidades: {
+      importacion: { precios: { 100: 22.9, 500: 17.5, 1000: 14.9 } },
+      nacionalizado: null,
     },
     material: "Latón",
     tecnicas: ["GRABADO LASER"],
@@ -411,7 +419,7 @@ export const productos: Producto[] = [
     colores: ["Dorado", "Negro", "Plata"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: true,
     fotos: [],
@@ -423,16 +431,15 @@ export const productos: Producto[] = [
   {
     id: 14,
     slug: "tarjetero-de-metal",
+    slugsAnteriores: [],
     nombre: "Tarjetero de metal",
     categoria: "Accesorios Personales",
     descripcionCorta: "Tarjetero de aluminio anodizado con apertura automática, ejecutivo.",
     descripcionLarga: "Tarjetero de metal de aluminio anodizado de alta calidad, disponible en 3 tonos, con apertura automática. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser, con área de marcado de 5 x 3 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 16.9,
-      300: 14.4,
-      500: 12.9,
-      1000: 10.9,
+    modalidades: {
+      importacion: { precios: { 100: 16.9, 500: 12.9, 1000: 10.9 } },
+      nacionalizado: null,
     },
     material: "Aluminio anodizado",
     tecnicas: ["GRABADO LASER"],
@@ -440,7 +447,7 @@ export const productos: Producto[] = [
     colores: ["Plata", "Negro", "Dorado"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [],
@@ -452,16 +459,15 @@ export const productos: Producto[] = [
   {
     id: 15,
     slug: "set-de-escritorio-metalico",
+    slugsAnteriores: [],
     nombre: "Set de escritorio metálico",
     categoria: "Oficina",
     descripcionCorta: "Pluma, portanotas y organizador metálicos en caja rígida, regalo corporativo.",
     descripcionLarga: "Set de escritorio metálico de alta calidad, disponible en 3 tonos, con pluma, portanotas y organizador en caja rígida. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser, con área de marcado de 5 x 2 cm. Bajo producción: consulta nuestros tiempos exactos de fabricación.",
     moq: 100,
-    precios: {
-      100: 44.9,
-      300: 38.9,
-      500: 34.5,
-      1000: 29.9,
+    modalidades: {
+      importacion: { precios: { 100: 44.9, 500: 34.5, 1000: 29.9 } },
+      nacionalizado: null,
     },
     material: "Metal con caja rígida",
     tecnicas: ["GRABADO LASER"],
@@ -469,7 +475,7 @@ export const productos: Producto[] = [
     colores: ["Azul marino", "Negro", "Dorado"],
     tallas: [],
     disponibilidad: "Bajo producción",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [],
@@ -481,16 +487,15 @@ export const productos: Producto[] = [
   {
     id: 16,
     slug: "placa-identificadora-para-mascota",
+    slugsAnteriores: [],
     nombre: "Placa identificadora para mascota",
     categoria: "Mascotas",
     descripcionCorta: "Placa de acero inoxidable con grabado a dos caras, para campañas pet friendly.",
     descripcionLarga: "Placa identificadora para mascota de acero inoxidable de alta calidad, disponible en 3 tonos, con grabado a dos caras. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite grabado láser, con área de marcado de 3 x 2 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 7.9,
-      300: 6.4,
-      500: 5.6,
-      1000: 4.5,
+    modalidades: {
+      importacion: { precios: { 100: 7.9, 500: 5.6, 1000: 4.5 } },
+      nacionalizado: null,
     },
     material: "Acero inoxidable",
     tecnicas: ["GRABADO LASER"],
@@ -498,7 +503,7 @@ export const productos: Producto[] = [
     colores: ["Plata", "Dorado", "Verde oliva"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: true,
     fotos: [],
@@ -510,16 +515,15 @@ export const productos: Producto[] = [
   {
     id: 17,
     slug: "bandana-para-mascotas",
+    slugsAnteriores: [],
     nombre: "Bandana para mascotas",
     categoria: "Mascotas",
     descripcionCorta: "Bandana para mascotas de poliéster, personalizable, ideal para mascotas y activaciones de marca.",
     descripcionLarga: "Bandana para mascotas de poliéster de alta calidad, disponible en 6 colores y 3 tallas (L, M, S). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite DTF textil y serigrafía, con área de marcado de 10 x 10 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 2.45,
-      300: 2.39,
-      500: 2.33,
-      1000: 2.29,
+    modalidades: {
+      importacion: { precios: { 100: 2.45, 500: 2.33, 1000: 2.29 } },
+      nacionalizado: null,
     },
     material: "Poliéster",
     tecnicas: ["DTF TEXTIL", "SERIGRAFIA"],
@@ -527,7 +531,7 @@ export const productos: Producto[] = [
     colores: ["Rojo", "Negro", "Azul", "Blanco", "Verde", "Naranja"],
     tallas: ["L", "M", "S"],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: true,
     fotos: [
@@ -544,16 +548,15 @@ export const productos: Producto[] = [
   {
     id: 18,
     slug: "toalla-deportiva-absorbente-con-estuche-de-silicona",
+    slugsAnteriores: [],
     nombre: "Toalla deportiva absorbente con estuche de silicona",
     categoria: "Deporte & Fitness",
     descripcionCorta: "Toalla deportiva absorbente con estuche de silicona, personalizable, ideal para textil y activaciones de marca.",
     descripcionLarga: "Toalla deportiva absorbente con estuche de silicona de alta calidad, disponible en 7 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 300 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 300,
-    precios: {
-      100: 0,
-      300: 8.66,
-      500: 8.28,
-      1000: 8.13,
+    modalidades: {
+      importacion: { precios: { 100: null, 500: 8.28, 1000: 8.13 } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: [],
@@ -561,7 +564,7 @@ export const productos: Producto[] = [
     colores: ["Rojo", "Negro", "Verde", "Azul", "Naranja", "Lila", "fuscia"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [
@@ -578,16 +581,15 @@ export const productos: Producto[] = [
   {
     id: 19,
     slug: "espejo-con-mango-de-sandalo",
+    slugsAnteriores: [],
     nombre: "Espejo con mango de sándalo",
     categoria: "Belleza",
     descripcionCorta: "Espejo con mango de sándalo, personalizable, ideal para otro y activaciones de marca.",
     descripcionLarga: "Espejo con mango de sándalo de alta calidad. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 650 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 650,
-    precios: {
-      100: 0,
-      300: 0,
-      500: 11,
-      1000: 0,
+    modalidades: {
+      importacion: { precios: { 100: null, 500: 11, 1000: null } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: [],
@@ -595,7 +597,7 @@ export const productos: Producto[] = [
     colores: [],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [
@@ -609,16 +611,15 @@ export const productos: Producto[] = [
   {
     id: 20,
     slug: "auriculares-bluetooth-i7mini",
+    slugsAnteriores: [],
     nombre: "Auriculares bluetooth i7mini",
     categoria: "Tecnología",
     descripcionCorta: "Auriculares bluetooth i7mini, personalizable, ideal para audio y activaciones de marca.",
     descripcionLarga: "Auriculares bluetooth i7mini de alta calidad, disponible en 3 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 18.42,
-      300: 18.25,
-      500: 0,
-      1000: 17.91,
+    modalidades: {
+      importacion: { precios: { 100: 18.42, 500: null, 1000: 17.91 } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: [],
@@ -626,7 +627,7 @@ export const productos: Producto[] = [
     colores: ["Blanco", "Negro", "beige"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [
@@ -641,16 +642,15 @@ export const productos: Producto[] = [
   {
     id: 21,
     slug: "auriculares-bluetooth-x7",
+    slugsAnteriores: [],
     nombre: "Auriculares bluetooth x7",
     categoria: "Tecnología",
     descripcionCorta: "Auriculares bluetooth x7, personalizable, ideal para audio y activaciones de marca.",
     descripcionLarga: "Auriculares bluetooth x7 de alta calidad, disponible en 2 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 120 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 120,
-    precios: {
-      100: 28.57,
-      300: 27.77,
-      500: 27.51,
-      1000: 27.24,
+    modalidades: {
+      importacion: { precios: { 100: 28.57, 500: 27.51, 1000: 27.24 } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: [],
@@ -658,7 +658,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Blanco"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [
@@ -672,16 +672,15 @@ export const productos: Producto[] = [
   {
     id: 22,
     slug: "mini-altavoz-inalambrico-portatil",
+    slugsAnteriores: [],
     nombre: "Mini altavoz inalámbrico portátil",
     categoria: "Tecnología",
     descripcionCorta: "Mini altavoz inalámbrico portátil, personalizable, ideal para audio y activaciones de marca.",
     descripcionLarga: "Mini altavoz inalámbrico portátil de alta calidad, disponible en 4 colores y 1 tallas (Tamaño: 4.5 cm x 4.7 cm). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
-    precios: {
-      100: 19.24,
-      300: 18.53,
-      500: 18.36,
-      1000: 18.18,
+    modalidades: {
+      importacion: { precios: { 100: 19.24, 500: 18.36, 1000: 18.18 } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: [],
@@ -689,7 +688,7 @@ export const productos: Producto[] = [
     colores: ["Blanco", "Negro", "Verde", "Naranja"],
     tallas: ["Tamaño: 4.5 cm x 4.7 cm"],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: true,
     fotos: [
@@ -705,16 +704,15 @@ export const productos: Producto[] = [
   {
     id: 23,
     slug: "power-bank-fibra-de-trigo-5000-mah",
+    slugsAnteriores: [],
     nombre: "Power bank fibra de trigo 5000 mah",
     categoria: "Tecnología",
     descripcionCorta: "Power bank fibra de trigo 5000 mah, personalizable, ideal para ejecutivos y activaciones de marca.",
     descripcionLarga: "Power bank fibra de trigo 5000 mah de alta calidad, disponible en 1 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 50 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 50,
-    precios: {
-      100: 45.17,
-      300: 44.74,
-      500: 44.31,
-      1000: 43.88,
+    modalidades: {
+      importacion: { precios: { 100: 45.17, 500: 44.31, 1000: 43.88 } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: ["SERIGRAFÍA"],
@@ -722,7 +720,7 @@ export const productos: Producto[] = [
     colores: ["Natural"],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: false,
     destacado: false,
     fotos: [
@@ -737,16 +735,15 @@ export const productos: Producto[] = [
   {
     id: 24,
     slug: "bateria-externa-biodegradable-de-corcho-y-fibra-de-trigo-10000-mah",
+    slugsAnteriores: [],
     nombre: "Batería externa biodegradable de corcho y fibra de trigo 10000 mah",
     categoria: "Eco & Sostenibilidad",
     descripcionCorta: "Batería externa biodegradable de corcho y fibra de trigo 10000 mah, personalizable, ideal para ejecutivos.",
     descripcionLarga: "Batería externa biodegradable de corcho y fibra de trigo 10000 mah de alta calidad. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 50 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 50,
-    precios: {
-      100: 72.02,
-      300: 71.32,
-      500: 71.32,
-      1000: 70.62,
+    modalidades: {
+      importacion: { precios: { 100: 72.02, 500: 71.32, 1000: 70.62 } },
+      nacionalizado: null,
     },
     material: "[SIN_DATO]",
     tecnicas: [],
@@ -754,7 +751,7 @@ export const productos: Producto[] = [
     colores: [],
     tallas: [],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [
@@ -769,16 +766,15 @@ export const productos: Producto[] = [
   {
     id: 25,
     slug: "botella-de-agua-para-mascotas",
+    slugsAnteriores: [],
     nombre: "Botella de agua para mascotas",
     categoria: "Mascotas",
     descripcionCorta: "Botella de agua para mascotas de plástico y silicona, personalizable, ideal para mascotas y activaciones de marca.",
     descripcionLarga: "Botella de agua para mascotas de plástico y silicona de alta calidad, disponible en 3 colores y 1 tallas (Tamaño: 9 x 8.7 cm). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 150 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 150,
-    precios: {
-      100: 22.95,
-      300: 0,
-      500: 21.66,
-      1000: 19.28,
+    modalidades: {
+      importacion: { precios: { 100: 22.95, 500: 21.66, 1000: 19.28 } },
+      nacionalizado: null,
     },
     material: "Plástico y silicona",
     tecnicas: [],
@@ -786,7 +782,7 @@ export const productos: Producto[] = [
     colores: ["Lila", "Rosado", "Celeste"],
     tallas: ["Tamaño: 9 x 8.7 cm"],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [
@@ -801,16 +797,15 @@ export const productos: Producto[] = [
   {
     id: 26,
     slug: "set-de-boligrafos-de-alta-gama",
+    slugsAnteriores: [],
     nombre: "Set de bolígrafos de alta gama",
     categoria: "Escritura",
     descripcionCorta: "Set de bolígrafos de alta gama de acero inoxidable, personalizable, ideal para escritura y activaciones de marca.",
     descripcionLarga: "Set de bolígrafos de alta gama de acero inoxidable de alta calidad, disponible en 4 colores y 1 tallas (Peso: 260 gramos). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 60 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 60,
-    precios: {
-      100: 49.29,
-      300: 48.1,
-      500: 47.32,
-      1000: 45.34,
+    modalidades: {
+      importacion: { precios: { 100: 49.29, 500: 47.32, 1000: 45.34 } },
+      nacionalizado: null,
     },
     material: "Acero inoxidable",
     tecnicas: ["LÁSER, SERIGRAFIA"],
@@ -818,7 +813,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Rojo", "Azul", "Blanco"],
     tallas: ["Peso: 260 gramos"],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: true,
     fotos: [
@@ -835,16 +830,15 @@ export const productos: Producto[] = [
   {
     id: 27,
     slug: "placa-de-identificacion-para-gatos",
+    slugsAnteriores: [],
     nombre: "Placa de identificación para gatos",
     categoria: "Mascotas",
     descripcionCorta: "Placa de identificación para gatos de acero inoxidable, personalizable, ideal para metal y activaciones de marca.",
     descripcionLarga: "Placa de identificación para gatos de acero inoxidable de alta calidad, disponible en 4 colores y 2 tallas (Tamaño 2.8 cm x 2.8cm, Espesor 1.7 mm). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite Láser, serigrafia, con área de marcado de 2 x 2 cm. Mínimo de compra: 50 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 50,
-    precios: {
-      100: 3.15,
-      300: 2.98,
-      500: 0,
-      1000: 2.63,
+    modalidades: {
+      importacion: { precios: { 100: 3.15, 500: null, 1000: 2.63 } },
+      nacionalizado: null,
     },
     material: "Acero inoxidable",
     tecnicas: ["LÁSER, SERIGRAFIA"],
@@ -852,7 +846,7 @@ export const productos: Producto[] = [
     colores: ["Negro", "Azul", "Plata", "Dorado"],
     tallas: ["Tamaño 2.8 cm x 2.8cm", "Espesor 1.7 mm"],
     disponibilidad: "En stock",
-    permisoMtc: false,
+    permisoMtc: "No",
     esNovedad: true,
     destacado: false,
     fotos: [

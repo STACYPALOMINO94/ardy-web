@@ -27,7 +27,7 @@ export function ProductCard({ producto }: { producto: Producto }) {
               Nuevo
             </span>
           )}
-          {producto.permisoMtc && (
+          {producto.permisoMtc === "Sí" && (
             <span className="text-[0.66rem] px-2 py-[3px] font-bold tracking-[0.04em] bg-alerta text-white">
               Permiso MTC
             </span>

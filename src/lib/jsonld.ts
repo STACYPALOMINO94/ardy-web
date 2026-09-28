@@ -1,5 +1,6 @@
 import type { Producto } from "@/data/productos";
 import { SITE_URL, SITE_NOMBRE } from "./config";
+import { datoValido } from "./productos";
 
 export function organizationJsonLd() {
   return {
@@ -38,24 +39,52 @@ export function productoJsonLd(producto: Producto) {
     description: producto.descripcionLarga,
     category: producto.categoria,
     sku: String(producto.id),
-    material: producto.material,
+    // Un campo público sin dato real (ej. "[SIN_DATO]" del pipeline) nunca se
+    // publica en datos estructurados que Google puede indexar.
+    ...(datoValido(producto.material) ? { material: producto.material } : {}),
     url: `${SITE_URL}/productos/${producto.slug}`,
-    // Solo cantidades que cumplen el MOQ y tienen precio cargado (> 0): nunca
-    // se publica un precio en S/ 0.00 en datos estructurados que Google puede indexar.
-    offers: (Object.keys(producto.precios) as unknown as Array<keyof typeof producto.precios>)
-      .filter((cantidad) => Number(cantidad) >= producto.moq && producto.precios[cantidad] > 0)
-      .map((cantidad) => ({
-        "@type": "Offer",
-        priceCurrency: "PEN",
-        price: producto.precios[cantidad],
-        eligibleQuantity: {
-          "@type": "QuantitativeValue",
-          value: Number(cantidad),
-        },
-        availability:
-          producto.disponibilidad === "En stock" ? "https://schema.org/InStock" : "https://schema.org/PreOrder",
-        url: `${SITE_URL}/productos/${producto.slug}`,
-      })),
+    // Genera offers para importación y nacionalizado por separado.
+    // Solo precios > 0 se publican en datos estructurados indexables por Google.
+    offers: [
+      ...(producto.modalidades.importacion
+        ? (Object.entries(producto.modalidades.importacion.precios) as Array<[string, number | null]>)
+            .filter(([, v]) => v !== null && v > 0)
+            .map(([cantidad, precio]) => ({
+              "@type": "Offer",
+              name: "Importación",
+              priceCurrency: "PEN",
+              price: precio,
+              eligibleQuantity: {
+                "@type": "QuantitativeValue",
+                value: Number(cantidad),
+              },
+              availability:
+                producto.disponibilidad === "En stock"
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/PreOrder",
+              url: `${SITE_URL}/productos/${producto.slug}`,
+            }))
+        : []),
+      ...(producto.modalidades.nacionalizado
+        ? (Object.entries(producto.modalidades.nacionalizado.precios) as Array<[string, number | null]>)
+            .filter(([, v]) => v !== null && v > 0)
+            .map(([cantidad, precio]) => ({
+              "@type": "Offer",
+              name: "Nacionalizado",
+              priceCurrency: "PEN",
+              price: precio,
+              eligibleQuantity: {
+                "@type": "QuantitativeValue",
+                value: Number(cantidad),
+              },
+              availability:
+                producto.disponibilidad === "En stock"
+                  ? "https://schema.org/InStock"
+                  : "https://schema.org/PreOrder",
+              url: `${SITE_URL}/productos/${producto.slug}`,
+            }))
+        : []),
+    ],
   };
 }
 

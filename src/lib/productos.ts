@@ -49,17 +49,47 @@ export function formatPrecio(valor: number): string {
 }
 
 /**
- * Precio unitario más barato realmente disponible para un producto: la
- * cantidad más alta que cumple el MOQ y tiene precio cargado (> 0). Nunca
- * devuelve un tier por debajo del MOQ ni un precio en S/ 0.00; si ningún
- * tier tiene precio válido, devuelve null (mostrar "a consultar").
+ * Precio unitario más barato de la modalidad importación: el tier más alto
+ * disponible (> 0). Devuelve null si no hay modalidad de importación o ningún
+ * tier tiene precio cargado.
  */
-export function getPrecioDesde(producto: Producto): number | null {
-  const cantidades = [1000, 500, 300, 100] as const;
-  for (const c of cantidades) {
-    if (c >= producto.moq && producto.precios[c] > 0) return producto.precios[c];
+export function getPrecioDesdeImportacion(producto: Producto): number | null {
+  const imp = producto.modalidades.importacion;
+  if (!imp) return null;
+  const { precios } = imp;
+  for (const c of [1000, 500, 100] as const) {
+    const v = precios[c];
+    if (v !== null && v > 0) return v;
   }
   return null;
+}
+
+/**
+ * Precio unitario más barato de la modalidad nacionalizado: el tier más alto
+ * disponible (> 0). Devuelve null si no hay modalidad nacional o ningún tier
+ * tiene precio cargado.
+ */
+export function getPrecioDesdeNacionalizado(producto: Producto): number | null {
+  const nac = producto.modalidades.nacionalizado;
+  if (!nac) return null;
+  const { precios } = nac;
+  for (const c of [500, 100, 50] as const) {
+    const v = precios[c];
+    if (v !== null && v > 0) return v;
+  }
+  return null;
+}
+
+/**
+ * Precio unitario más barato del producto, considerando ambas modalidades.
+ * Devuelve el menor de los dos precios desde disponibles, o null si ninguno
+ * tiene precio cargado (mostrar "a consultar").
+ */
+export function getPrecioDesde(producto: Producto): number | null {
+  const imp = getPrecioDesdeImportacion(producto);
+  const nac = getPrecioDesdeNacionalizado(producto);
+  if (imp !== null && nac !== null) return Math.min(imp, nac);
+  return imp ?? nac;
 }
 
 const PLACEHOLDERS_DATO_FALTANTE = new Set(["[sin_dato]", "n/a", "undefined", "null", "-", "—"]);
