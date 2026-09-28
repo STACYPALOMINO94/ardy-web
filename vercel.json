@@ -1,0 +1,8 @@
+{
+  "redirects": [
+    { "source": "/para-agencias-de-eventos", "destination": "/soluciones-corporativas", "permanent": true },
+    { "source": "/para-agencias-de-eventos/", "destination": "/soluciones-corporativas", "permanent": true },
+    { "source": "/para-revendedores-e-imprentas", "destination": "/soluciones-corporativas", "permanent": true },
+    { "source": "/para-revendedores-e-imprentas/", "destination": "/soluciones-corporativas", "permanent": true }
+  ]
+}
