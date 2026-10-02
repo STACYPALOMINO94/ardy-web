@@ -28,6 +28,8 @@ export interface ModalidadImportacion {
 
 export interface ModalidadNacionalizado {
   precios: PreciosNacionalizado;
+  /** Escala elegida como "Precio desde" por ARDY Operations; legacy data defaults to 50. */
+  precioDesde?: 50 | 100 | 500;
 }
 
 export interface Producto {
