@@ -65,7 +65,7 @@ export interface Producto {
 
 export const productos: Producto[] = [
   {
-    id: 17,
+    id: 1,
     slug: "bandana-para-mascotas",
     slugsAnteriores: [],
     nombre: "Bandana para mascotas",
@@ -74,7 +74,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Bandana para mascotas de poliéster de alta calidad, disponible en 6 colores y 3 tallas (L, M, S). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite DTF textil y serigrafía, con área de marcado de 10 x 10 cm. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
     modalidades: {
-      importacion: { precios: { 100: 2.45, 500: 2.33, 1000: 2.29 } },
+      importacion: {
+        precios: {
+          100: 2.45,
+          500: 2.33,
+          1000: 2.29,
+        },
+      },
       nacionalizado: null,
     },
     material: "Poliéster",
@@ -98,7 +104,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-02",
   },
   {
-    id: 18,
+    id: 2,
     slug: "toalla-deportiva-absorbente-con-estuche-de-silicona",
     slugsAnteriores: [],
     nombre: "Toalla deportiva absorbente con estuche de silicona",
@@ -107,7 +113,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Toalla deportiva absorbente con estuche de silicona de alta calidad, disponible en 7 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 300 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 300,
     modalidades: {
-      importacion: { precios: { 100: null, 500: 8.28, 1000: 8.13 } },
+      importacion: {
+        precios: {
+          100: null,
+          500: 8.28,
+          1000: 8.13,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -131,7 +143,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-08",
   },
   {
-    id: 19,
+    id: 3,
     slug: "espejo-con-mango-de-sandalo",
     slugsAnteriores: [],
     nombre: "Espejo con mango de sándalo",
@@ -140,7 +152,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Espejo con mango de sándalo de alta calidad. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 650 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 650,
     modalidades: {
-      importacion: { precios: { 100: null, 500: 11, 1000: null } },
+      importacion: {
+        precios: {
+          100: null,
+          500: 11,
+          1000: null,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -161,7 +179,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-08",
   },
   {
-    id: 20,
+    id: 4,
     slug: "auriculares-bluetooth-i7mini",
     slugsAnteriores: [],
     nombre: "Auriculares bluetooth i7mini",
@@ -170,7 +188,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Auriculares bluetooth i7mini de alta calidad, disponible en 3 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
     modalidades: {
-      importacion: { precios: { 100: 18.42, 500: null, 1000: 17.91 } },
+      importacion: {
+        precios: {
+          100: 18.42,
+          500: null,
+          1000: 17.91,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -192,7 +216,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-08",
   },
   {
-    id: 21,
+    id: 5,
     slug: "auriculares-bluetooth-x7",
     slugsAnteriores: [],
     nombre: "Auriculares bluetooth x7",
@@ -201,7 +225,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Auriculares bluetooth x7 de alta calidad, disponible en 2 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 120 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 120,
     modalidades: {
-      importacion: { precios: { 100: 28.57, 500: 27.51, 1000: 27.24 } },
+      importacion: {
+        precios: {
+          100: 28.57,
+          500: 27.51,
+          1000: 27.24,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -222,7 +252,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-08",
   },
   {
-    id: 22,
+    id: 6,
     slug: "mini-altavoz-inalambrico-portatil",
     slugsAnteriores: [],
     nombre: "Mini altavoz inalámbrico portátil",
@@ -231,7 +261,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Mini altavoz inalámbrico portátil de alta calidad, disponible en 4 colores y 1 tallas (Tamaño: 4.5 cm x 4.7 cm). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 100 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 100,
     modalidades: {
-      importacion: { precios: { 100: 19.24, 500: 18.36, 1000: 18.18 } },
+      importacion: {
+        precios: {
+          100: 19.24,
+          500: 18.36,
+          1000: 18.18,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -254,7 +290,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-08",
   },
   {
-    id: 23,
+    id: 7,
     slug: "power-bank-fibra-de-trigo-5000-mah",
     slugsAnteriores: [],
     nombre: "Power bank fibra de trigo 5000 mah",
@@ -263,7 +299,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Power bank fibra de trigo 5000 mah de alta calidad, disponible en 1 colores. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 50 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 50,
     modalidades: {
-      importacion: { precios: { 100: 45.17, 500: 44.31, 1000: 43.88 } },
+      importacion: {
+        precios: {
+          100: 45.17,
+          500: 44.31,
+          1000: 43.88,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -285,7 +327,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-07",
   },
   {
-    id: 24,
+    id: 8,
     slug: "bateria-externa-biodegradable-de-corcho-y-fibra-de-trigo-10000-mah",
     slugsAnteriores: [],
     nombre: "Batería externa biodegradable de corcho y fibra de trigo 10000 mah",
@@ -294,7 +336,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Batería externa biodegradable de corcho y fibra de trigo 10000 mah de alta calidad. Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 50 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 50,
     modalidades: {
-      importacion: { precios: { 100: 72.02, 500: 71.32, 1000: 70.62 } },
+      importacion: {
+        precios: {
+          100: 72.02,
+          500: 71.32,
+          1000: 70.62,
+        },
+      },
       nacionalizado: null,
     },
     material: "[SIN_DATO]",
@@ -316,7 +364,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-07",
   },
   {
-    id: 25,
+    id: 9,
     slug: "botella-de-agua-para-mascotas",
     slugsAnteriores: [],
     nombre: "Botella de agua para mascotas",
@@ -325,7 +373,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Botella de agua para mascotas de plástico y silicona de alta calidad, disponible en 3 colores y 1 tallas (Tamaño: 9 x 8.7 cm). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 150 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 150,
     modalidades: {
-      importacion: { precios: { 100: 22.95, 500: 21.66, 1000: 19.28 } },
+      importacion: {
+        precios: {
+          100: 22.95,
+          500: 21.66,
+          1000: 19.28,
+        },
+      },
       nacionalizado: null,
     },
     material: "Plástico y silicona",
@@ -347,7 +401,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-06",
   },
   {
-    id: 26,
+    id: 10,
     slug: "set-de-boligrafos-de-alta-gama",
     slugsAnteriores: [],
     nombre: "Set de bolígrafos de alta gama",
@@ -356,7 +410,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Set de bolígrafos de alta gama de acero inoxidable de alta calidad, disponible en 4 colores y 1 tallas (Peso: 260 gramos). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Mínimo de compra: 60 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 60,
     modalidades: {
-      importacion: { precios: { 100: 49.29, 500: 47.32, 1000: 45.34 } },
+      importacion: {
+        precios: {
+          100: 49.29,
+          500: 47.32,
+          1000: 45.34,
+        },
+      },
       nacionalizado: null,
     },
     material: "Acero inoxidable",
@@ -380,7 +440,7 @@ export const productos: Producto[] = [
     fechaActualizacion: "2026-09-06",
   },
   {
-    id: 27,
+    id: 11,
     slug: "placa-de-identificacion-para-gatos",
     slugsAnteriores: [],
     nombre: "Placa de identificación para gatos",
@@ -389,7 +449,13 @@ export const productos: Producto[] = [
     descripcionLarga: "Placa de identificación para gatos de acero inoxidable de alta calidad, disponible en 4 colores y 2 tallas (Tamaño 2.8 cm x 2.8cm, Espesor 1.7 mm). Ideal para activaciones de marca, eventos corporativos y regalos promocionales. Admite Láser, serigrafia, con área de marcado de 2 x 2 cm. Mínimo de compra: 50 unidades, plazo 15 a 17 días hábiles en blanco. Como el grabado es en Lima, el arte se aprueba mientras el producto vuela.",
     moq: 50,
     modalidades: {
-      importacion: { precios: { 100: 3.15, 500: null, 1000: 2.63 } },
+      importacion: {
+        precios: {
+          100: 3.15,
+          500: null,
+          1000: 2.63,
+        },
+      },
       nacionalizado: null,
     },
     material: "Acero inoxidable",
@@ -408,5 +474,42 @@ export const productos: Producto[] = [
     seoMeta: "Placa de identificación para gatos de acero inoxidable personalizable con Láser, serigrafia. MOQ 50 unidades. 4 colores, 2 tallas. Plazo 3 semanas en blanco....",
     palabraClave: "placa de identificacion para gatos personalizada",
     fechaActualizacion: "2026-09-06",
+  },
+  {
+    id: 12,
+    slug: "libreta-natura",
+    slugsAnteriores: [],
+    nombre: "LIBRETA NATURA",
+    categoria: "Papeleria y libretas",
+    descripcionCorta: "LIBRETA DE CARTON ANILLADA ECOLOGICA CON POSIT Y LAPICERO",
+    descripcionLarga: "Libreta Natura. La Libreta Espiral A6 Publicitaria es un accesorio de oficina práctico y versátil, diseñado para empresas que buscan un obsequio corporativo funcional para reuniones, capacitaciones, congresos, ferias y welcome packs. Su formato compacto facilita tomar notas y organizar información en cualquier momento. Fabricada con tapa dura ecológica, incorpora 70 hojas blancas, un lapicero ecológico, notas adhesivas de colores y banderines marcadores, ofreciendo una solución completa para el trabajo diario, el estudio y la planificación de actividades.",
+    moq: 50,
+    modalidades: {
+      importacion: null,
+      nacionalizado: {
+        precioDesde: 50,
+        precios: {
+          50: 8.58,
+          100: 6.69,
+          500: 6.06,
+        },
+      },
+    },
+    material: "CARTÓN ECOLÓGICO",
+    tecnicas: ["SERIGRAFÍA"],
+    areaMarcado: "",
+    colores: [],
+    tallas: [],
+    disponibilidad: "En stock",
+    permisoMtc: "No",
+    esNovedad: false,
+    destacado: false,
+    fotos: [
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1790815874/ardy-import/productos/libreta-natura/foto-1.png", alt: "LIBRETA NATURA" },
+    ],
+    seoTitle: "Libreta Natura personalizada | ARDY Import",
+    seoMeta: "Libreta Natura de cartón anillada ecológica con posit y lapicero. Para empresas, reuniones, capacitaciones, regalos corporativos. Consulta el precio nacionalizado.",
+    palabraClave: "libreta natura personalizada",
+    fechaActualizacion: "2026-10-02",
   },
 ];
