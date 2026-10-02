@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { Producto } from "@/data/productos";
-import { datoValido, formatPrecio, getPrecioDesdeImportacion, getPrecioDesdeNacionalizado, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
+import type { PreciosNacionalizado, Producto } from "@/data/productos";
+import { datoValido, formatPrecio, getPrecioDesdeImportacion, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
 import { EN_BLANCO } from "@/lib/plazos";
 import { construirLinkWhatsApp } from "@/lib/config";
@@ -37,8 +37,11 @@ export function FichaProducto({ producto }: { producto: Producto }) {
     const v = producto.modalidades.nacionalizado?.precios[c];
     return v !== null && v !== undefined && v > 0;
   });
-  const [cantNac, setCantNac] = useState<number>(cantNacDisp[0] ?? 50);
-  const precioDesdeNac = getPrecioDesdeNacionalizado(producto);
+  const [cantNac, setCantNac] = useState<number>(producto.modalidades.nacionalizado?.precioDesde ?? cantNacDisp[0] ?? 50);
+  const precioDesdeNacValor = producto.modalidades.nacionalizado
+    ? producto.modalidades.nacionalizado.precios[producto.modalidades.nacionalizado.precioDesde ?? 50]
+    : null;
+  const precioDesdeNac = precioDesdeNacValor !== null && precioDesdeNacValor > 0 ? precioDesdeNacValor : null;
   const precioUnitNac = producto.modalidades.nacionalizado?.precios[cantNac as (typeof CANTIDADES_NAC)[number]] ?? null;
   const precioTotalNac = precioUnitNac !== null ? precioUnitNac * cantNac : null;
 
@@ -163,6 +166,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
               onCantidad={setCantNac}
               precioDesde={precioDesdeNac}
               precioUnitario={precioUnitNac}
+              preciosPorCantidad={producto.modalidades.nacionalizado?.precios}
               mensajeCotizar={mensajeNac}
               moq={50}
             />
@@ -309,6 +313,7 @@ interface BloqueModalidadProps {
   onCantidad: (c: number) => void;
   precioDesde: number | null;
   precioUnitario: number | null;
+  preciosPorCantidad?: PreciosNacionalizado;
   mensajeCotizar: string;
   moq: number;
 }
@@ -320,6 +325,7 @@ function BloqueModalidad({
   onCantidad,
   precioDesde,
   precioUnitario,
+  preciosPorCantidad,
   mensajeCotizar,
   moq,
 }: BloqueModalidadProps) {
@@ -375,18 +381,21 @@ function BloqueModalidad({
           )}
           {mostrarPrecios && cantidades.length > 1 && (
             <div className="flex flex-col mt-1">
-              {cantidades.map((c) => (
-                <div key={c} className="flex justify-between gap-4 py-2 border-b border-linea-soft text-[15px]">
-                  <span className="text-gris">
-                    {c === cantidades[cantidades.length - 1]
-                      ? `Desde ${c.toLocaleString("es-PE")} unidades`
-                      : `${c.toLocaleString("es-PE")} unidades`}
-                  </span>
-                  {precioUnitario !== null && (
-                    <span className="font-semibold text-marino">{formatPrecio(precioUnitario)}</span>
-                  )}
-                </div>
-              ))}
+              {cantidades.map((c) => {
+                const precioFila = preciosPorCantidad ? preciosPorCantidad[c as keyof PreciosNacionalizado] : precioUnitario;
+                return (
+                  <div key={c} className="flex justify-between gap-4 py-2 border-b border-linea-soft text-[15px]">
+                    <span className="text-gris">
+                      {c === cantidades[cantidades.length - 1]
+                        ? `Desde ${c.toLocaleString("es-PE")} unidades`
+                        : `${c.toLocaleString("es-PE")} unidades`}
+                    </span>
+                    {precioFila !== null && precioFila !== undefined && (
+                      <span className="font-semibold text-marino">{formatPrecio(precioFila)}</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
           <span className="text-[0.8rem] text-gris">Precio referencial sin IGV según cantidad y personalización.</span>
