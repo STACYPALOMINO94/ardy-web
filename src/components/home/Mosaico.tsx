@@ -1,12 +1,8 @@
 import Link from "next/link";
 import { getCategorias } from "@/lib/productos";
-import { CATEGORIAS_MOSAICO_HOME } from "@/lib/categorias";
 
 /**
- * Mosaico del Home: exactamente 6 categorías fijas (ver CATEGORIAS_MOSAICO_HOME),
- * en este orden — no se deriva dinámicamente de todas las categorías del catálogo,
- * a propósito, para que el grid de 2 tarjetas grandes + 4 pequeñas nunca quede
- * con huecos. Las 2 primeras del orden son las tarjetas grandes.
+ * El mosaico muestra las categorías presentes en el catálogo publicado.
  *
  * Tarjeta horizontal: texto a la izquierda (título/contador/link), foto a la
  * derecha en un recuadro redondeado — no es texto-sobre-foto.
@@ -27,24 +23,14 @@ const IMAGENES_CATEGORIAS: Record<string, { src: string; alt: string }> = {
 
 export function Mosaico() {
   const categorias = getCategorias();
-  const porSlug = new Map(categorias.map((c) => [c.slug, c]));
-
-  const tiles = CATEGORIAS_MOSAICO_HOME.map((slug, i) => {
-    const cat = porSlug.get(slug);
-    const nombre = cat?.nombre ?? slug;
-    const cantidad = cat?.cantidad ?? 0;
-    return {
-      slug,
-      href: `/categoria/${slug}`,
-      titulo: nombre,
-      texto:
-        cantidad > 0
-          ? `${cantidad} ${cantidad === 1 ? "modelo disponible" : "modelos disponibles"}.`
-          : "Próximamente en el catálogo.",
-      grande: i < 2,
-      imagen: IMAGENES_CATEGORIAS[slug] ?? null,
-    };
-  });
+  const tiles = categorias.map((cat, i) => ({
+    slug: cat.slug,
+    href: `/categoria/${cat.slug}`,
+    titulo: cat.nombre,
+    texto: `${cat.cantidad} ${cat.cantidad === 1 ? "modelo disponible" : "modelos disponibles"}.`,
+    grande: i < 2,
+    imagen: IMAGENES_CATEGORIAS[cat.slug] ?? null,
+  }));
 
   const grandes = tiles.filter((t) => t.grande);
   const pequenas = tiles.filter((t) => !t.grande);

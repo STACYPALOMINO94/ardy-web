@@ -1,5 +1,7 @@
 "use client";
 
+import { normalizarCategoriaPublica } from "@/lib/categorias";
+
 import { useEffect, useMemo, useState } from "react";
 import type { Producto } from "@/data/productos";
 import type { Categoria } from "@/lib/productos";
@@ -72,7 +74,7 @@ export function CatalogoExplorer({
     let items = productos.filter((p) => {
       if (tab === "tendencias" && !p.destacado) return false;
       if (tab === "nuevos" && !p.esNovedad) return false;
-      if (categoria !== "todas" && categoriaPorSlug.get(categoria) !== p.categoria) return false;
+      if (categoria !== "todas" && categoriaPorSlug.get(categoria) !== normalizarCategoriaPublica(p.categoria)) return false;
       if (disponibilidad !== "todas" && p.disponibilidad !== disponibilidad) return false;
       if (termino) {
         const haystack = `${p.nombre} ${p.descripcionCorta} ${p.categoria} ${p.palabraClave}`.toLowerCase();

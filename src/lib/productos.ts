@@ -1,5 +1,5 @@
 import { productos, type Producto } from "@/data/productos";
-import { CATEGORIAS_OFICIALES } from "./categorias";
+import { normalizarCategoriaPublica } from "./categorias";
 
 export function toSlug(texto: string): string {
   return texto
@@ -17,22 +17,15 @@ export interface Categoria {
   cantidad: number;
 }
 
-/**
- * Las 28 categorías oficiales (ver lib/categorias.ts), con la cantidad de
- * productos que caen en cada una. Se listan TODAS, incluidas las que todavía
- * tienen 0 productos: la taxonomía es fija, no se deriva de los datos.
- */
+/** Categorías públicas presentes en el catálogo publicado, agrupadas por nombre normalizado. */
 export function getCategorias(): Categoria[] {
   const conteos = new Map<string, number>();
   for (const p of productos) {
-    const slug = toSlug(p.categoria);
-    conteos.set(slug, (conteos.get(slug) ?? 0) + 1);
+    if (!datoValido(p.categoria)) continue;
+    const nombre = normalizarCategoriaPublica(p.categoria);
+    conteos.set(nombre, (conteos.get(nombre) ?? 0) + 1);
   }
-  return CATEGORIAS_OFICIALES.map((c) => ({
-    nombre: c.nombre,
-    slug: c.slug,
-    cantidad: conteos.get(c.slug) ?? 0,
-  }));
+  return [...conteos].map(([nombre, cantidad]) => ({ nombre, slug: toSlug(nombre), cantidad }));
 }
 
 /** Productos marcados como destacados (campo editorial `destacado` en productos.ts). */
@@ -113,5 +106,5 @@ export function getProductoPorSlug(slug: string): Producto | undefined {
 }
 
 export function getProductosPorCategoriaSlug(slug: string): Producto[] {
-  return productos.filter((p) => toSlug(p.categoria) === slug);
+  return productos.filter((p) => toSlug(normalizarCategoriaPublica(p.categoria)) === slug);
 }
