@@ -417,7 +417,7 @@ function BloqueModalidad({
         rel="noopener noreferrer"
         className="flex items-center justify-center h-12 rounded-sm bg-ambar text-white font-bold text-[16px] hover:bg-ambar-accent"
       >
-        Cotizar {etiqueta} por WhatsApp
+        {etiqueta === "Nacionalizado" ? "Cotizar precio por WhatsApp" : `Cotizar ${etiqueta} por WhatsApp`}
       </a>
     </div>
   );
