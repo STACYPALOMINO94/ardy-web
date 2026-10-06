@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { PreciosNacionalizado, Producto } from "@/data/productos";
+import type { Producto } from "@/data/productos";
 import { datoValido, formatPrecio, getPrecioDesdeImportacion, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
 import { EN_BLANCO } from "@/lib/plazos";
@@ -151,7 +151,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
               cantidadActual={cantImp}
               onCantidad={setCantImp}
               precioDesde={precioDesdeImp}
-              precioUnitario={precioUnitImp}
+              preciosPorCantidad={producto.modalidades.importacion!.precios}
               mensajeCotizar={mensajeImp}
               moq={producto.moq}
             />
@@ -165,8 +165,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
               cantidadActual={cantNac}
               onCantidad={setCantNac}
               precioDesde={precioDesdeNac}
-              precioUnitario={precioUnitNac}
-              preciosPorCantidad={producto.modalidades.nacionalizado?.precios}
+              preciosPorCantidad={producto.modalidades.nacionalizado!.precios}
               mensajeCotizar={mensajeNac}
               moq={50}
             />
@@ -312,8 +311,7 @@ interface BloqueModalidadProps {
   cantidadActual: number;
   onCantidad: (c: number) => void;
   precioDesde: number | null;
-  precioUnitario: number | null;
-  preciosPorCantidad?: PreciosNacionalizado;
+  preciosPorCantidad: Partial<Record<50 | 100 | 500 | 1000, number | null>>;
   mensajeCotizar: string;
   moq: number;
 }
@@ -324,7 +322,6 @@ function BloqueModalidad({
   cantidadActual,
   onCantidad,
   precioDesde,
-  precioUnitario,
   preciosPorCantidad,
   mensajeCotizar,
   moq,
@@ -382,7 +379,8 @@ function BloqueModalidad({
           {mostrarPrecios && cantidades.length > 1 && (
             <div className="flex flex-col mt-1">
               {cantidades.map((c) => {
-                const precioFila = preciosPorCantidad ? preciosPorCantidad[c as keyof PreciosNacionalizado] : precioUnitario;
+                // Cada fila representa su propia escala; nunca reutilizar la selección actual.
+                const precioFila = preciosPorCantidad[c as 50 | 100 | 500 | 1000];
                 return (
                   <div key={c} className="flex justify-between gap-4 py-2 border-b border-linea-soft text-[15px]">
                     <span className="text-gris">
