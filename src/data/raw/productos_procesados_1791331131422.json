@@ -1,0 +1,56 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "abrebotellas-nivelador",
+      "slugsAnteriores": [],
+      "nombre": "Abrebotellas Nivelador",
+      "categoria": "Accesorios y llaveros",
+      "descripcionCorta": "Abrebotellas Nivelador de bambú para accesorios y llaveros",
+      "descripcionLarga": "El destapador de bambú con nivelador es un accesorio original y multifuncional que combina un abrebotellas clásico con un nivel de burbuja integrado. Características principales: Material de madera de bambú natural y mecanismo de metal resistente. Función doble que sirve como destapador de botellas y cuenta con un nivel de burbuja incorporado para verificar superficies. Diseño con estética rústica, ecológica y compacta, ideal para regalos originales, carpintería ligera, asados o uso cotidiano en el hogar. Solicita cotización de importación en Perú.",
+      "moq": 100,
+      "modalidades": {
+        "importacion": {
+          "precios": {
+            "100": 16.22,
+            "500": 11.18,
+            "1000": 10.15
+          }
+        },
+        "nacionalizado": null
+      },
+      "material": "Bambú",
+      "tecnicas": [
+        "SERIGRAFIA",
+        "LASER",
+        "FULL COLOR"
+      ],
+      "areaMarcado": "7 x 3.5  cm",
+      "colores": [],
+      "tallas": [],
+      "disponibilidad": "Importación",
+      "permisoMtc": "No",
+      "esNovedad": true,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791320596/ardy-import/productos/ardy-045/foto-1.jpg",
+          "alt": "Abrebotellas Nivelador"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791320598/ardy-import/productos/ardy-045/foto-2.jpg",
+          "alt": "Abrebotellas Nivelador — imagen 2"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791321794/ardy-import/productos/ardy-045/foto-3.png",
+          "alt": "Abrebotellas Nivelador — imagen 3"
+        }
+      ],
+      "seoTitle": "Abrebotellas Nivelador de Bambú | ARDY Import Perú",
+      "seoMeta": "Compra abrebotellas nivelador de bambú natural con función doble de destapador y nivel de burbuja. Ideal para regalos y accesorios. Solicita importación.",
+      "palabraClave": "abrebotellas nivelador personalizada",
+      "fechaActualizacion": "2026-10-06"
+    }
+  ]
+}
