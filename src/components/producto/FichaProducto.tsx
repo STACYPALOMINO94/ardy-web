@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { Producto } from "@/data/productos";
-import { datoValido, formatPrecio, getPrecioDesdeImportacion, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
+import { datoValido, formatPrecio, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
 import { EN_BLANCO } from "@/lib/plazos";
 import { construirLinkWhatsApp } from "@/lib/config";
@@ -28,7 +28,6 @@ export function FichaProducto({ producto }: { producto: Producto }) {
     return v !== null && v !== undefined && v > 0;
   });
   const [cantImp, setCantImp] = useState<number>(cantImpDisp[0] ?? producto.moq);
-  const precioDesdeImp = getPrecioDesdeImportacion(producto);
   const precioUnitImp = producto.modalidades.importacion?.precios[cantImp as (typeof CANTIDADES_IMP)[number]] ?? null;
   const precioTotalImp = precioUnitImp !== null ? precioUnitImp * cantImp : null;
 
@@ -38,10 +37,6 @@ export function FichaProducto({ producto }: { producto: Producto }) {
     return v !== null && v !== undefined && v > 0;
   });
   const [cantNac, setCantNac] = useState<number>(producto.modalidades.nacionalizado?.precioDesde ?? cantNacDisp[0] ?? 50);
-  const precioDesdeNacValor = producto.modalidades.nacionalizado
-    ? producto.modalidades.nacionalizado.precios[producto.modalidades.nacionalizado.precioDesde ?? 50]
-    : null;
-  const precioDesdeNac = precioDesdeNacValor !== null && precioDesdeNacValor > 0 ? precioDesdeNacValor : null;
   const precioUnitNac = producto.modalidades.nacionalizado?.precios[cantNac as (typeof CANTIDADES_NAC)[number]] ?? null;
   const precioTotalNac = precioUnitNac !== null ? precioUnitNac * cantNac : null;
 
@@ -150,7 +145,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
               cantidades={cantImpDisp}
               cantidadActual={cantImp}
               onCantidad={setCantImp}
-              precioDesde={precioDesdeImp}
+              precioDesde={precioUnitImp}
               preciosPorCantidad={producto.modalidades.importacion!.precios}
               mensajeCotizar={mensajeImp}
               moq={producto.moq}
@@ -164,7 +159,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
               cantidades={cantNacDisp}
               cantidadActual={cantNac}
               onCantidad={setCantNac}
-              precioDesde={precioDesdeNac}
+              precioDesde={precioUnitNac}
               preciosPorCantidad={producto.modalidades.nacionalizado!.precios}
               mensajeCotizar={mensajeNac}
               moq={50}
