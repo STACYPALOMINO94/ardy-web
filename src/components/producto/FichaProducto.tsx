@@ -92,7 +92,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
             {bajoProduccion && <Insignia tono="oliva">Bajo producción</Insignia>}
           </div>
 
-          <p className="text-[0.95rem] text-gris leading-relaxed">{producto.descripcionLarga}</p>
+          <p className="text-[0.95rem] text-gris leading-relaxed">{producto.descripcionCorta}</p>
 
           <div className="h-px bg-linea-soft my-1" />
 
@@ -211,7 +211,9 @@ export function FichaProducto({ producto }: { producto: Producto }) {
       <section id="descripcion" className="grid grid-cols-1 md:grid-cols-2 gap-9 items-start py-9 border-b border-linea-soft">
         <div className="flex flex-col gap-4">
           <h2 className="text-marino">Descripción del producto</h2>
-          <p className="text-gris leading-relaxed max-w-[640px]">{producto.descripcionLarga}</p>
+          {datoValido(producto.descripcionLarga) && (
+            <p className="text-gris leading-relaxed max-w-[640px]">{producto.descripcionLarga}</p>
+          )}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {datoValido(producto.material) && <DatoRapido titulo="Material" valor={producto.material} />}
