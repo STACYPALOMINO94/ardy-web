@@ -18,7 +18,7 @@ export function SeccionCarrusel({
 }) {
   if (productos.length === 0) return null;
   return (
-    <section className="mx-auto max-w-[1240px] px-5" id={id} style={{ paddingTop }}>
+    <section className="mx-auto max-w-[1240px] px-5" id={id} style={{ paddingTop, paddingBottom: 64 }}>
       <div className="flex items-baseline justify-between gap-4 border-b-2 border-marino pb-2.5 mb-6">
         <h2>{titulo}</h2>
         {accion}
