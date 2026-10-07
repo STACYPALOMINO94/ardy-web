@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { productos } from "@/data/productos";
 import { getCategorias } from "@/lib/productos";
+import { normalizarCategoriaPublica } from "@/lib/categorias";
 
 /**
  * El mosaico muestra las categorías presentes en el catálogo publicado.
@@ -7,19 +9,21 @@ import { getCategorias } from "@/lib/productos";
  * Tarjeta horizontal: texto a la izquierda (título/contador/link), foto a la
  * derecha en un recuadro redondeado — no es texto-sobre-foto.
  *
- * Foto por categoría: son los assets aprobados del Handoff (image-slots
- * ardy-cat-*, exportados a public/img/home/cat-<slug>.webp) — producto recortado
- * sobre fondo blanco. Las fotos antiguas de public/img/categorias/ (producto
- * sobre fondo azul) NO pertenecen a este diseño y ya no se usan aquí.
+ * Foto por categoría: se toma la primera foto válida de un producto publicado
+ * de esa categoría, directamente desde el catálogo.
  */
-const IMAGENES_CATEGORIAS: Record<string, { src: string; alt: string }> = {
-  tecnologia: { src: "/img/home/cat-tecnologia.webp", alt: "Cargador inalámbrico de bambú" },
-  escritura: { src: "/img/home/cat-escritura.webp", alt: "Lapiceros premium" },
-  "llaveros-accesorios": { src: "/img/home/cat-llaveros-accesorios.webp", alt: "Llaveros corporativos" },
-  "bolsos-organizadores": { src: "/img/home/cat-bolsos-organizadores.webp", alt: "Organizador de viaje" },
-  "deporte-fitness": { src: "/img/home/cat-deporte-fitness.webp", alt: "Tomatodo deportivo" },
-  mascotas: { src: "/img/home/cat-mascotas.webp", alt: "Accesorio para mascotas" },
-};
+
+function imagenCategoria(nombre: string): { src: string; alt: string } | null {
+  if (nombre === "Deporte & Fitness") {
+    return { src: "/img/home/cat-deporte-fitness.webp", alt: "Accesorios deportivos" };
+  }
+
+  const producto = productos.find(
+    (p) => normalizarCategoriaPublica(p.categoria) === nombre && p.fotos[0]?.url && p.fotos[0]?.alt,
+  );
+  if (!producto) return null;
+  return { src: producto.fotos[0].url, alt: producto.fotos[0].alt };
+}
 
 export function Mosaico() {
   const categorias = getCategorias();
@@ -29,7 +33,7 @@ export function Mosaico() {
     titulo: cat.nombre,
     texto: `${cat.cantidad} ${cat.cantidad === 1 ? "modelo disponible" : "modelos disponibles"}.`,
     grande: i < 2,
-    imagen: IMAGENES_CATEGORIAS[cat.slug] ?? null,
+    imagen: imagenCategoria(cat.nombre),
   }));
 
   const grandes = tiles.filter((t) => t.grande);
@@ -90,6 +94,7 @@ function Tarjeta({ tile: t }: { tile: Tile }) {
             src={t.imagen.src}
             alt={t.imagen.alt}
             loading="lazy"
+            referrerPolicy="no-referrer"
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
           />
         )}

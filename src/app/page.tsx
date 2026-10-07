@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getDestacados } from "@/lib/productos";
 import { Slider } from "@/components/home/Slider";
 import { BarraBusqueda } from "@/components/home/BarraBusqueda";
 import { Mosaico } from "@/components/home/Mosaico";
+import { SeccionCarrusel } from "@/components/home/SeccionCarrusel";
 import { TendenciasHome } from "@/components/home/TendenciasHome";
 import { SolucionesHome } from "@/components/home/SolucionesHome";
 import { PasosCompacto } from "@/components/home/PasosCompacto";
@@ -17,6 +19,10 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
+  const productosDestacados = getDestacados().filter(
+    (p) => p.nombre.trim() && p.descripcionCorta.trim() && p.fotos[0]?.url && p.fotos[0]?.alt,
+  );
+
   return (
     <main className="w-full overflow-x-hidden text-marino">
       <h1 className="sr-only">Merchandising importado por vía aérea para eventos con fecha</h1>
@@ -46,6 +52,17 @@ export default function Home() {
       </section>
 
       <TendenciasHome />
+      <SeccionCarrusel
+        id="destacados"
+        titulo="Destacados"
+        accion={
+          <Link href="/productos" className="text-[14px] font-semibold text-ambar-accent">
+            Ver catálogo →
+          </Link>
+        }
+        productos={productosDestacados}
+        paddingTop={64}
+      />
       <SolucionesHome />
       <PasosCompacto />
       <CtaFinal />
