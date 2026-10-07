@@ -1,0 +1,50 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "libreta-natura",
+      "slugsAnteriores": [],
+      "nombre": "LIBRETA NATURA",
+      "categoria": "Papeleria y libretas",
+      "descripcionCorta": "Libreta de cartón anillada ecológica con posit y lapicero, formato A6 con 70 hojas blancas.",
+      "descripcionLarga": "La Libreta Natura es un accesorio de oficina práctico y versátil, diseñado para empresas que buscan un obsequio corporativo funcional para reuniones, capacitaciones, congresos, ferias y welcome packs. Su formato compacto facilita tomar notas y organizar información en cualquier momento. Fabricada con tapa dura ecológica de cartón/papel, incorpora 70 hojas blancas, un lapicero ecológico, notas adhesivas de colores y banderines marcadores, ofreciendo una solución completa para el trabajo diario, el estudio y la planificación de actividades. Producto nacionalizado disponible para el mercado peruano.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 50,
+          "precios": {
+            "50": 8.58,
+            "100": 6.69,
+            "500": 6.06
+          }
+        }
+      },
+      "material": "CARTÓN ECOLÓGICO",
+      "tecnicas": [
+        "SERIGRAFÍA"
+      ],
+      "areaMarcado": "",
+      "colores": [
+        "kraft",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": "No",
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1790815874/ardy-import/productos/libreta-natura/foto-1.png",
+          "alt": "LIBRETA NATURA"
+        }
+      ],
+      "seoTitle": "Libreta Natura Ecológica Publicitaria con Lapicero y Post It | ARDY Import Perú",
+      "seoMeta": "Compra libreta Natura ecológica de cartón anillada con lapicero, post-it y banderines. Ideal para merchandising corporativo en Perú. Stock nacionalizado.",
+      "palabraClave": "libreta natura ecológica",
+      "fechaActualizacion": "2026-10-07"
+    }
+  ]
+}
