@@ -1,6 +1,7 @@
 import type { Producto } from "@/data/productos";
 import { SITE_URL, SITE_NOMBRE } from "./config";
 import { datoValido } from "./productos";
+import { getSku } from "./product-sku";
 
 export function organizationJsonLd() {
   return {
@@ -38,7 +39,7 @@ export function productoJsonLd(producto: Producto) {
     name: producto.nombre,
     description: producto.descripcionLarga,
     category: producto.categoria,
-    sku: String(producto.id),
+    sku: getSku(producto),
     // Un campo público sin dato real (ej. "[SIN_DATO]" del pipeline) nunca se
     // publica en datos estructurados que Google puede indexar.
     ...(datoValido(producto.material) ? { material: producto.material } : {}),

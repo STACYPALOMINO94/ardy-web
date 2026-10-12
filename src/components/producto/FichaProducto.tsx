@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { Producto } from "@/data/productos";
 import { datoValido, formatPrecio, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
+import { getSku, hasNationalStock } from "@/lib/product-sku";
 import { EN_BLANCO } from "@/lib/plazos";
 import { construirLinkWhatsApp } from "@/lib/config";
 import { GaleriaProducto } from "./GaleriaProducto";
@@ -86,8 +87,10 @@ export function FichaProducto({ producto }: { producto: Producto }) {
           <h1 className="text-marino text-[clamp(1.75rem,3.4vw,2.25rem)] leading-[1.15] font-bold tracking-[-0.015em]">
             {producto.nombre}
           </h1>
+          <p className="text-[0.8rem] text-gris">SKU: <span className="font-semibold text-marino">{getSku(producto)}</span></p>
 
           <div className="flex flex-wrap gap-1.5">
+            {hasNationalStock(producto) && <Insignia tono="oliva">Stock disponible</Insignia>}
             {producto.esNovedad && <Insignia tono="ambar">Nuevo</Insignia>}
             {bajoProduccion && <Insignia tono="oliva">Bajo producción</Insignia>}
           </div>
@@ -329,6 +332,7 @@ function BloqueModalidad({
   return (
     <div className="flex flex-col gap-3 pt-4 border-t border-linea-soft">
       <span className="text-[0.7rem] font-bold tracking-[0.12em] uppercase text-oliva">{etiqueta}</span>
+      {etiqueta === "Nacionalizado" && <span className="text-[0.8rem] font-semibold text-oliva">Stock disponible</span>}
 
       {/* Selector de cantidades */}
       <div className="flex flex-col gap-2">

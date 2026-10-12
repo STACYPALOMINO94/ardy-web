@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { Producto } from "@/data/productos";
 import { formatPrecio, getPrecioDesde } from "@/lib/productos";
+import { getSku, hasNationalStock } from "@/lib/product-sku";
 import { getColorHex } from "@/lib/colores";
 import { useCotizacion } from "@/components/cotizacion/CotizacionContext";
 import { IconoCategoria } from "./IconoCategoria";
@@ -22,6 +23,11 @@ export function ProductCard({ producto }: { producto: Producto }) {
         aria-label={`Ver ficha de ${producto.nombre}`}
       >
         <div className="absolute top-2.5 left-2.5 flex flex-col gap-1.5 items-start z-[3]">
+          {hasNationalStock(producto) && (
+            <span className="text-[0.66rem] px-2 py-[3px] font-bold tracking-[0.04em] bg-oliva text-white">
+              Stock disponible
+            </span>
+          )}
           {producto.esNovedad && (
             <span className="text-[0.66rem] px-2 py-[3px] font-bold tracking-[0.04em] bg-ambar text-marino-3">
               Nuevo
@@ -89,6 +95,7 @@ export function ProductCard({ producto }: { producto: Producto }) {
           {producto.categoria.toUpperCase()}
         </p>
         <h3 className="text-marino mb-1.5 leading-snug font-semibold">{producto.nombre}</h3>
+        <p className="text-[0.72rem] text-gris mb-1.5">SKU: {getSku(producto)}</p>
         <p className="text-[0.81rem] text-gris leading-snug mb-2.5">{producto.descripcionCorta}</p>
         <div className="text-[0.8rem] border-t border-linea pt-2.5 mt-auto flex justify-between gap-2 text-gris">
           <span>
