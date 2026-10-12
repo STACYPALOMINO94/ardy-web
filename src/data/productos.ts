@@ -675,9 +675,9 @@ export const productos: Producto[] = [
     modalidades: {
       importacion: {
         precios: {
-          100: 14.05,
-          500: 5.64,
-          1000: 4.31,
+          100: 9.89,
+          500: 5.46,
+          1000: 3.75,
         },
       },
       nacionalizado: null,
