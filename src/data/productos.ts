@@ -787,8 +787,8 @@ export const productos: Producto[] = [
     modalidades: {
       importacion: {
         precios: {
-          100: 17.87,
-          500: 4.95,
+          100: 5.37,
+          500: 3.97,
           1000: 4.03,
         },
       },
