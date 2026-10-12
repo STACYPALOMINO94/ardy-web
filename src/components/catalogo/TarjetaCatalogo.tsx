@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Producto } from "@/data/productos";
 import { formatPrecio, getPrecioDesde } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
+import { getSku, hasNationalStock } from "@/lib/product-sku";
 
 export function TarjetaCatalogo({ producto }: { producto: Producto }) {
   const precioDesde = getPrecioDesde(producto);
@@ -38,6 +39,10 @@ export function TarjetaCatalogo({ producto }: { producto: Producto }) {
           </div>
         )}
         <h3 className="text-marino font-bold text-[17px] leading-[1.35] tracking-[-0.015em]">{producto.nombre}</h3>
+        <p className="text-[12px] text-gris">SKU: {getSku(producto)}</p>
+        {hasNationalStock(producto) && (
+          <span className="self-start rounded-sm bg-oliva text-white px-2 py-1 text-[12px] font-semibold">Stock disponible</span>
+        )}
         <div className="flex items-baseline gap-1.5 mt-auto">
           {precioDesde !== null ? (
             <>

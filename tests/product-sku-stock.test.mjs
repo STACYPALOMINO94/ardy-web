@@ -3,6 +3,9 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import { test } from 'node:test';
 import ts from 'typescript';
+import { createRequire } from 'node:module';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { createElement } from 'react';
 const registry = JSON.parse(fs.readFileSync('src/data/product-skus.json','utf8'));
 const catalogueSource = fs.readFileSync('src/data/productos.ts','utf8');
 const products = vm.runInNewContext('(' + catalogueSource.match(/export\s+const\s+productos\s*(?::[^=]+)?=\s*(\[[\s\S]*\]);?\s*$/)[1] + ')');
@@ -33,4 +36,23 @@ test('stock corresponde a Nacionalizado incluso si coexiste con Importación', (
   for (const p of products) assert.equal(hasNationalStock(p), p.modalidades.nacionalizado !== null);
   assert.equal(hasNationalStock({ modalidades:{ importacion:{}, nacionalizado:{} } }), true);
   assert.equal(hasNationalStock({ modalidades:{ importacion:{}, nacionalizado:null } }), false);
+});
+
+test('la tarjeta real del catálogo renderiza SKU y stock por modalidad', () => {
+  const require = createRequire(import.meta.url);
+  const cardSource = fs.readFileSync('src/components/catalogo/TarjetaCatalogo.tsx','utf8');
+  const cardCompiled = ts.transpileModule(cardSource, { compilerOptions:{ module:ts.ModuleKind.CommonJS, esModuleInterop:true, jsx:ts.JsxEmit.ReactJSX } }).outputText;
+  const context = { exports:{}, require: name => {
+    if (name === '@/lib/product-sku') return { getSku, hasNationalStock };
+    if (name === '@/lib/productos') return { getPrecioDesde: () => null, formatPrecio: String };
+    if (name === '@/lib/colores') return { getColorHex: () => '#000' };
+    return require(name);
+  } };
+  vm.runInNewContext(cardCompiled, context);
+  for (const p of products) {
+    const html = renderToStaticMarkup(createElement(context.exports.TarjetaCatalogo,{ producto:p }));
+    assert.ok(html.includes(getSku(p)));
+    assert.ok(html.includes('SKU:'));
+    assert.equal(html.includes('Stock disponible'),hasNationalStock(p));
+  }
 });
