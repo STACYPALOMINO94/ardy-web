@@ -1,0 +1,53 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "pines-personalizados",
+      "slugsAnteriores": [],
+      "nombre": "Pines Personalizados",
+      "categoria": "Accesorios y llaveros",
+      "descripcionCorta": "Pines publicitarios personalizados en metal Zamak con formas exclusivas, sticker full color y resina transparente. Presentación en paquetes de 100 unidades con broche incluido.",
+      "descripcionLarga": "Descubre nuestros pines publicitarios personalizados fabricados en metal Zamak con formas exclusivas, circulares, cuadradas o rectangulares. Cuentan con aplicación de sticker full color cubierto de resina transparente y broche mariposa incluido. Disponibles en tamaños de 2cm, 2.5cm y 3cm, con espesores de 0.6mm y 1mm. Ofrecemos diversos acabados de baños metálicos como oro brillante o mate, níquel brillante o mate, bronce dorado, bronce y cobre. Presentación en paquetes de 100 unidades, ideales para campañas corporativas y merchandising en Perú con un pedido mínimo (MOQ) de 100 unidades.",
+      "moq": 100,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 100,
+          "precios": {
+            "50": null,
+            "100": 7.7,
+            "500": 6.81
+          }
+        }
+      },
+      "material": "Zamak",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": true,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791851571/ardy-import/productos/ardy-052/foto-1.png",
+          "alt": "Pines Personalizados"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791853676/ardy-import/productos/ardy-052/foto-2.webp",
+          "alt": "Pines Personalizados — imagen 2"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791853708/ardy-import/productos/ardy-052/foto-3.webp",
+          "alt": "Pines Personalizados — imagen 3"
+        }
+      ],
+      "seoTitle": "Pines Personalizados de Metal Zamak | ARDY Perú",
+      "seoMeta": "Compra pines personalizados de metal Zamak con resina y acabados metálicos para merchandising en Perú. Pedido mínimo de 100 unidades.",
+      "palabraClave": "pines personalizados en peru",
+      "fechaActualizacion": "2026-10-13"
+    }
+  ]
+}
