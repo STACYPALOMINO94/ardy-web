@@ -826,7 +826,7 @@ export const productos: Producto[] = [
     modalidades: {
       importacion: null,
       nacionalizado: {
-        precioDesde: 50,
+        precioDesde: 100,
         precios: {
           50: null,
           100: 7.7,
