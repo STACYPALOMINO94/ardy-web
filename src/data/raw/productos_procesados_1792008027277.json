@@ -1,0 +1,45 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "llavero-chapa-destapador",
+      "slugsAnteriores": [],
+      "nombre": "Llavero Chapa Destapador",
+      "categoria": "Llaveros & Accesorios",
+      "descripcionCorta": "Llavero chapita de metal galvanizado con destapador. Ideal para merchandising y regalos corporativos en Perú.",
+      "descripcionLarga": "Abre momentos inolvidables con este llavero destapador bañado en níquel mate: tu marca presente en cada brindis. Este llavero chapita de metal galvanizado mide 5 cm e incluye función de destapador. Cuenta con opción de impresión full color para destacar tu marca. Es perfecto para campañas de merchandising y regalos corporativos. Presentación disponible en paquete de 100 unidades.",
+      "moq": 100,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 50,
+          "precios": {
+            "50": 1.44,
+            "100": 1,
+            "500": 0.65
+          }
+        }
+      },
+      "material": "Metal Galvanizado",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [],
+      "tallas": [],
+      "disponibilidad": "Bajo producción",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792005769/ardy-import/productos/ardy-055/foto-1.jpg",
+          "alt": "Llavero Chapa Destapador"
+        }
+      ],
+      "seoTitle": "Llavero Chapa Destapador Metálico para Merchandising | ARDY Perú",
+      "seoMeta": "Compra llaveros chapa destapador de metal galvanizado con impresión full color en Perú. Ideal para regalos corporativos y merchandising. ¡Cotiza hoy!",
+      "palabraClave": "llavero chapa destapador publicitario en Peru",
+      "fechaActualizacion": "2026-10-14"
+    }
+  ]
+}
