@@ -58,19 +58,15 @@ export function getPrecioDesdeImportacion(producto: Producto): number | null {
 }
 
 /**
- * Precio unitario más barato de la modalidad nacionalizado: el tier más alto
- * disponible (> 0). Devuelve null si no hay modalidad nacional o ningún tier
+ * Precio unitario mínimo entre todas las escalas nacionalizadas válidas.
+ * Devuelve null si no hay modalidad nacional o ningún tier
  * tiene precio cargado.
  */
 export function getPrecioDesdeNacionalizado(producto: Producto): number | null {
   const nac = producto.modalidades.nacionalizado;
   if (!nac) return null;
-  const { precios } = nac;
-  for (const c of [500, 100, 50] as const) {
-    const v = precios[c];
-    if (v !== null && v > 0) return v;
-  }
-  return null;
+  const precios = Object.values(nac.precios).filter((v): v is number => typeof v === "number" && Number.isFinite(v) && v > 0);
+  return precios.length ? Math.min(...precios) : null;
 }
 
 /**

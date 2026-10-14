@@ -34,12 +34,12 @@ test("Nacionalizado conserva las tres escalas publicadas", () => {
   );
 });
 
-test("La ficha actualiza Desde con la escala seleccionada y mantiene filas independientes", () => {
+test("La ficha conserva Importación por selección y muestra el mínimo Nacionalizado", () => {
   assert.match(ficha, /preciosPorCantidad=\{producto\.modalidades\.importacion!\.precios\}/);
   assert.match(ficha, /preciosPorCantidad=\{producto\.modalidades\.nacionalizado!\.precios\}/);
   assert.match(ficha, /preciosPorCantidad\[c as 50 \| 100 \| 500 \| 1000\]/);
   assert.doesNotMatch(ficha, /: preciosPorCantidad \? [^:]+: precioUnitario/);
   assert.match(ficha, /precioDesde=\{precioUnitImp\}/);
-  assert.match(ficha, /precioDesde=\{precioUnitNac\}/);
+  assert.match(ficha, /precioDesde=\{getPrecioDesdeNacionalizado\(producto\)\}/);
   assert.match(ficha, /Desde \{formatPrecio\(precioDesde!\)\}/);
 });

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import type { Producto } from "@/data/productos";
-import { datoValido, formatPrecio, getProductosPorCategoriaSlug, toSlug } from "@/lib/productos";
+import { datoValido, formatPrecio, getProductosPorCategoriaSlug, getPrecioDesdeNacionalizado, toSlug } from "@/lib/productos";
 import { getColorHex } from "@/lib/colores";
 import { getSku, hasNationalStock } from "@/lib/product-sku";
 import { EN_BLANCO } from "@/lib/plazos";
@@ -162,7 +162,7 @@ export function FichaProducto({ producto }: { producto: Producto }) {
               cantidades={cantNacDisp}
               cantidadActual={cantNac}
               onCantidad={setCantNac}
-              precioDesde={precioUnitNac}
+              precioDesde={getPrecioDesdeNacionalizado(producto)}
               preciosPorCantidad={producto.modalidades.nacionalizado!.precios}
               mensajeCotizar={mensajeNac}
               moq={50}
@@ -367,6 +367,9 @@ function BloqueModalidad({
           <span className="text-marino text-[1.25rem] font-extrabold tracking-[-0.01em]">
             Desde {formatPrecio(precioDesde!)} <span className="text-[0.85rem] font-normal text-gris">/ unidad</span>
           </span>
+          {etiqueta === "Nacionalizado" && preciosPorCantidad[cantidadActual as 50 | 100 | 500] != null && preciosPorCantidad[cantidadActual as 50 | 100 | 500] !== precioDesde && (
+            <span className="text-[0.82rem] text-gris">Para {cantidadActual.toLocaleString("es-PE")} unidades: {formatPrecio(preciosPorCantidad[cantidadActual as 50 | 100 | 500]!)} / unidad</span>
+          )}
           {cantidades.length > 1 && (
             <button
               type="button"
