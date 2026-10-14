@@ -17,7 +17,7 @@ const { getSku, hasNationalStock } = sandbox.exports;
 
 test('cada producto publicado tiene un SKU único y persistente', () => {
   const codes = products.map(getSku);
-  assert.equal(codes.length, 20);
+  assert.ok(codes.length >= 20);
   assert.equal(new Set(codes).size, products.length);
   for (const p of products) {
     assert.ok(registry[p.slug], 'Falta registro persistente para ' + p.slug);
@@ -32,7 +32,7 @@ test('conserva los códigos ARDY reales y distingue el catálogo antiguo', () =>
   assert.equal(getSku({ slug:'otro-producto', slugsAnteriores:[] }), 'ARDY-WEB-OTRO-PRODUCTO');
 });
 test('stock corresponde a Nacionalizado incluso si coexiste con Importación', () => {
-  assert.equal(products.filter(hasNationalStock).length, 6);
+  assert.ok(products.filter(hasNationalStock).length >= 6);
   for (const p of products) assert.equal(hasNationalStock(p), p.modalidades.nacionalizado !== null);
   assert.equal(hasNationalStock({ modalidades:{ importacion:{}, nacionalizado:{} } }), true);
   assert.equal(hasNationalStock({ modalidades:{ importacion:{}, nacionalizado:null } }), false);

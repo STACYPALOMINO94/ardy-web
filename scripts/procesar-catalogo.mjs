@@ -388,11 +388,11 @@ const CLAVES_PRODUCTO_V2_REQUERIDAS = [
   "esNovedad", "destacado", "fotos", "seoTitle", "seoMeta", "palabraClave", "fechaActualizacion",
 ];
 // "presentaciones" es opcional — se incluye solo si el producto la trae.
-const CLAVE_OPCIONAL = "presentaciones";
+const CLAVES_OPCIONALES = ["presentaciones", "sku"];
 
 function productoPublicado(p) {
   const faltan = CLAVES_PRODUCTO_V2_REQUERIDAS.filter((k) => !(k in p));
-  const clavesPermitidas = [...CLAVES_PRODUCTO_V2_REQUERIDAS, CLAVE_OPCIONAL];
+  const clavesPermitidas = [...CLAVES_PRODUCTO_V2_REQUERIDAS, ...CLAVES_OPCIONALES];
   const sobran = Object.keys(p).filter((k) => !clavesPermitidas.includes(k));
   if (faltan.length || sobran.length || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(p.slug || "")) {
     throw new Error(
@@ -400,7 +400,8 @@ function productoPublicado(p) {
     );
   }
   const resultado = Object.fromEntries(CLAVES_PRODUCTO_V2_REQUERIDAS.map((k) => [k, p[k]]));
-  if (CLAVE_OPCIONAL in p) resultado[CLAVE_OPCIONAL] = p[CLAVE_OPCIONAL];
+  if ("sku" in p && (typeof p.sku !== "string" || !/^ARDY-\d{3}$/.test(p.sku))) throw new Error("SKU Product ARDY inválido");
+  for (const key of CLAVES_OPCIONALES) if (key in p) resultado[key] = p[key];
   return resultado;
 }
 
@@ -440,6 +441,7 @@ export interface ModalidadNacionalizado {
 }
 
 export interface Producto {
+  sku?: string;
   id: number;
   slug: string;
   slugsAnteriores: string[];
@@ -520,7 +522,8 @@ function mergeProductos(existentes, nuevos) {
       agregados++;
       console.log(`  + Nuevo: ${p.nombre} (${p.slug})`);
     }
-    mapa.set(p.slug, p);
+    const skuAnterior = mapa.get(p.slug)?.sku;
+    mapa.set(p.slug, { ...p, ...(!p.sku && skuAnterior ? { sku: skuAnterior } : {}) });
   }
 
   console.log(`\nResumen merge: ${reemplazados} reemplazados, ${agregados} nuevos.`);

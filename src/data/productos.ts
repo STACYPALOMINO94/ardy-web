@@ -33,6 +33,7 @@ export interface ModalidadNacionalizado {
 }
 
 export interface Producto {
+  sku?: string;
   id: number;
   slug: string;
   /** Slugs anteriores de este producto. El pipeline genera un redirect 301 desde cada uno al slug actual. */
