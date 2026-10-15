@@ -1,0 +1,63 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "botella-de-agua-para-mascotas",
+      "slugsAnteriores": [],
+      "nombre": "Botella de agua para Mascotas",
+      "categoria": "Mascotas",
+      "descripcionCorta": "Dispensador y alimentador portátil multifuncional de agua diseñado especialmente para mascotas (perros y gatos) durante caminatas, viajes o actividades al aire libre.",
+      "descripcionLarga": "¡Mantén a tu engreído siempre hidratado en cada aventura! Esta innovadora botella portátil combina un contenedor de agua con un plato de silicona flexible e inodoro que se despliega instantáneamente en forma de hoja para que tu perro o gato beba de manera natural y cómoda. Su diseño compacto, ligero y seguro evita salpicaduras y desperdicios, permitiendo retornar el agua no consumida directamente al envase. Además, incluye una práctica correa de sujeción para colgarla en tu mochila o muñeca con total facilidad.\n\nMedidas: 9 cm\n\nCapacidad: 285 ml",
+      "moq": 150,
+      "modalidades": {
+        "importacion": {
+          "precios": {
+            "100": 25.52,
+            "500": 16,
+            "1000": 15.81
+          }
+        },
+        "nacionalizado": null
+      },
+      "material": "Plástico + Silicona",
+      "tecnicas": [
+        "SERIGRAFÍA"
+      ],
+      "areaMarcado": "",
+      "colores": [
+        "Rosado",
+        "Verde",
+        "Lila"
+      ],
+      "tallas": [],
+      "disponibilidad": "Importación",
+      "permisoMtc": "No",
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792100800/ardy-historico/productos/ardy-021/foto-1.webp",
+          "alt": "Botella de agua para Mascotas"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1790787204/ardy-historico/productos/ardy-021/foto-2.jpg",
+          "alt": "Botella de agua para mascotas, vaso de agua portátil para uso en exteriores, dispensador de agua plegable para exteriores, dispositivo para alimentar y beber agua para gatos y perros. — imagen 2"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792100189/ardy-historico/productos/ardy-021/foto-3.jpg",
+          "alt": "Botella de agua para Mascotas — imagen 3"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792100203/ardy-historico/productos/ardy-021/foto-4.jpg",
+          "alt": "Botella de agua para Mascotas — imagen 4"
+        }
+      ],
+      "seoTitle": "Botella de Agua para Mascotas al por Mayor en Perú | ARDY Import",
+      "seoMeta": "Compra botellas de agua portátiles para mascotas al por mayor en Perú. Dispensador con plato de silicona ideal para perros y gatos. ¡Cotiza aquí!",
+      "palabraClave": "botella de agua para mascotas al por mayor en peru",
+      "fechaActualizacion": "2026-10-15",
+      "sku": "ARDY-021"
+    }
+  ]
+}
