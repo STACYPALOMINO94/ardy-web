@@ -1,0 +1,53 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "auriculares-bluetooth-i7mini",
+      "slugsAnteriores": [],
+      "nombre": "Auriculares Bluetooth i7mini",
+      "categoria": "Tecnología",
+      "descripcionCorta": "Auriculares Bluetooth i7mini con conectividad inalámbrica y alcance de hasta 10 metros, fabricados en plástico y metal. Disponible para importación B2B en Perú.",
+      "descripcionLarga": "Adquiere los auriculares Bluetooth i7mini para proyectos de tecnología y merchandising corporativo. Cuentan con conectividad Bluetooth 4.2 o 5.0 según la placa interna y ofrecen un alcance de hasta 10 metros. Están fabricados con una combinación de plástico y metal, con opciones de color en blanco, negro y crema. Producto disponible bajo la modalidad de importación con un pedido mínimo (MOQ) de 100 unidades para todo el Perú.\n\nMedidas: 17 mm",
+      "moq": 100,
+      "modalidades": {
+        "importacion": {
+          "precios": {
+            "100": 17.65,
+            "500": 12.65,
+            "1000": 12.46
+          }
+        },
+        "nacionalizado": null
+      },
+      "material": "Plástico + Metal",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "Blanco",
+        "Negro",
+        "Crema"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": "No",
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1790787221/ardy-historico/productos/ardy-026/foto-1.jpg",
+          "alt": "Auriculares Bluetooth i7mini"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1790787222/ardy-historico/productos/ardy-026/foto-2.jpg",
+          "alt": "Auriculares Bluetooth i7mini — imagen 2"
+        }
+      ],
+      "seoTitle": "Auriculares Bluetooth i7mini al por Mayor en Perú | ARDY Import",
+      "seoMeta": "Compra auriculares Bluetooth i7mini de plástico y metal con alcance de 10 metros. Importación B2B disponible para empresas en Perú. ¡Conoce el MOQ!",
+      "palabraClave": "auriculares bluetooth i7mini en Peru",
+      "fechaActualizacion": "2026-10-15",
+      "sku": "ARDY-026"
+    }
+  ]
+}
