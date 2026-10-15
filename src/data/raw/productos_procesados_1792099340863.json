@@ -1,0 +1,70 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "placa-antiperdida-para-mascotas",
+      "slugsAnteriores": [],
+      "nombre": "Placa Antipérdida para Mascotas",
+      "categoria": "Mascotas",
+      "descripcionCorta": "Placa Antipérdida para Mascotas de acero",
+      "descripcionLarga": "Placa Antipérdida para Mascotas. Placa de Identificación de Acero Inoxidable Forma de Hueso Huella de Pata Hueca Etiqueta de Perro Colgante Anti-pérdida para Perros Gatos Solicita cotización de importación.\n\nMedidas: Tamaño pequeño 40*21*1.8,Tamaño mediano 45*25*1.8,Tamaño grande 50*28*1.8",
+      "moq": 500,
+      "modalidades": {
+        "importacion": {
+          "precios": {
+            "100": 6.12,
+            "500": 4.13,
+            "1000": 4.19
+          }
+        },
+        "nacionalizado": null
+      },
+      "material": "Acero",
+      "tecnicas": [
+        "LÁSER",
+        "UV",
+        "STICKER DTF"
+      ],
+      "areaMarcado": "",
+      "colores": [
+        "Negro",
+        "Blanco",
+        "Gris",
+        "Rosado Plata"
+      ],
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "disponibilidad": "En stock",
+      "permisoMtc": "No",
+      "esNovedad": true,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791480268/ardy-import/productos/ardy-051/foto-1.jpg",
+          "alt": "Placa Antipérdida para Mascotas"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791480270/ardy-import/productos/ardy-051/foto-2.jpg",
+          "alt": "Placa Antipérdida para Mascotas — imagen 2"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791480273/ardy-import/productos/ardy-051/foto-3.jpg",
+          "alt": "Placa Antipérdida para Mascotas — imagen 3"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791480275/ardy-import/productos/ardy-051/foto-4.jpg",
+          "alt": "Placa Antipérdida para Mascotas — imagen 4"
+        }
+      ],
+      "seoTitle": "Placa Antipérdida para Mascotas personalizada | ARDY Import",
+      "seoMeta": "Placa Antipérdida para Mascotas antipérdida para mascotas de acero. Solicita cotización de importación.",
+      "palabraClave": "placa antiperdida para mascotas personalizada",
+      "fechaActualizacion": "2026-10-15",
+      "sku": "ARDY-051"
+    }
+  ]
+}
