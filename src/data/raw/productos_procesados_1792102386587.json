@@ -1,0 +1,58 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "placa-de-identificacion-para-gatos",
+      "slugsAnteriores": [],
+      "nombre": "Placa de identificación para gatos",
+      "categoria": "Mascotas",
+      "descripcionCorta": "Placa de identificación para gatos fabricada en acero inoxidable y titanio. Diseño en forma de cabeza de gato con resistencia superior y opción de grabado láser.",
+      "descripcionLarga": "¡Protección y estilo para los engreídos de la casa! Estas placas de identificación combinan un diseño minimalista y tierno en forma de cabeza de gato con una resistencia excepcional. Fabricadas en acero inoxidable y acero de titanio, garantizan una alta durabilidad contra golpes, juegos y arañazos, manteniendo su brillo original sin oxidarse. Son la superficie perfecta para realizar grabados en bajo relieve o láser de nombres, números de contacto o códigos QR, asegurando que tu mascota siempre regrese a casa con total seguridad. Disponible para el mercado B2B en Perú.\n\nMedidas: 2.8 cm",
+      "moq": 100,
+      "modalidades": {
+        "importacion": {
+          "precios": {
+            "100": 5.41,
+            "500": 2.49,
+            "1000": 2.33
+          }
+        },
+        "nacionalizado": null
+      },
+      "material": "Acero",
+      "tecnicas": [
+        "LÁSER"
+      ],
+      "areaMarcado": "",
+      "colores": [
+        "Negro",
+        "Azul",
+        "Gris",
+        "Dorado"
+      ],
+      "tallas": [
+        "Espesor 1.7 mm"
+      ],
+      "disponibilidad": "Importación",
+      "permisoMtc": "No",
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792102182/ardy-historico/productos/ardy-019/foto-1.webp",
+          "alt": "Placa de identificación para gatos"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792102140/ardy-historico/productos/ardy-019/foto-2.jpg",
+          "alt": "Placa de identificación para gatos — imagen 2"
+        }
+      ],
+      "seoTitle": "Placa de Identificación para Gatos al por Mayor en Perú | ARDY Import",
+      "seoMeta": "Adquiere placas de identificación para gatos de acero inoxidable y titanio al por mayor en Perú. Resistentes, con diseño de cabeza de gato y grabados láser.",
+      "palabraClave": "placa de identificacion para gatos al por mayor en peru",
+      "fechaActualizacion": "2026-10-15",
+      "sku": "ARDY-019"
+    }
+  ]
+}
