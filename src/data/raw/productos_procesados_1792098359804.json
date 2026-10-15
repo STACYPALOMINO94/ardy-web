@@ -1,0 +1,71 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "bandana-para-mascotas",
+      "slugsAnteriores": [],
+      "nombre": "BANDANA PARA MASCOTAS",
+      "categoria": "Mascotas",
+      "descripcionCorta": "Bandanas triangulares y pañoletas para perros y gatos en tallas S, M y L. Fabricadas en poliéster con opciones de personalización por serigrafía y DTF textil.",
+      "descripcionLarga": "Adquiere bandanas para mascotas al por mayor en Perú. Estas pañoletas o baberos triangulares están diseñados con patrones impresos para perros y gatos de todos los tamaños, disponibles en tallas S, M y L. Fabricadas en material de poliéster, ofrecen compatibilidad con técnicas de personalización como serigrafía y DTF textil para integrar la identidad de tu marca o negocio.\n\nMedidas: 75 x 52 cm, 68 x 45 x 45 cm, 50 x 35 x 35 cm",
+      "moq": 100,
+      "modalidades": {
+        "importacion": {
+          "precios": {
+            "100": 6.23,
+            "500": 3.61,
+            "1000": 2.71
+          }
+        },
+        "nacionalizado": null
+      },
+      "material": "Poliester",
+      "tecnicas": [
+        "SERIGRAFÍA",
+        "DTF TEXTIL"
+      ],
+      "areaMarcado": "",
+      "colores": [
+        "Negro",
+        "Rojo",
+        "Amarillo",
+        "Azul",
+        "Verde",
+        "Blanco"
+      ],
+      "tallas": [
+        "S",
+        "M",
+        "L"
+      ],
+      "disponibilidad": "Importación",
+      "permisoMtc": "No",
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791156631/ardy-import/productos/ardy-018/foto-1.png",
+          "alt": "BANDANA PARA MASCOTAS"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791470808/ardy-import/productos/ardy-018/foto-2.jpg",
+          "alt": "BANDANA PARA MASCOTAS  — imagen 2"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791470834/ardy-import/productos/ardy-018/foto-3.jpg",
+          "alt": "BANDANA PARA MASCOTAS  — imagen 3"
+        },
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791470896/ardy-import/productos/ardy-018/foto-4.jpg",
+          "alt": "BANDANA PARA MASCOTAS  — imagen 4"
+        }
+      ],
+      "seoTitle": "Bandana para Mascotas al por Mayor en Perú | ARDY Import",
+      "seoMeta": "Compra bandanas para mascotas al por mayor en Perú. Pañoletas triangulares de poliéster en tallas S, M, L con opciones de serigrafía y DTF textil.",
+      "palabraClave": "bandana para mascotas al por mayor en peru",
+      "fechaActualizacion": "2026-10-15",
+      "sku": "ARDY-018"
+    }
+  ]
+}
