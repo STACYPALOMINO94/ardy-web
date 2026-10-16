@@ -786,6 +786,7 @@ export const productos: Producto[] = [
     seoMeta: "Adquiere frisbees colapsibles publicitarios para merchandising corporativo y campañas en Perú. Disponible en varios colores. Pedido mínimo desde 50 unidades.",
     palabraClave: "frisbee colapsible publicitario",
     fechaActualizacion: "2026-10-12",
+    sku: "ARDY-049",
   },
   {
     id: 20,
