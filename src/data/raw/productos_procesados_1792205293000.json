@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "tomatodo-apolo-600-ml",
+      "slugsAnteriores": [],
+      "nombre": "Tomatodo  apolo 600 ml",
+      "categoria": "Bebidas y recipientes",
+      "descripcionCorta": "Tomatodo Apolo de metal con capacidad de 600 ml, disponible en colores negro y plata.",
+      "descripcionLarga": "El tomatodo Apolo 600 ml es un recipiente fabricado en metal, diseñado con una capacidad de 600 ml. Se encuentra disponible en colores negro y plata, adaptándose a requerimientos corporativos y comerciales en el Perú.\n\nMedidas: 74x37x26 cm, 24cm x 6.1, 24.5x7 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 15.58,
+            "100": 13.58,
+            "500": 12.87
+          }
+        }
+      },
+      "material": "metal",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "negro",
+        "plata"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150856/ardy-import/productos/ardy-073/foto-1.png",
+          "alt": "TOMATODO  APOLO 600 ML"
+        }
+      ],
+      "seoTitle": "Tomatodo Apolo 600 ml de Metal | ARDY Import Perú",
+      "seoMeta": "Compra el tomatodo Apolo de 600 ml de metal en colores negro y plata. Disponible para el mercado peruano en ARDY Import.",
+      "palabraClave": "tomatodo apolo 600 ml",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-073"
+    }
+  ]
+}
