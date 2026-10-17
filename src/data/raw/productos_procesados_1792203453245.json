@@ -1,0 +1,51 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "tomatodo-space",
+      "slugsAnteriores": [],
+      "nombre": "TOMATODO SPACE",
+      "categoria": "Bebidas y recipientes",
+      "descripcionCorta": "Tomatodo Space de plástico con capacidad de 700ml. Disponible en colores transparente, negro, rojo y blanco. Pedido mínimo desde 50 unidades.",
+      "descripcionLarga": "Adquiere el Tomatodo Space fabricado en plástico, con una capacidad de 700ml y dimensiones de 24cm x 6.7cm. Este recipiente para bebidas está disponible en colores transparente, negro, rojo y blanco. Producto nacionalizado ideal para requerimientos corporativos y comerciales con un pedido mínimo (MOQ) de 50 unidades.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 11.33,
+            "100": 9.2,
+            "500": 8.7
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "Transparente",
+        "Negro",
+        "Rojo",
+        "Blanco"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1790823994/ardy-import/productos/ardy-031/foto-1.png",
+          "alt": "TOMATODO SPACE"
+        }
+      ],
+      "seoTitle": "Tomatodo Space de Plástico 700ml | ARDY Import Perú",
+      "seoMeta": "Compra Tomatodo Space de plástico con capacidad de 700ml en Perú. Stock disponible para empresas desde 50 unidades. Colores transparente, negro, rojo y blanco.",
+      "palabraClave": "Tomatodo space personalizado",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-031"
+    }
+  ]
+}
