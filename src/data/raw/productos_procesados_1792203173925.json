@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "llavero-rectangular-sumaq",
+      "slugsAnteriores": [],
+      "nombre": "Llavero rectangular sumaq",
+      "categoria": "Accesorios y llaveros",
+      "descripcionCorta": "Llavero rectangular sumaq de metal y madera en color bambú.",
+      "descripcionLarga": "Llavero rectangular sumaq fabricado en metal y madera. Disponible en color bambú con medidas de 7.3 cm x 4 cm. Una opción adecuada para campañas de merchandising y accesorios corporativos en el mercado peruano.\n\nMedidas: 7.3 cm x 4 cm, 45x29x18.5 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 7.88,
+            "100": 5.88,
+            "500": 5.17
+          }
+        }
+      },
+      "material": "metal, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791422850/ardy-import/productos/ardy-046/foto-1.png",
+          "alt": "LLAVERO RECTANGULAR SUMAQ"
+        }
+      ],
+      "seoTitle": "Llavero Rectangular Sumaq personalizada | ARDY Import",
+      "seoMeta": "Llavero Rectangular Sumaq rectangular sumaq de metal, madera para accesorios y llaveros. Consulta el precio nacionalizado.",
+      "palabraClave": "llavero rectangular sumaq personalizada",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-046"
+    }
+  ]
+}
