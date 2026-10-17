@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "resaltador-manotas-xl",
+      "slugsAnteriores": [],
+      "nombre": "Resaltador manotas xl",
+      "categoria": "Escritura",
+      "descripcionCorta": "Resaltador Manotas XL fabricado en plástico con medidas de 10.8cm x 9cm, ideal para oficinas y artículos de escritura.",
+      "descripcionLarga": "El Resaltador Manotas XL es un producto de la categoría de escritura fabricado en material plástico. Cuenta con unas medidas de unidad de 10.8cm x 9cm y dimensiones de caja de 51x41x35 cm. Es una alternativa funcional para uso en oficinas, instituciones y proyectos comerciales en el mercado peruano.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 8.04,
+            "100": 6.15,
+            "500": 5.47
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791175496/ardy-import/productos/ardy-039/foto-1.jpg",
+          "alt": "RESALTADOR MANOTAS XL"
+        }
+      ],
+      "seoTitle": "Resaltador Manotas XL de Plástico | ARDY Import Perú",
+      "seoMeta": "Compra Resaltador Manotas XL de plástico para oficinas y merchandising en Perú. Consulta especificaciones y medidas disponibles en ARDY Import.",
+      "palabraClave": "resaltador manotas xl",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-039"
+    }
+  ]
+}
