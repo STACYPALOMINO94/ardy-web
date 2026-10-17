@@ -1,0 +1,52 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "resaltador-torino-eco",
+      "slugsAnteriores": [],
+      "nombre": "RESALTADOR TORINO ECO",
+      "categoria": "Escritura",
+      "descripcionCorta": "Resaltador torino eco para escritura",
+      "descripcionLarga": "MATERIAL: Fibra de trigo MEDIDAS: 12 cm de alto x 2.5 cm de ancho x 1cm ACCESORIO: tapa y caja individual IMPRESION: SERIGRAFIA / UV ACABADO:\nFabricado en fibra de trigo, este resaltador es ideal para empresas educativas, bancos o instituciones que apuestan por lo ecológico y funcional.\nUna opción simple y poderosa para incluir en kits escolares o de oficina. Su diseño y material transmiten responsabilidad con el medio ambiente.\n\nMedidas: 12cm x 2.5cm x 1 cm, 64.50x40x15 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 6.14,
+            "100": 4.25,
+            "500": 3.69
+          }
+        }
+      },
+      "material": "Fibra de trigo",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "amarillo",
+        "azul",
+        "naranja",
+        "rojo",
+        "verde"
+      ],
+      "tallas": [],
+      "disponibilidad": "Bajo producción",
+      "permisoMtc": "No",
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791175488/ardy-import/productos/ardy-035/foto-1.png",
+          "alt": "RESALTADOR TORINO ECO"
+        }
+      ],
+      "seoTitle": "Resaltador Torino Eco personalizada | ARDY Import",
+      "seoMeta": "Resaltador torino eco torino eco para escritura. Para empresas. Consulta el precio nacionalizado.",
+      "palabraClave": "resaltador torino eco personalizado",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-035"
+    }
+  ]
+}
