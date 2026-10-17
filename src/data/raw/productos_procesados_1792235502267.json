@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "tomatodo-prix-sublimable",
+      "slugsAnteriores": [],
+      "nombre": "Tomatodo prix sublimable",
+      "categoria": "Bebidas y recipientes",
+      "descripcionCorta": "Tomatodo Prix sublimable de 600ml fabricado en metal, silicona y plástico.",
+      "descripcionLarga": "Tomatodo Prix sublimable con una capacidad de 600ml. Está fabricado con una combinación de metal, silicona y plástico. Diseñado para proyectos de sublimación y merchandising corporativo en el mercado peruano.\n\nMedidas: 74x27x37 cm, 24.50cm x 6.50, 25.8x7 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 16.72,
+            "100": 14.72,
+            "500": 13.87
+          }
+        }
+      },
+      "material": "metal, silicona, plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "sublimable"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150862/ardy-import/productos/ardy-077/foto-1.png",
+          "alt": "TOMATODO PRIX SUBLIMABLE"
+        }
+      ],
+      "seoTitle": "Tomatodo Prix Sublimable de 600ml en Perú | ARDY Import",
+      "seoMeta": "Tomatodo Prix sublimable de 600ml hecho de metal, silicona y plástico. Producto para merchandising y regalos corporativos en Perú.",
+      "palabraClave": "tomatodo prix sublimable en peru",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-077"
+    }
+  ]
+}
