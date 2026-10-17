@@ -10,9 +10,9 @@ export function TarjetaCatalogo({ producto }: { producto: Producto }) {
   return (
     <Link
       href={`/productos/${producto.slug}`}
-      className="flex flex-col bg-white border border-linea-soft rounded-md shadow-card hover:shadow-card-hover transition-shadow overflow-hidden"
+      className="catalog-card flex flex-col bg-white border border-linea-soft rounded-md shadow-card hover:shadow-card-hover transition-shadow overflow-hidden"
     >
-      <div className="aspect-[4/3] flex items-center justify-center overflow-hidden">
+      <div className="catalog-card-image aspect-[4/3] flex items-center justify-center overflow-hidden">
         {producto.fotos.length > 0 ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -26,9 +26,9 @@ export function TarjetaCatalogo({ producto }: { producto: Producto }) {
           <span className="text-[12px] font-bold tracking-[.14em] text-gris-light uppercase">Foto de producto</span>
         )}
       </div>
-      <div className="p-6 flex flex-col gap-3 flex-1">
+      <div className="catalog-card-content p-6 flex flex-col gap-3 flex-1">
         {producto.colores.length > 0 && (
-          <div className="flex gap-1.5 items-center">
+          <div className="catalog-card-colors flex gap-1.5 items-center">
             {producto.colores.slice(0, 4).map((c) => (
               <span
                 key={c}
@@ -39,11 +39,11 @@ export function TarjetaCatalogo({ producto }: { producto: Producto }) {
           </div>
         )}
         <h3 className="text-marino font-bold text-[17px] leading-[1.35] tracking-[-0.015em]">{producto.nombre}</h3>
-        <p className="text-[12px] text-gris">SKU: {getSku(producto)}</p>
+        <p className="catalog-card-sku text-[12px] text-gris">SKU: {getSku(producto)}</p>
         {hasNationalStock(producto) && (
-          <span className="self-start rounded-sm bg-oliva text-white px-2 py-1 text-[12px] font-semibold">Stock disponible</span>
+          <span className="catalog-card-stock self-start rounded-sm bg-oliva text-white px-2 py-1 text-[12px] font-semibold">Stock disponible</span>
         )}
-        <div className="flex items-baseline gap-1.5 mt-auto">
+        <div className="catalog-card-price flex items-baseline gap-1.5 mt-auto">
           {precioDesde !== null ? (
             <>
               <span className="text-[14px] text-gris">Desde</span>
@@ -53,7 +53,7 @@ export function TarjetaCatalogo({ producto }: { producto: Producto }) {
             <span className="text-marino font-bold text-[18px]">Precio bajo cotización</span>
           )}
         </div>
-        <span className="mt-2 flex items-center justify-center gap-2 text-[14px] font-semibold py-[11px] px-4 rounded-sm bg-marino text-white hover:bg-marino-press">
+        <span className="catalog-card-link mt-2 flex items-center justify-center gap-2 text-[14px] font-semibold py-[11px] px-4 rounded-sm bg-marino text-white hover:bg-marino-press">
           Ver ficha →
         </span>
       </div>

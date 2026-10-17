@@ -14,11 +14,11 @@ export function BusquedaFotoWhatsApp() {
   const tieneFoto = existsSync(RUTA_FOTO);
 
   return (
-    <section className="bg-sand border-b border-linea-soft">
-      <div className="mx-auto max-w-[1240px] px-8 pt-4 pb-12">
-        <span className="text-[12px] leading-[1.2] font-bold tracking-[.14em] text-oliva uppercase">Productos</span>
-        <div className="mt-2 grid grid-cols-1 md:grid-cols-[1.7fr_1fr] gap-8 items-center">
-          <div className="overflow-hidden self-end -ml-8 -mt-3 -mb-12" style={{ aspectRatio: "1.76" }}>
+    <section className="catalog-photo-search bg-sand border-b border-linea-soft">
+      <div className="catalog-photo-inner mx-auto max-w-[1240px] px-8 pt-4 pb-12">
+        <span className="catalog-photo-eyebrow text-[12px] leading-[1.2] font-bold tracking-[.14em] text-oliva uppercase">Productos</span>
+        <div className="catalog-photo-grid mt-2 grid grid-cols-1 md:grid-cols-[1.7fr_1fr] gap-8 items-center">
+          <div className="catalog-photo-image overflow-hidden self-end -ml-8 -mt-3 -mb-12" style={{ aspectRatio: "1.76" }}>
             {tieneFoto ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -33,12 +33,13 @@ export function BusquedaFotoWhatsApp() {
               </span>
             )}
           </div>
-          <div className="flex flex-col gap-4 border-l border-linea-fuerte pl-12">
+          <div className="catalog-photo-copy flex flex-col gap-4 border-l border-linea-fuerte pl-12">
             <h1 className="text-marino text-[clamp(2rem,4.5vw,3rem)] leading-[1.15] font-bold tracking-[-0.015em]">
-              Búsqueda por WhatsApp
+              <span className="catalog-desktop-text">Búsqueda por WhatsApp</span>
+              <span className="catalog-mobile-text">¿Buscas otro producto?</span>
             </h1>
             <p className="text-gris text-[18px] leading-[1.65] max-w-[420px]">Envíanos la foto y te ayudamos a encontrarlo.</p>
-            <div className="mt-2">
+            <div className="catalog-photo-action mt-2">
               <a
                 href={construirLinkWhatsApp("Hola, quiero enviarles una foto de un producto que estoy buscando.")}
                 target="_blank"

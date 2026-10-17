@@ -3,6 +3,7 @@ import { productos } from "@/data/productos";
 import { getCategorias } from "@/lib/productos";
 import { CatalogoExplorer } from "@/components/catalogo/CatalogoExplorer";
 import { BusquedaFotoWhatsApp } from "@/components/catalogo/BusquedaFotoWhatsApp";
+import "./productos-responsive.css";
 
 export const metadata: Metadata = {
   title: "Catálogo de merchandising personalizado",
@@ -14,7 +15,7 @@ export default function ProductosPage() {
   const categorias = getCategorias();
 
   return (
-    <main>
+    <main className="catalogo-page">
       <BusquedaFotoWhatsApp />
       <CatalogoExplorer productos={productos} categorias={categorias} />
     </main>

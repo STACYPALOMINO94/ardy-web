@@ -50,6 +50,7 @@ export function CatalogoExplorer({
   const [orden, setOrden] = useState<Orden>("recientes");
   const [busqueda, setBusqueda] = useState("");
   const [pagina, setPagina] = useState(1);
+  const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
 
   // "q" en la URL viene de la barra de búsqueda del Home (/productos?q=...). Se
   // lee con window.location en un efecto (no useSearchParams) para que el grid
@@ -101,10 +102,10 @@ export function CatalogoExplorer({
   const items = filtrados.slice((paginaActual - 1) * POR_PAGINA, paginaActual * POR_PAGINA);
 
   return (
-    <div className="mx-auto max-w-[1240px] px-8">
-      <section className="pt-12">
-        <form onSubmit={(e) => e.preventDefault()} className="flex gap-3 items-stretch">
-          <div className="flex-1 flex items-center gap-4 bg-white border border-linea-fuerte rounded-sm px-6 shadow-hairline">
+    <div className="catalog-explorer mx-auto max-w-[1240px] px-8">
+      <section className="catalog-search-section pt-12">
+        <form onSubmit={(e) => e.preventDefault()} className="catalog-search-form flex gap-3 items-stretch">
+          <div className="catalog-search-input flex-1 flex items-center gap-4 bg-white border border-linea-fuerte rounded-sm px-6 shadow-hairline">
             <label htmlFor="busqueda-catalogo" className="sr-only">
               Buscar producto
             </label>
@@ -113,29 +114,32 @@ export function CatalogoExplorer({
               type="search"
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
-              placeholder="Busca por producto, material o uso (ej. lapicero, botella térmica, mochila)"
+              placeholder="Buscar producto..."
               className="flex-1 border-none outline-none bg-transparent text-[16px] text-marino py-5"
             />
           </div>
           <button
             type="submit"
+            aria-label="Buscar"
             className="min-w-[120px] px-[28px] py-[15px] rounded-sm bg-marino text-white font-semibold text-[16px] hover:bg-marino-press"
           >
-            Buscar
+            <span className="catalog-desktop-text">Buscar</span>
+            <svg className="catalog-mobile-text" aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="10.5" cy="10.5" r="7" /><path d="m16 16 5 5" /></svg>
           </button>
         </form>
       </section>
 
-      <section className="pt-8">
-        <div className="flex flex-wrap items-center justify-between gap-6">
-          <div className="flex gap-2 flex-wrap">
+      <section className="catalog-toolbar pt-8">
+        <div className="catalog-toolbar-top flex flex-wrap items-center justify-between gap-6">
+          <div className="catalog-tabs flex gap-2 flex-wrap">
             {TABS.map((t) => (
               <ChipTab key={t.id} activo={tab === t.id} onClick={() => setTab(t.id)}>
-                {t.label}
+                <span className="catalog-desktop-text">{t.label}</span>
+                <span className="catalog-mobile-text">{t.id === "todos" ? "Todos" : t.id === "nuevos" ? "Nuevos" : t.label}</span>
               </ChipTab>
             ))}
           </div>
-          <div className="flex items-center gap-6 flex-wrap">
+          <div className="catalog-sort flex items-center gap-6 flex-wrap">
             <span className="text-[14px] text-gris">
               {filtrados.length} {filtrados.length === 1 ? "producto" : "productos"}
             </span>
@@ -154,7 +158,8 @@ export function CatalogoExplorer({
           </div>
         </div>
 
-        <div className="mt-6 py-6 border-t border-linea-soft flex items-center gap-12 flex-wrap">
+        <button type="button" className="catalog-filter-toggle" aria-expanded={filtrosAbiertos} aria-controls="filtros-catalogo" onClick={() => setFiltrosAbiertos(v => !v)}>Filtros {filtrosAbiertos ? "−" : "+"}</button>
+        <div id="filtros-catalogo" className={`catalog-filters ${filtrosAbiertos ? "is-open" : ""} mt-6 py-6 border-t border-linea-soft flex items-center gap-12 flex-wrap`}>
           {!ocultarFiltroCategoria && (
             <div className="flex items-center gap-3">
               <span className="text-[14px] text-gris">Categoría</span>
@@ -189,21 +194,21 @@ export function CatalogoExplorer({
         </div>
       </section>
 
-      <section className="pt-3 pb-24">
+      <section className="catalog-results pt-3 pb-24">
         {items.length === 0 ? (
           <p className="py-10 text-gris">
             Ningún producto con esos filtros. Prueba quitando uno, o pídenos la búsqueda de sourcing.
           </p>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="catalog-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {items.map((p) => (
                 <TarjetaCatalogo key={p.slug} producto={p} />
               ))}
             </div>
 
             {totalPaginas > 1 && (
-              <div className="mt-16 flex justify-center items-center gap-2">
+              <div className="catalog-pagination mt-16 flex justify-center items-center gap-2">
                 <BotonPagina onClick={() => setPagina(Math.max(1, paginaActual - 1))}>«</BotonPagina>
                 {Array.from({ length: totalPaginas }, (_, i) => i + 1).map((n) => (
                   <BotonPagina key={n} activo={n === paginaActual} onClick={() => setPagina(n)}>

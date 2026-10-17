@@ -29,7 +29,7 @@ export function SiteHeader() {
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   return (
-    <header className="sticky top-0 z-[80] bg-white border-b border-[#EFEDE6]">
+    <header className="site-header sticky top-0 z-[80] bg-white border-b border-[#EFEDE6]">
       <div
         className="flex items-center justify-between max-w-[1240px] mx-auto min-h-[76px]"
         style={{ padding: "0 clamp(20px,4vw,60px)", gap: "clamp(12px,2vw,28px)" }}

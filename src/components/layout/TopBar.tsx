@@ -13,7 +13,7 @@ export function TopBar() {
   if (pathname === "/") return null;
 
   return (
-    <div className="bg-marino-3 text-[#93A3B4] text-[0.8rem] py-[7px]">
+    <div className="site-topbar bg-marino-3 text-[#93A3B4] text-[0.8rem] py-[7px]">
       <div className="mx-auto max-w-[1240px] px-5 flex justify-between gap-4 flex-wrap">
         <span>Importación aérea desde China · Entrega en Lima y provincias</span>
         <span className="flex gap-2">
