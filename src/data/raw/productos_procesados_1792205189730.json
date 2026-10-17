@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "soporte-para-celular",
+      "slugsAnteriores": [],
+      "nombre": "Soporte para celular",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Soporte para celular de plástico disponible en colores blanco y negro.",
+      "descripcionLarga": "Soporte para celular fabricado en material plástico. Cuenta con unas medidas de unidad de 6cm x 5cm x 5.50 cm (y dimensiones de caja de 46.5x32.5x30 cm). Producto disponible en colores blanco y negro.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 7.01,
+            "100": 5.01,
+            "500": 4.21
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150843/ardy-import/productos/ardy-066/foto-1.png",
+          "alt": "SOPORTE PARA CELULAR"
+        }
+      ],
+      "seoTitle": "Soporte para Celular de Plástico en Perú | ARDY Import",
+      "seoMeta": "Adquiere soporte para celular de plástico en colores blanco y negro. Medidas de 6cm x 5cm x 5.50 cm en Perú.",
+      "palabraClave": "soporte para celular de plastico",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-066"
+    }
+  ]
+}
