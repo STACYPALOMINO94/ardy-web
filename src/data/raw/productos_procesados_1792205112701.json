@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "memo-clip-bambu",
+      "slugsAnteriores": [],
+      "nombre": "Memo clip bambú",
+      "categoria": "Oficina y escritorio",
+      "descripcionCorta": "Memo Clip Bambú fabricado en metal y madera, con medidas de 3cm x 3cm x 3cm, ideal para organización de oficina y escritorio.",
+      "descripcionLarga": "El Memo Clip Bambú es un accesorio de oficina y escritorio diseñado con materiales de metal y madera. Sus dimensiones son de 3cm x 3cm x 3cm, ofreciendo una opción funcional para la organización diaria en entornos corporativos y de oficina en el Perú.\n\nMedidas: 3cm x 3cm x 3cm, 53x28x39 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 6.75,
+            "100": 4.75,
+            "500": 4.15
+          }
+        }
+      },
+      "material": "metal, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150838/ardy-import/productos/ardy-064/foto-1.png",
+          "alt": "MEMO CLIP BAMBÚ"
+        }
+      ],
+      "seoTitle": "Memo Clip Bambú para Oficina en Perú | ARDY Import",
+      "seoMeta": "Compra Memo Clip Bambú de metal y madera para oficina en Perú. Artículo de escritorio funcional para empresas y merchandising.",
+      "palabraClave": "memo clip bambu en Peru",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-064"
+    }
+  ]
+}
