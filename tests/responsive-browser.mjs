@@ -13,7 +13,7 @@ const output='evidence/responsive';await fs.mkdir(output,{recursive:true});
 const browser=await chromium.launch({channel:'msedge',headless:true});
 const results=[];const base='http://127.0.0.1:4180';
 try{
- for(const width of [320,360,390,430,768,1280]){
+ for(const width of [320,360,390,430,768,1024,1280,1440,1920]){
   const context=await browser.newContext({viewport:{width,height:1000},deviceScaleFactor:1});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
   await page.goto(base+'/productos/',{waitUntil:'networkidle'});await page.evaluate(()=>document.fonts.ready);
   const horizontal=await page.evaluate(()=>({viewport:innerWidth,scroll:document.documentElement.scrollWidth}));assert.ok(horizontal.scroll<=width+1,JSON.stringify(horizontal));
@@ -21,8 +21,15 @@ try{
   const banner=await page.locator('.catalog-photo-search').boundingBox();if(width<768)assert.ok(banner.height<195,JSON.stringify(banner));
   const floating=await page.locator('.floating-whatsapp').evaluate(n=>({position:getComputedStyle(n).position,href:n.href}));assert.ok(floating.href.startsWith('https://wa.me/'));assert.equal(floating.position,width<768?'static':'fixed');
   await page.screenshot({path:`${output}/productos-${width}-inicio.png`,fullPage:false});
-  await page.locator('.catalog-grid').scrollIntoViewIfNeeded();await page.locator('.catalog-card-image img').first().evaluate(img=>img.decode().catch(()=>{}));
-  if(width<768)assert.equal(await page.locator('.catalog-card-image img').first().evaluate(n=>getComputedStyle(n).objectFit),'contain');
+  await page.locator('.catalog-grid').evaluate(n=>window.scrollTo(0,n.getBoundingClientRect().top+scrollY-100));await page.locator('.catalog-card-image img').first().evaluate(img=>img.decode().catch(()=>{}));
+  assert.equal(await page.locator('.catalog-card-image img').first().evaluate(n=>getComputedStyle(n).objectFit),'contain');
+  if(width>=768){
+   assert.ok(banner.height<=260,`Desktop banner: ${banner.height}`);
+   assert.equal(await page.locator('.catalog-photo-image img').evaluate(n=>getComputedStyle(n).objectFit),'contain');
+   const layout=await page.evaluate(()=>{const rect=n=>{const r=n.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom}};const cards=[...document.querySelectorAll('.catalog-card')];const firstTop=cards[0].getBoundingClientRect().top;const row=cards.filter(n=>Math.abs(n.getBoundingClientRect().top-firstTop)<1);return {floating:rect(document.querySelector('.floating-whatsapp')),cards:cards.map(rect),prices:row.map(n=>rect(n.querySelector('.catalog-card-price')).top),buttons:row.map(n=>rect(n.querySelector('.catalog-card-link')).top)}});
+   for(const card of layout.cards)assert.ok(layout.floating.right<=card.left||layout.floating.left>=card.right||layout.floating.bottom<=card.top||layout.floating.top>=card.bottom,'WhatsApp overlaps a card');
+   for(const positions of [layout.prices,layout.buttons])assert.ok(Math.max(...positions)-Math.min(...positions)<1,'Row prices/buttons must align');
+  }
   await page.screenshot({path:`${output}/productos-${width}-tarjetas.png`,fullPage:false});
   // Search remains live, tabs retain their filters, and reset restores full results.
   const input=page.getByRole('searchbox');await input.fill('resaltador');
@@ -30,7 +37,7 @@ try{
   assert.ok(expected.length);await page.waitForFunction(n=>document.querySelectorAll('.catalog-card').length===Math.min(n,8),expected.length);
   const cards=await page.locator('.catalog-card').evaluateAll(nodes=>nodes.map(n=>({href:n.getAttribute('href').replace(/\/$/,''),text:n.innerText})));
   for(const card of cards){const p=expected.find(p=>card.href===`/productos/${p.slug}`);assert.ok(p,card.href);assert.ok(card.text.includes(p.sku||registry[p.slug]));const prices=Object.values(p.modalidades).flatMap(b=>b?Object.values(b.precios).filter(v=>typeof v==='number'&&v>0):[]);if(prices.length)assert.ok(card.text.includes(Math.min(...prices).toLocaleString('es-PE',{minimumFractionDigits:2,maximumFractionDigits:2})));}
-  if(width===390){await page.locator('.catalog-grid').scrollIntoViewIfNeeded();await page.locator('.catalog-card-image img').evaluateAll(ns=>Promise.all(ns.map(i=>i.decode())));await page.screenshot({path:`${output}/resaltadores-390.png`,fullPage:false});}
+  if(width===390){await page.locator('.catalog-grid').evaluate(n=>window.scrollTo(0,n.getBoundingClientRect().top+scrollY-100));await page.locator('.catalog-card-image img').evaluateAll(ns=>Promise.all(ns.filter(i=>{const r=i.getBoundingClientRect();return r.top<innerHeight&&r.bottom>0}).map(i=>i.decode())));await page.screenshot({path:`${output}/resaltadores-390.png`,fullPage:false});}
   await input.fill('');await page.locator('.catalog-tabs button').nth(1).click();assert.equal(await page.locator('.catalog-tabs button').nth(1).getAttribute('aria-pressed'),'true');
   const trendLinks=await page.locator('.catalog-card').evaluateAll(ns=>ns.map(n=>n.getAttribute('href').replace(/\/$/,'')));for(const link of trendLinks)assert.ok(products.find(p=>link===`/productos/${p.slug}`)?.destacado);
   await page.locator('.catalog-tabs button').nth(2).click();const newLinks=await page.locator('.catalog-card').evaluateAll(ns=>ns.map(n=>n.getAttribute('href').replace(/\/$/,'')));for(const link of newLinks)assert.ok(products.find(p=>link===`/productos/${p.slug}`)?.esNovedad);

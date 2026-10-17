@@ -1,4 +1,4 @@
-/* Presentation only, scoped to the Productos listing. Desktop rules are retained. */
+/* Presentation only, scoped to the Productos listing. Mobile and desktop rules are separate. */
 .catalog-mobile-text, .catalog-filter-toggle { display: none; }
 @media (max-width: 767px) {
   body:has(.catalogo-page) .site-topbar { font-size: 10px; line-height: 1.4; padding: 4px 0; }
@@ -63,4 +63,54 @@
   .catalogo-page .catalog-grid { grid-template-columns: minmax(0, 1fr); }
   .catalogo-page .catalog-card-image { aspect-ratio: 4 / 3; }
   .catalogo-page .catalog-card h3 { font-size: 16px; }
+}
+
+/* Desktop/tablet presentation; the approved rules below 768 px stay unchanged. */
+@media (min-width: 768px) {
+  .catalogo-page .catalog-photo-search { background: #fff; border: 0; }
+  .catalogo-page .catalog-photo-inner,
+  .catalogo-page .catalog-explorer { width: calc(100% - 64px); max-width: 1240px; margin-inline: auto; padding-inline: 24px; }
+  .catalogo-page .catalog-photo-inner { padding-block: 16px; }
+  .catalogo-page .catalog-photo-eyebrow { display: none; }
+  .catalogo-page .catalog-photo-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 28px; margin: 0; padding: 14px 20px; border: 1px solid #efede6; border-radius: 16px; background: #faf8f3; }
+  .catalogo-page .catalog-photo-image { height: clamp(140px, 14vw, 196px); margin: 0; align-self: center; aspect-ratio: auto !important; border-radius: 10px; }
+  .catalogo-page .catalog-photo-image img { object-fit: contain; object-position: center !important; }
+  .catalogo-page .catalog-photo-copy { min-width: 0; padding: 0; border: 0; gap: 10px; }
+  .catalogo-page .catalog-photo-copy h1 { font-size: clamp(24px, 2.3vw, 32px); line-height: 1.2; }
+  .catalogo-page .catalog-photo-copy > p { font-size: 15px; line-height: 1.5; max-width: 440px; }
+  .catalogo-page .catalog-photo-action { margin-top: 0; }
+  .catalogo-page .catalog-photo-action a { min-height: 44px; padding: 10px 18px; font-size: 14px; }
+  .catalogo-page .catalog-search-section { padding-top: 4px; }
+  .catalogo-page .catalog-search-input { min-width: 0; padding-inline: 16px; }
+  .catalogo-page #busqueda-catalogo { min-width: 0; width: 100%; padding-block: 11px; }
+  .catalogo-page .catalog-search-form > button { min-width: 100px; padding: 10px 20px; }
+  .catalogo-page .catalog-toolbar { padding-top: 12px; }
+  .catalogo-page .catalog-toolbar-top { gap: 10px 16px; }
+  .catalogo-page .catalog-tabs button { min-height: 36px; padding: 7px 12px; font-size: 13px; }
+  .catalogo-page .catalog-sort { gap: 12px; }
+  .catalogo-page .catalog-sort select { min-width: 170px; height: 36px; }
+  .catalogo-page .catalog-filters { gap: 10px 24px; margin-top: 10px; padding-block: 10px; }
+  .catalogo-page .catalog-filters > div { gap: 8px; flex-wrap: wrap; min-width: 0; }
+  .catalogo-page .catalog-filters select { min-width: 180px; height: 36px; }
+  .catalogo-page .catalog-filters button { min-height: 36px; padding: 7px 10px; font-size: 13px; }
+  .catalogo-page .catalog-results { padding-top: 4px; padding-bottom: 36px; }
+  .catalogo-page .catalog-grid { gap: 20px; }
+  .catalogo-page .catalog-card { min-width: 0; }
+  .catalogo-page .catalog-card-image { height: clamp(140px, 14vw, 176px); aspect-ratio: auto; margin: 12px 12px 0; }
+  .catalogo-page .catalog-card-image img { object-fit: contain; }
+  /* Explicit rows preserve alignment even when a product has no colors or stock badge. */
+  .catalogo-page .catalog-card-content { display: grid; grid-template-rows: 10px minmax(40px, 1fr) minmax(28px, auto) 22px 26px 40px; gap: 5px; padding: 12px 14px 14px; }
+  .catalogo-page .catalog-card-colors { grid-row: 1; gap: 5px; }
+  .catalogo-page .catalog-card-colors span { width: 10px; height: 10px; }
+  .catalogo-page .catalog-card h3 { grid-row: 2; font-size: 15px; line-height: 1.3; overflow-wrap: anywhere; }
+  .catalogo-page .catalog-card-sku { grid-row: 3; font-size: 11px; line-height: 1.25; overflow-wrap: anywhere; }
+  .catalogo-page .catalog-card-stock { grid-row: 4; justify-self: start; align-self: start; font-size: 11px; line-height: 16px; padding: 2px 6px; }
+  .catalogo-page .catalog-card-price { grid-row: 5; margin: 0; gap: 5px; align-self: center; flex-wrap: wrap; }
+  .catalogo-page .catalog-card-price span:first-child { font-size: 13px; }
+  .catalogo-page .catalog-card-price span:last-child { font-size: 18px; }
+  .catalogo-page .catalog-card-link { grid-row: 6; margin: 0; min-height: 40px; padding: 8px; font-size: 13px; }
+  .catalogo-page .catalog-pagination { margin-top: 28px; }
+  /* A reserved outer gutter keeps this fixed action outside the product cards. */
+  body:has(.catalogo-page) .floating-whatsapp { right: 8px; bottom: 24px; width: 44px; height: 44px; padding: 0; justify-content: center; }
+  body:has(.catalogo-page) .floating-whatsapp > span { display: none; }
 }
