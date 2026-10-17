@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "llavero-redondo-nina-giratorio",
+      "slugsAnteriores": [],
+      "nombre": "Llavero redondo nina - giratorio",
+      "categoria": "Accesorios y llaveros",
+      "descripcionCorta": "Llavero redondo nina giratorio fabricado en metal y madera.",
+      "descripcionLarga": "El llavero redondo nina giratorio es un accesorio perteneciente a nuestra categoría de accesorios y llaveros. Está fabricado en combinación de metal y madera, con medidas de 7.3cm x 4cm (y opciones adicionales de 45x29x18.5 cm y 9x4x1.7 cm). Cuenta con diseño giratorio y color bambú.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 8.33,
+            "100": 6.33,
+            "500": 5.73
+          }
+        }
+      },
+      "material": "metal, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791422857/ardy-import/productos/ardy-048/foto-1.png",
+          "alt": "LlAVERO REDONDO NINA - GIRATORIO"
+        }
+      ],
+      "seoTitle": "Llavero Redondo Nina Giratorio de Metal y Madera | ARDY Perú",
+      "seoMeta": "Conoce el llavero redondo nina giratorio fabricado en metal y madera. Producto de la categoría accesorios y llaveros disponible en ARDY Import Perú.",
+      "palabraClave": "llavero redondo nina giratorio",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-048"
+    }
+  ]
+}
