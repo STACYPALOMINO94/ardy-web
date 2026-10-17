@@ -1,0 +1,52 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "resaltador-viena",
+      "slugsAnteriores": [],
+      "nombre": "Resaltador viena",
+      "categoria": "Escritura",
+      "descripcionCorta": "Resaltador Viena fabricado en plástico, disponible en colores amarillo, azul, naranja, rojo y verde.",
+      "descripcionLarga": "El resaltador Viena es un artículo de escritura fabricado en plástico, disponible en una variedad de colores que incluye amarillo, azul, naranja, rojo y verde. Producto nacionalizado adecuado para requerimientos corporativos y de oficina en el mercado peruano.\n\nMedidas: 37x26x32 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 5.9,
+            "100": 4.01,
+            "500": 3.44
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "amarillo",
+        "azul",
+        "naranja",
+        "rojo",
+        "verde"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791175494/ardy-import/productos/ardy-038/foto-1.png",
+          "alt": "RESALTADOR VIENA"
+        }
+      ],
+      "seoTitle": "Resaltador Viena al por Mayor en Perú | ARDY Import",
+      "seoMeta": "Compra el resaltador Viena de plástico en colores amarillo, azul, naranja, rojo y verde al por mayor en Perú. Ideal para oficinas y merchandising.",
+      "palabraClave": "resaltador viena al por mayor en peru",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-038"
+    }
+  ]
+}
