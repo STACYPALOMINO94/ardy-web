@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "termo-stylus-smart",
+      "slugsAnteriores": [],
+      "nombre": "Termo stylus smart",
+      "categoria": "Bebidas y recipientes",
+      "descripcionCorta": "Termo Stylus Smart fabricado en metal con capacidad de 400ml, disponible en colores blanco y negro.",
+      "descripcionLarga": "El Termo Stylus Smart es un recipiente para bebidas fabricado en metal con una capacidad de 400ml. Se encuentra disponible en colores blanco y negro, con dimensiones de unidad de 22.5x6.3 cm y 23.5x7 cm. Ideal para complementar tu línea de bebidas y recipientes en el mercado peruano.\n\nMedidas: 72x37x25 cm, 22.5x6.3 cm, 23.5x7 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 23.03,
+            "100": 21.03,
+            "500": 20.56
+          }
+        }
+      },
+      "material": "metal",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150867/ardy-import/productos/ardy-081/foto-1.png",
+          "alt": "TERMO STYLUS SMART"
+        }
+      ],
+      "seoTitle": "Termo Stylus Smart de Metal 400ml en Perú | ARDY Import",
+      "seoMeta": "Conoce el Termo Stylus Smart de metal con capacidad de 400ml en colores blanco y negro. Disponible en Perú para tus necesidades corporativas y publicitarias.",
+      "palabraClave": "termo stylus smart de metal en peru",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-081"
+    }
+  ]
+}
