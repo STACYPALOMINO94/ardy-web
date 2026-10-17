@@ -1,0 +1,136 @@
+/* Shared presentation for routes outside the approved Productos listing.
+   Category pages reuse its existing stylesheet without modifying that file. */
+body:not(:has(.catalogo-page)) {
+  main, footer { overflow-wrap: anywhere; }
+  main :where(.grid, .flex) > *, footer :where(.grid, .flex) > * { min-width: 0; }
+  main :where(input, select, textarea) { min-width: 0; max-width: 100%; }
+  main :where(img, video) { max-width: 100%; }
+  .product-carousel { min-width: 0; max-width: 100%; }
+  .product-carousel-track { align-items: stretch; scroll-snap-type: x proximity; }
+  .product-carousel-track > div { width: 272px; min-width: 0; max-width: 100%; scroll-snap-align: start; }
+  .featured-card { min-width: 0; height: 100%; }
+  .featured-card > a { height: 188px; flex-shrink: 0; }
+  .featured-card > div { min-width: 0; }
+  .featured-card h3 { min-height: 42px; font-size: 15px; }
+  .featured-card > div > div:first-of-type { flex-wrap: wrap; }
+  .featured-card img { object-fit: contain; }
+  .home-hero-inner { padding-inline: clamp(24px, 5vw, 60px) !important; }
+  .home-hero-slide { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .home-categories > div { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .home-categories > div + div { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+  .home-categories img { object-fit: contain; }
+  #tendencias img { object-fit: contain; }
+  .floating-whatsapp { position: static; width: 44px; height: 44px; padding: 0; margin: 16px 20px 16px auto; justify-content: center; }
+  .floating-whatsapp > span { display: none; }
+}
+.category-page { padding-top: 24px !important; }
+.category-page > .catalog-explorer { width: 100%; padding-inline: 0; }
+.category-page > div:has(>h1) { align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.category-page > div > h1 { font-size: clamp(26px, 3vw, 36px); overflow-wrap: anywhere; }
+@media (max-width: 1023px) {
+  body:not(:has(.catalogo-page)) {
+    main form.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    footer > div > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+}
+@media (max-width: 767px) {
+  body:not(:has(.catalogo-page)) {
+    .site-topbar { font-size: 10px; line-height: 1.4; padding-block: 4px; }
+    .site-topbar > div { gap: 3px 10px; }
+    .site-header > div:first-child { min-height: 64px; }
+    .site-header > div:first-child > a { padding-block: 10px; }
+    main { padding-inline: 16px; }
+    main > section { padding-block: 28px !important; }
+    main > section > div[class*='max-w-'] { padding-inline: 0 !important; }
+    main > section.px-8, main > section.px-5 { padding-inline: 0; }
+    main h1 { font-size: clamp(26px, 6.7vw, 34px); line-height: 1.15; }
+    main h2 { font-size: clamp(23px, 5.8vw, 30px); line-height: 1.2; }
+    main h3 { overflow-wrap: anywhere; }
+    main :where(p, li) { line-height: 1.55; }
+    main :where(.grid, .flex) { gap: 16px; }
+    main :where(a, button) { max-width: 100%; }
+    main :where(a[class*='py-'], button, input, select, textarea) { min-height: 44px; }
+    main form.grid { grid-template-columns: minmax(0, 1fr); }
+    main form > * { grid-column: auto; }
+    main form :where(input, select, textarea) { width: 100%; }
+    main form > button { width: 100%; white-space: normal; }
+    .home-hero { padding-block: 24px !important; }
+    .home-hero-inner { padding-inline: 0 !important; }
+    .home-hero-slide { grid-template-columns: minmax(0, 1fr) !important; gap: 20px !important; min-height: 0 !important; }
+    .home-hero-copy > p:first-child { font-size: 10px; margin-bottom: 12px; }
+    .home-hero-copy h2 { font-size: clamp(27px, 7.3vw, 34px); line-height: 1.1; }
+    .home-hero-copy h2 + p { font-size: 15px; line-height: 1.5; margin-top: 14px; }
+    .home-hero-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 8px; margin-top: 18px; }
+    .home-hero-actions a { padding: 10px 6px; font-size: 12px; text-align: center; display: flex; align-items: center; justify-content: center; }
+    .home-hero-image { height: clamp(170px, 48vw, 240px); }
+    .home-hero-dots { margin-top: 16px; gap: 10px; }
+    .home-hero-dots button { min-height: 24px; background-clip: content-box; padding-block: 8px; box-sizing: content-box; }
+    #categorias > div > div:first-child { gap: 12px; margin-bottom: 18px; }
+    #categorias a { white-space: normal; }
+    .home-categories > div, .home-categories > div + div { grid-template-columns: minmax(0, 1fr) !important; gap: 12px; }
+    .home-categories > div + div { margin-top: 12px; }
+    .home-categories a { padding: 16px; min-height: 148px; gap: 12px; }
+    .home-categories a > div:first-child { flex: 1 1 52%; }
+    .home-categories a > div:last-child { flex: 1 1 44%; min-height: 116px; }
+    .home-categories h3 { font-size: 19px; margin-bottom: 5px; }
+    .home-categories p { font-size: 13px; }
+    .home-categories span { font-size: 13px; margin-top: 12px; }
+    #tendencias > div > div:first-child { margin-bottom: 20px; }
+    #tendencias > div > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px; }
+    #tendencias .grid > a { min-width: 0; padding: 10px; }
+    #tendencias .grid > a > div { height: clamp(120px, 34vw, 180px); background: #fff; }
+    #tendencias .grid > a > span { margin-block: 12px 8px; }
+    #tendencias h3 { font-size: 13px; line-height: 1.4; }
+    #destacados > div:first-child { flex-wrap: wrap; gap: 10px; }
+    .product-carousel-track { gap: 12px; }
+    .product-carousel-track > div { width: min(272px, 100%); }
+    .featured-card > a { height: 168px; }
+    .featured-card > a button { min-height: 20px; }
+    .featured-card > div { padding: 12px; }
+    #lista > div > div > div { flex-wrap: wrap; }
+    #lista input { width: 80px; }
+    #lista span.flex-1 { flex-basis: 100%; }
+    footer { margin-top: 28px; padding-top: 28px; }
+    footer > div > .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+    footer a { display: inline-block; padding-block: 5px; }
+    main [role='dialog'] { padding: 16px; }
+  }
+  .category-page { padding-inline: 16px; padding-top: 20px !important; }
+  .category-page > nav { margin-bottom: 12px; }
+  .category-page > .catalog-explorer { padding-inline: 0; }
+}
+@media (max-width: 359px) {
+  body:not(:has(.catalogo-page)) footer > div > .grid { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 767px) {
+  body:not(:has(.catalogo-page)) {
+    .home-page #soluciones .grid { grid-template-columns: minmax(0, 1fr) !important; }
+    .home-page #soluciones .grid > div > div:first-child { height: 180px !important; }
+    .home-page form:has(input[placeholder^='Buscar producto']) { display: grid; grid-template-columns: 18px minmax(0, 1fr) 70px; padding: 8px; gap: 8px; }
+    .home-page form:has(input[placeholder^='Buscar producto']) input { width: 100%; }
+    .home-page form:has(input[placeholder^='Buscar producto']) button { padding: 10px 8px; font-size: 13px; }
+    .home-page > section:last-child > div > div { padding: 20px !important; }
+    .home-page > section:last-child img.w-\[190px\] { width: 115px; height: 80px; }
+    main [role='tablist'] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    main [role='tab'] { padding: 12px; font-size: 13px; }
+    main [role='tablist'] + div { gap: 20px; }
+    main > div.px-5 { padding-inline: 0; }
+    main > div > .flex.border-b { flex-wrap: wrap; gap: 12px; }
+  }
+}
+
+body:not(:has(.catalogo-page)) .featured-card,
+body:not(:has(.catalogo-page)) .featured-card > div { gap: 6px; }
+.category-page.catalogo-page > .catalog-explorer { width: 100%; padding-inline: 0; }
+@media (max-width: 767px) {
+  body:not(:has(.catalogo-page)) {
+    .featured-card > a button { width: 20px; height: 20px; min-height: 20px; }
+    .home-hero-dots { gap: 16px; }
+    .home-hero-dots button { position: relative; height: 8px; min-height: 8px; padding: 0; background-clip: border-box; }
+    .home-hero-dots button::after { content: ''; position: absolute; inset: -8px; }
+  }
+}
+@media (max-width: 767px) {
+  body:not(:has(.catalogo-page)) main .flex[class*='border-b'] { flex-wrap: wrap; gap: 8px 12px; }
+  body:not(:has(.catalogo-page)) main .flex[class*='border-b'] > .whitespace-nowrap { white-space: normal; }
+}

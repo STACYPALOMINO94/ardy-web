@@ -16,7 +16,7 @@ export function ProductCard({ producto }: { producto: Producto }) {
   const precioDesde = getPrecioDesde(producto);
 
   return (
-    <article className="bg-white border border-linea rounded-2xl overflow-hidden flex flex-col transition-[border-color,transform] hover:border-linea-2 hover:-translate-y-0.5">
+    <article className="featured-card bg-white border border-linea rounded-2xl overflow-hidden flex flex-col transition-[border-color,transform] hover:border-linea-2 hover:-translate-y-0.5">
       <Link
         href={`/productos/${producto.slug}`}
         className="group relative h-[240px] w-full bg-white flex items-center justify-center overflow-hidden border-b border-linea cursor-zoom-in"

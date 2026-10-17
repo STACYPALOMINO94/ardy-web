@@ -66,15 +66,15 @@ export function Slider() {
   }, [idx, reduceMotion]);
 
   return (
-    <section className="bg-white" style={{ padding: "clamp(36px,5vw,64px) 0 clamp(28px,4vw,48px)" }}>
-      <div className="max-w-[1240px] mx-auto" style={{ padding: "0 clamp(20px,11vw,220px)" }}>
+    <section className="home-hero bg-white" style={{ padding: "clamp(36px,5vw,64px) 0 clamp(28px,4vw,48px)" }}>
+      <div className="home-hero-inner max-w-[1240px] mx-auto" style={{ padding: "0 clamp(20px,11vw,220px)" }}>
         <div className="grid">
           {SLIDES.map((s, i) => {
             const activo = i === idx;
             return (
               <div
                 key={s.titulo}
-                className="[grid-area:1/1] grid items-center transition-[opacity,transform] duration-700 ease-out"
+                className="home-hero-slide [grid-area:1/1] grid items-center transition-[opacity,transform] duration-700 ease-out"
                 style={{
                   gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
                   gap: "clamp(28px,4vw,56px)",
@@ -84,7 +84,7 @@ export function Slider() {
                   pointerEvents: activo ? "auto" : "none",
                 }}
               >
-                <div key={activo ? `activo-${idx}` : `idle-${i}`}>
+                <div className="home-hero-copy" key={activo ? `activo-${idx}` : `idle-${i}`}>
                   <p className="mb-[22px] text-[11.5px] font-bold tracking-[.18em] text-oliva">{s.eyebrow}</p>
                   <h2
                     className={`text-[clamp(2.125rem,4.4vw,3.5rem)] leading-[1.06] font-extrabold tracking-[-.02em] text-marino text-balance ${
@@ -103,7 +103,7 @@ export function Slider() {
                     {s.texto}
                   </p>
                   <div
-                    className={`flex gap-3.5 flex-wrap mt-8 ${
+                    className={`home-hero-actions flex gap-3.5 flex-wrap mt-8 ${
                       activo && !reduceMotion
                         ? "animate-[banner-boton-in_600ms_ease-out_both] [animation-delay:300ms]"
                         : ""
@@ -125,7 +125,7 @@ export function Slider() {
                     </a>
                   </div>
                 </div>
-                <div className="w-full h-[clamp(300px,32vw,420px)] overflow-hidden flex items-center justify-center">
+                <div className="home-hero-image w-full h-[clamp(300px,32vw,420px)] overflow-hidden flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className="w-full h-full object-contain"
@@ -140,7 +140,7 @@ export function Slider() {
           })}
         </div>
 
-        <div className="flex gap-2 justify-center mt-9">
+        <div className="home-hero-dots flex gap-2 justify-center mt-9">
           {SLIDES.map((s, i) => (
             <button
               key={s.titulo}

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./site-responsive.css";
 
 /*
   Sistema de diseño (rediseño 2026, ver /diseños): paleta de marca sin cambios

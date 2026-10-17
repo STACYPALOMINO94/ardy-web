@@ -40,7 +40,7 @@ export function Mosaico() {
   const pequenas = tiles.filter((t) => !t.grande);
 
   return (
-    <div>
+    <div className="home-categories">
       <div className="grid gap-6" style={{ gridTemplateColumns: "repeat(auto-fit,minmax(380px,1fr))" }}>
         {grandes.map((t) => (
           <Tarjeta key={t.slug} tile={t} />

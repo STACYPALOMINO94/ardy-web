@@ -24,7 +24,7 @@ export default function Home() {
   );
 
   return (
-    <main className="w-full overflow-x-hidden text-marino">
+    <main className="home-page w-full text-marino">
       <h1 className="sr-only">Merchandising importado por vía aérea para eventos con fecha</h1>
       <Slider />
 

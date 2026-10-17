@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "../../productos/productos-responsive.css";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { productos } from "@/data/productos";
@@ -76,7 +77,7 @@ export default async function CategoriaPage({ params }: { params: Promise<{ slug
     : [];
 
   return (
-    <main className="mx-auto max-w-[1240px] px-5" style={{ paddingTop: 40, paddingBottom: 64 }}>
+    <main className="catalogo-page category-page mx-auto max-w-[1240px] px-5" style={{ paddingTop: 40, paddingBottom: 64 }}>
       <JsonLd
         data={breadcrumbJsonLd([
           { nombre: "Inicio", url: "/" },

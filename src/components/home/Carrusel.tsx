@@ -10,10 +10,10 @@ export function Carrusel({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="relative">
+    <div className="product-carousel relative">
       <div
         ref={ref}
-        className="flex gap-4 overflow-x-auto scroll-smooth pb-1.5 [scrollbar-width:thin]"
+        className="product-carousel-track flex gap-4 overflow-x-auto scroll-smooth pb-1.5 [scrollbar-width:thin]"
       >
         {children}
       </div>
