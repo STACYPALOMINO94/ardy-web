@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "bolsa-angeline",
+      "slugsAnteriores": [],
+      "nombre": "Bolsa angeline",
+      "categoria": "Ecologicos",
+      "descripcionCorta": "Bolsa Angeline de material textil en colores gris y negro, con medidas de 39.5cm x 39cm x 9cm. Producto de la categoría ecológicos.",
+      "descripcionLarga": "La Bolsa Angeline es un producto ecológico fabricado en material textil, disponible en combinaciones de colores gris y negro. Cuenta con unas dimensiones de 39.5cm x 39cm x 9cm y caja de 53x53x40 cm. Diseñada para aplicaciones comerciales y campañas corporativas que requieren artículos textiles funcionales en el mercado peruano.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 10.53,
+            "100": 8.53,
+            "500": 7.69
+          }
+        }
+      },
+      "material": "textil",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "gris",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150871/ardy-import/productos/ardy-084/foto-1.png",
+          "alt": "BOLSA ANGELINE"
+        }
+      ],
+      "seoTitle": "Bolsa Angeline Textil Ecológica al por Mayor en Perú | ARDY Import",
+      "seoMeta": "Compra la Bolsa Angeline textil en colores gris y negro. Artículo ecológico ideal para merchandising corporativo en Perú. Consulta especificaciones.",
+      "palabraClave": "bolsa angeline textil en peru",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-084"
+    }
+  ]
+}
