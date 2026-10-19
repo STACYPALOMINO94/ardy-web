@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "mug-termico-castellon",
+      "slugsAnteriores": [],
+      "nombre": "Mug termico castellon",
+      "categoria": "Bebidas y recipientes",
+      "descripcionCorta": "Mug térmico Castellón con capacidad de 300ml, fabricado en metal y madera. Disponible en colores blanco y negro.",
+      "descripcionLarga": "El Mug Térmico Castellón es un recipiente para bebidas con capacidad de 300ml. Está fabricado con una combinación de metal y madera, y se encuentra disponible en colores blanco y negro.\n\nMedidas: 47x47x15.5 cm, 13.5x9.3x9.3",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 25.43,
+            "100": 23.43,
+            "500": 22.33
+          }
+        }
+      },
+      "material": "metal, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150878/ardy-import/productos/ardy-089/foto-1.png",
+          "alt": "MUG TERMICO CASTELLON"
+        }
+      ],
+      "seoTitle": "Mug Térmico Castellón de Metal y Madera | ARDY Import Perú",
+      "seoMeta": "Adquiere el Mug Térmico Castellón de 300ml fabricado en metal y madera. Disponible en colores blanco y negro para el mercado peruano.",
+      "palabraClave": "mug termico castellon en peru",
+      "fechaActualizacion": "2026-10-19",
+      "sku": "ARDY-089"
+    }
+  ]
+}
