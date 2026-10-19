@@ -1,0 +1,46 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "resaltador-flor",
+      "slugsAnteriores": [],
+      "nombre": "+resaltador flor",
+      "categoria": "Escritura",
+      "descripcionCorta": "Resaltador con diseño de flor fabricado en plástico, perteneciente a la categoría de escritura.",
+      "descripcionLarga": "El OF-159 Resaltador Flor es un artículo de escritura fabricado en plástico. Su diseño en forma de flor lo convierte en una opción funcional para oficinas y actividades de escritura en el mercado peruano.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 7.41,
+            "100": 5.41,
+            "500": 4.71
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1791175492/ardy-import/productos/ardy-037/foto-1.jpg",
+          "alt": "OF-159 RESALTADOR FLOR"
+        }
+      ],
+      "seoTitle": "Resaltador Flor de Plástico para Oficina | ARDY Perú",
+      "seoMeta": "Adquiere el resaltador flor de plástico en Perú. Artículo de escritura ideal para oficina y uso comercial.",
+      "palabraClave": "resaltador flor en Peru",
+      "fechaActualizacion": "2026-10-19",
+      "sku": "ARDY-037"
+    }
+  ]
+}
