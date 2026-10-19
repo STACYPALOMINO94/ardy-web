@@ -2195,7 +2195,7 @@ export const productos: Producto[] = [
     seoTitle: "Tabla de Quesos Bosco personalizada | ARDY Import",
     seoMeta: "Tabla de Quesos Bosco de quesos  en madera, utensilios de metal para hogar.",
     palabraClave: "tabla de quesos bosco personalizada",
-    fechaActualizacion: "2026-10-16",
+    fechaActualizacion: "2026-10-19",
     sku: "ARDY-094",
   },
 ];
