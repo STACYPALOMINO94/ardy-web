@@ -1543,7 +1543,7 @@ export const productos: Producto[] = [
     esNovedad: false,
     destacado: false,
     fotos: [
-      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150847/ardy-import/productos/ardy-068/foto-1.jpg", alt: "TOMATODO PRAGA" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792442265/ardy-import/productos/ardy-068/foto-1.webp", alt: "TOMATODO PRAGA" },
     ],
     seoTitle: "Tomatodo Praga de Plástico 800 ml | ARDY Import Perú",
     seoMeta: "Tomatodo Praga de plástico con capacidad de 800 ml. Disponible en colores azul, negro, rojo y transparente. Encuéntralo en ARDY Import.",
