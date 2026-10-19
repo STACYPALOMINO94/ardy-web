@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "set-parrillero-asador",
+      "slugsAnteriores": [],
+      "nombre": "Set parrillero asador",
+      "categoria": "Hogar",
+      "descripcionCorta": "Set parrillero asador fabricado en metal, madera y textil con dimensiones de 39x11x3.5cm y 46x31.5x28 cm.",
+      "descripcionLarga": "Set parrillero asador de uso general confeccionado con componentes de metal, madera y textil. Cuenta con medidas de 39x11x3.5cm y 46x31.5x28 cm, e incluye estuche textil negro para almacenamiento.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 41.6,
+            "100": 39.6,
+            "500": 37.9
+          }
+        }
+      },
+      "material": "metal, madera, textil",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "madera"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150886/ardy-import/productos/ardy-092/foto-1.png",
+          "alt": "SET PARRILLERO ASADOR"
+        }
+      ],
+      "seoTitle": "Set Parrillero Asador personalizada | ARDY Import",
+      "seoMeta": "Set Parrillero Asador parrillero asador de metal, madera, textil para hogar. Consulta el precio nacionalizado.",
+      "palabraClave": "set parrillero asador personalizada",
+      "fechaActualizacion": "2026-10-19",
+      "sku": "ARDY-092"
+    }
+  ]
+}
