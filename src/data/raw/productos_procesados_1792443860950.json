@@ -1,0 +1,46 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "sp-01-set-parrillero-3-piezas-b",
+      "slugsAnteriores": [],
+      "nombre": "Sp-01 set parrillero 3 piezas b",
+      "categoria": "Hogar",
+      "descripcionCorta": "Set parrillero de 3 piezas fabricado en metal y textil con dimensiones de 38 x 8.6 cm, perteneciente a la categoría Hogar.",
+      "descripcionLarga": "El SP-01 Set Parrillero 3 Piezas B es un producto de la categoría Hogar, elaborado con materiales de metal y textil. Cuenta con unas medidas de 38 x 8.6 cm, siendo una opción adecuada para actividades de cocina y parrilla.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 32,
+            "100": 30,
+            "500": 28.82
+          }
+        }
+      },
+      "material": "metal, textil",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150892/ardy-import/productos/ardy-096/foto-1.png",
+          "alt": "SP-01 SET PARRILLERO 3 PIEZAS B"
+        }
+      ],
+      "seoTitle": "Set Parrillero 3 Piezas de Metal y Textil | ARDY Import Perú",
+      "seoMeta": "Compra el SP-01 Set Parrillero 3 Piezas B de metal y textil de 38 x 8.6 cm en Perú. Ideal para hogar y menaje. Consulta disponibilidad.",
+      "palabraClave": "set parrillero 3 piezas en peru",
+      "fechaActualizacion": "2026-10-19",
+      "sku": "ARDY-096"
+    }
+  ]
+}
