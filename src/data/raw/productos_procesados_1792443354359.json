@@ -1,0 +1,51 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "tomatodo-praga",
+      "slugsAnteriores": [],
+      "nombre": "Tomatodo praga",
+      "categoria": "Bebidas y recipientes",
+      "descripcionCorta": "Tomatodo Praga de plástico con capacidad de 800 ml y medidas de 47x39x26.50 cm. Disponible en color azul, negro, rojo y transparente.",
+      "descripcionLarga": "El Tomatodo Praga es un recipiente para bebidas fabricado en plástico, con una capacidad de 800 ml. Sus dimensiones de caja son 47x39x26.50 cm y se encuentra disponible en variedad de colores como azul, negro, rojo y transparente. Ideal para mantener hidratación diaria.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 12.81,
+            "100": 10.81,
+            "500": 10.09
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "azul",
+        "negro",
+        "rojo",
+        "transp"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792442265/ardy-import/productos/ardy-068/foto-1.webp",
+          "alt": "TOMATODO PRAGA"
+        }
+      ],
+      "seoTitle": "Tomatodo Praga de Plástico 800 ml | ARDY Import Perú",
+      "seoMeta": "Tomatodo Praga de plástico con capacidad de 800 ml. Disponible en colores azul, negro, rojo y transparente. Encuéntralo en ARDY Import.",
+      "palabraClave": "tomatodo praga de plastico 800 ml",
+      "fechaActualizacion": "2026-10-17",
+      "sku": "ARDY-068"
+    }
+  ]
+}
