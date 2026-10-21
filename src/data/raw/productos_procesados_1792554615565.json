@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "power-bank-5k",
+      "slugsAnteriores": [],
+      "nombre": "Power bank 5k",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Power Bank 5K de plástico disponible en color blanco y negro.",
+      "descripcionLarga": "Power Bank 5K fabricado en material plástico. Producto disponible en colores blanco y negro, ideal para el mercado peruano.\n\nMedidas: 9cmx6.2cmx1.3cm,31.5x31.5x18.5,",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 43.48,
+            "100": 41.48,
+            "500": 39.74
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150918/ardy-import/productos/ardy-113/foto-1.png",
+          "alt": "POWER BANK 5K"
+        }
+      ],
+      "seoTitle": "Power Bank 5k personalizada | ARDY Import",
+      "seoMeta": "Power Bank 5k bank 5k de plastico para tecnologia y accesorios. Consulta el precio nacionalizado.",
+      "palabraClave": "power bank 5k personalizada",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-113"
+    }
+  ]
+}
