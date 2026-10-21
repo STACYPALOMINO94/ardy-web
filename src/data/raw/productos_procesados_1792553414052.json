@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "mouse-eco-duomo",
+      "slugsAnteriores": [],
+      "nombre": "Mouse eco duomo",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Mouse Eco Duomo fabricado en plástico y madera, disponible en colores blanco y negro.",
+      "descripcionLarga": "El Mouse Eco Duomo es un accesorio de tecnología y oficina fabricado con una combinación de plástico y madera. Está disponible en colores blanco y negro, con dimensiones de  11.4x 6.8x 3.5cm. Producto nacionalizado para el mercado peruano.\n\nMedidas: 11cm x 6cm x 2.5 cm, 35x19x25, 11.4x 6.8x 3.5cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 22.65,
+            "100": 20.65,
+            "500": 19.81
+          }
+        }
+      },
+      "material": "plastico, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150909/ardy-import/productos/ardy-107/foto-1.png",
+          "alt": "MOUSE ECO DUOMO"
+        }
+      ],
+      "seoTitle": "Mouse Eco Duomo de Plástico y Madera en Perú | ARDY Import",
+      "seoMeta": "Consigue el Mouse Eco Duomo fabricado en plástico y madera en colores blanco y negro. Accesorio tecnológico disponible en Perú para empresas.",
+      "palabraClave": "mouse eco duomo en peru",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-107"
+    }
+  ]
+}
