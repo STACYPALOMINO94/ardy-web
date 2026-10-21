@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "bolsa-para-auto-touring",
+      "slugsAnteriores": [],
+      "nombre": "Bolsa para auto touring",
+      "categoria": "Herramientas y autos",
+      "descripcionCorta": "Bolsa para auto touring en color negro, fabricada en material textil, con dimensiones de 47x33x54.",
+      "descripcionLarga": "Bolsa para auto touring de color negro confeccionada en material textil. Sus dimensiones son 47x33x54, diseñada para adaptarse a las necesidades del sector automotriz y de viajes.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 11.55,
+            "100": 9.55,
+            "500": 8.82
+          }
+        }
+      },
+      "material": "textil",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150899/ardy-import/productos/ardy-100/foto-1.png",
+          "alt": "BOLSA PARA AUTO TOURING"
+        }
+      ],
+      "seoTitle": "Bolsa para Auto Touring personalizada | ARDY Import",
+      "seoMeta": "Bolsa para Auto Touring para auto touring de textil para herramientas y autos. Consulta el precio nacionalizado.",
+      "palabraClave": "bolsa para auto touring personalizada",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-100"
+    }
+  ]
+}
