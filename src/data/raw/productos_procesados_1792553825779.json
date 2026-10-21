@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "cable-cargador-atiq",
+      "slugsAnteriores": [],
+      "nombre": "Cable cargador atiq",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Cable cargador ATIQ de material plastico y madera.",
+      "descripcionLarga": "Cable cargador ATIQ fabricado en plastico y madera. Producto dentro de la categoría Tecnologia y accesorios, subcategoría Carga y energia.\n\nMedidas: 45.5x 29x 30.5 cm, 8.5x6.8x 2.5 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 18.24,
+            "100": 16.24,
+            "500": 15.13
+          }
+        }
+      },
+      "material": "plastico, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150907/ardy-import/productos/ardy-106/foto-1.png",
+          "alt": "CABLE CARGADOR ATIQ"
+        }
+      ],
+      "seoTitle": "Cable Cargador Atiq de Plástico y Madera en Perú | ARDY Import",
+      "seoMeta": "Compra el cable cargador Atiq fabricado en plástico y madera en Perú. Accesorio tecnológico disponible para tus requerimientos corporativos.",
+      "palabraClave": "cable cargador atiq en peru",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-106"
+    }
+  ]
+}
