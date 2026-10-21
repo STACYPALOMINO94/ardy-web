@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "set-de-cubiertos-eco",
+      "slugsAnteriores": [],
+      "nombre": "Set de cubiertos eco",
+      "categoria": "Ecologicos",
+      "descripcionCorta": "Set de cubiertos eco de color natural con dimensiones de 20.2cm x 5.3 cm y 45x30x57 cm.",
+      "descripcionLarga": "Set de cubiertos eco perteneciente a la categoría Ecologicos y subcategoría Articulos ecologicos. Disponible en color natural. Cuenta con dimensiones de 20.2cm x 5.3 cm, 45x30x57 cm. Producto adecuado para iniciativas ecológicas y corporativas en el mercado peruano.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 9.27,
+            "100": 7.27,
+            "500": 6.56
+          }
+        }
+      },
+      "material": "",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "natural"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150874/ardy-import/productos/ardy-086/foto-1.png",
+          "alt": "SET DE CUBIERTOS ECO"
+        }
+      ],
+      "seoTitle": "Set de Cubiertos Eco personalizada | ARDY Import",
+      "seoMeta": "Set de Cubiertos Eco de cubiertos eco de dato no disponible para ecologicos. Consulta el precio nacionalizado.",
+      "palabraClave": "set de cubiertos eco personalizada",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-086"
+    }
+  ]
+}
