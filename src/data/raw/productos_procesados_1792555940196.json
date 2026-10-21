@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "ventilador-ibiza",
+      "slugsAnteriores": [],
+      "nombre": "VENTILADOR IBIZA",
+      "categoria": "Bienestar & Relax",
+      "descripcionCorta": "Ventilador ibiza de plastico para pendiente de clasificar",
+      "descripcionLarga": "Conoce el Ventilador Ibiza, un producto nacionalizado fabricado en material plástico. Disponible en colores blanco y negro, con medidas de 18.1x 8.4x3.6 cm. Ideal para tus requerimientos comerciales en Perú.\n\nMedidas: 46x39x39 cm, 18.1x 8.4x3.6 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 16.72,
+            "100": 14.72,
+            "500": 13.87
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150896/ardy-import/productos/ardy-098/foto-1.png",
+          "alt": "VENTILADOR IBIZA"
+        }
+      ],
+      "seoTitle": "Ventilador Ibiza de Plástico en Perú | ARDY Import",
+      "seoMeta": "Compra el Ventilador Ibiza de plástico en colores blanco y negro. Producto nacionalizado disponible en Perú en ARDY Import.",
+      "palabraClave": "ventilador ibiza en peru",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-098"
+    }
+  ]
+}
