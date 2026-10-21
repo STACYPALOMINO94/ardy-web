@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "mini-parlante-bronx",
+      "slugsAnteriores": [],
+      "nombre": "Mini parlante bronx",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Mini parlante Bronx fabricado en plástico y textil, color negro.",
+      "descripcionLarga": "Mini parlante Bronx disponible en color negro. Elaborado en combinación de plástico y textil. Cuenta con dimensiones de 12 cm x 8 cm x 4,2 cm,\n\nMedidas: 12 cm x 8 cm x 4,2 cm, 46.5x23.5x25.5 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 34.01,
+            "100": 32.01,
+            "500": 30.28
+          }
+        }
+      },
+      "material": "plastico, textil",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150910/ardy-import/productos/ardy-108/foto-1.png",
+          "alt": "MINI PARLANTE BRONX"
+        }
+      ],
+      "seoTitle": "Mini Parlante Bronx personalizada | ARDY Import",
+      "seoMeta": "Mini Parlante Bronx parlante bronx de plastico, textil para tecnologia y accesorios. Consulta el precio nacionalizado.",
+      "palabraClave": "mini parlante bronx personalizada",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-108"
+    }
+  ]
+}
