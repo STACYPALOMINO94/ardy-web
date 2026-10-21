@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "set-bar-auritz",
+      "slugsAnteriores": [],
+      "nombre": "Set bar auritz",
+      "categoria": "Hogar",
+      "descripcionCorta": "Set Bar Auritz fabricado en metal y madera con capacidad de 10 onzas y medidas de 29 cm x 7.4 cm, ideal para el hogar.",
+      "descripcionLarga": "El Set Bar Auritz es un accesorio para el hogar fabricado con una combinación de metal y madera, incorporando detalles en color bambú. Cuenta con una capacidad de 10 onzas y diversas dimensiones que incluyen 29 cm x 7.4 cm, 62x40x30 cm y 28x19x12 cm, adaptándose a las necesidades de presentación y uso en el hogar.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 96.48,
+            "100": 94.48,
+            "500": 90.22
+          }
+        }
+      },
+      "material": "metal, madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150890/ardy-import/productos/ardy-095/foto-1.png",
+          "alt": "SET BAR AURITZ"
+        }
+      ],
+      "seoTitle": "Set Bar Auritz de Metal y Madera | ARDY Import Perú",
+      "seoMeta": "Compra el Set Bar Auritz fabricado en metal y madera con capacidad de 10 onzas. Disponible en Perú en ARDY Import.",
+      "palabraClave": "set bar auritz",
+      "fechaActualizacion": "2026-10-21",
+      "sku": "ARDY-095"
+    }
+  ]
+}
