@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "cuaderno-espiral-mate-pvc",
+      "slugsAnteriores": [],
+      "nombre": "Cuaderno espiral mate pvc",
+      "categoria": "Papeleria y libretas",
+      "descripcionCorta": "Cuaderno espiral mate PVC, fabricado en plástico, con dimensiones de 17.8cm x 12.5cm y 34x31.5x38.5 cm, disponible en colores blanco y negro.",
+      "descripcionLarga": "Cuaderno espiral mate PVC disponible en color blanco y negro. Fabricado en plástico, cuenta con unas dimensiones de 17.8cm x 12.5cm,  Ideal para uso de oficina y papelería corporativa en el mercado peruano.\n\nMedidas: 17.8cm x 12.5cm, 34x31.5x38.5 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 9.4,
+            "100": 7.4,
+            "500": 6.67
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150836/ardy-import/productos/ardy-062/foto-1.png",
+          "alt": "CUADERNO ESPIRAL MATE PVC"
+        }
+      ],
+      "seoTitle": "Cuaderno Espiral Mate Pvc personalizada | ARDY Import",
+      "seoMeta": "Cuaderno Espiral Mate Pvc espiral mate pvc de plastico para papeleria y libretas. Consulta el precio nacionalizado.",
+      "palabraClave": "cuaderno espiral mate pvc personalizada",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-062"
+    }
+  ]
+}
