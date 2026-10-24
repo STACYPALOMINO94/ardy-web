@@ -1,0 +1,49 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "cable-cargador-multipuerto-5-en-1",
+      "slugsAnteriores": [],
+      "nombre": "Cable cargador multipuerto 5 en 1",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Cable cargador multipuerto 5 en 1 de plástico, disponible en colores blanco y negro.",
+      "descripcionLarga": "El cable cargador multipuerto 5 en 1 es un accesorio de tecnología fabricado en plástico. Se encuentra disponible en colores blanco y negro, con medidas de caja de 37.9x28.8x22.5 cm. Producto nacionalizado dentro de la categoría de tecnología y accesorios para el mercado peruano.\n\nMedidas: 30 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 14.95,
+            "100": 12.95,
+            "500": 12.24
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco",
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150902/ardy-import/productos/ardy-102/foto-1.png",
+          "alt": "CABLE CARGADOR MULTIPUERTO 5 EN 1"
+        }
+      ],
+      "seoTitle": "Cable Cargador Multipuerto 5 en 1 en Perú | ARDY Import",
+      "seoMeta": "Adquiere el cable cargador multipuerto 5 en 1 de plástico en colores blanco y negro para tecnología y accesorios. Consulta stock en ARDY Import Perú.",
+      "palabraClave": "cable cargador multipuerto en Peru",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-102"
+    }
+  ]
+}
