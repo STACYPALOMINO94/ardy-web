@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "audifonos-con-microfono-plegable",
+      "slugsAnteriores": [],
+      "nombre": "Audifonos con microfono (plegable)",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Audífonos con micrófono plegables fabricados en plástico de color blanco, diseñados para mayor comodidad y transportabilidad.",
+      "descripcionLarga": "Adquiere los audífonos con micrófono (plegable) elaborados en material plástico de color blanco. Su diseño plegable facilita su almacenamiento y transporte, convirtiéndolos en una opción funcional dentro de la categoría de tecnología y accesorios.\n\nMedidas: 46x41x55 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 15.58,
+            "100": 13.58,
+            "500": 12.61
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "blanco"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150935/ardy-import/productos/ardy-123/foto-1.png",
+          "alt": "AUDIFONOS CON MICROFONO (PLEGABLE)"
+        }
+      ],
+      "seoTitle": "Audífonos con Micrófono Plegables en Perú | ARDY Import",
+      "seoMeta": "Compra audífonos con micrófono plegables de plástico en color blanco en Perú. Producto nacionalizado para tus necesidades tecnológicas.",
+      "palabraClave": "audifonos con microfono plegable en peru",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-123"
+    }
+  ]
+}
