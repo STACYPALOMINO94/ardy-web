@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "adaptador-multiple-traveler-en-peru",
+      "slugsAnteriores": [],
+      "nombre": "Adaptador multiple traveler",
+      "categoria": "Bolsos y viaje",
+      "descripcionCorta": "Adaptador múltiple Traveler, adaptador de enchufe múltiple con estuche para viaje de plástico, diseñado para facilitar la conexión de diferentes tipos de enchufe en diversos destinos.",
+      "descripcionLarga": "El ADAPTADOR MULTIPLE TRAVELER es un adaptador de enchufe múltiple con estuche para viaje fabricado en plástico, ideal para equipar a equipos viajeros y profesionales en constante desplazamiento internacional. Este artículo de viaje facilita la conexión a tomas de corriente en distintos países y viene acompañado de un estuche protector con tapa abatible y cierre para mantener las piezas organizadas. Resulta una opción práctica para regalos empresariales, campañas corporativas orientadas al turismo o kits de bienvenida para colaboradores que realizan viajes de negocios.\n\nMedidas: 6.2cm x 6 cm x 4.7 cm, 37 x 27x 28 cm, 7x8x5.5 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 14.19,
+            "100": 12.19,
+            "500": 11.35
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792554984/ardy-import/productos/ardy-131/foto-1.png",
+          "alt": "ADAPTADOR MULTIPLE TRAVELER"
+        }
+      ],
+      "seoTitle": "Adaptador Múltiple Traveler de Plástico para Viaje | ARDY Import Perú",
+      "seoMeta": "Consigue el adaptador múltiple Traveler de plástico con estuche protector en Perú. Ideal para kits de bienvenida y regalos empresariales.",
+      "palabraClave": "adaptador multiple traveler en peru",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-131"
+    }
+  ]
+}
