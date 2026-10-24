@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "cargador-zeus",
+      "slugsAnteriores": [],
+      "nombre": "Cargador zeus",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Cargador Zeus fabricado en madera con diseño en color bambú.",
+      "descripcionLarga": "Cargador Zeus de la categoría Tecnología y accesorios, subcategoría Carga y energia. Producto elaborado en madera con color bambú.\n\nMedidas: 10.3cm x 8.3cm, 47x47x 25cm, 11.3x 9x 3.8 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 52.57,
+            "100": 50.57,
+            "500": 48.6
+          }
+        }
+      },
+      "material": "madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150933/ardy-import/productos/ardy-122/foto-1.png",
+          "alt": "CARGADOR ZEUS"
+        }
+      ],
+      "seoTitle": "Cargador Zeus personalizada | ARDY Import",
+      "seoMeta": "Cargador Zeus zeus de madera para tecnologia y accesorios. Consulta el precio nacionalizado.",
+      "palabraClave": "cargador zeus personalizada",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-122"
+    }
+  ]
+}
