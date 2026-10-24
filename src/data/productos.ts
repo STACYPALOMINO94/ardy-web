@@ -2535,7 +2535,9 @@ export const productos: Producto[] = [
     esNovedad: false,
     destacado: false,
     fotos: [
-      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150932/ardy-import/productos/ardy-121/foto-1.png", alt: "CUBO ECOLÓGICO\n50 UNID X CAJA" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792811560/ardy-import/productos/ardy-121/foto-1.png", alt: "Cubo ecológico\n50 unid x caja — imagen 2" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792811570/ardy-import/productos/ardy-121/foto-2.png", alt: "Cubo ecológico\n50 unid x caja — imagen 3" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792811727/ardy-import/productos/ardy-121/foto-3.webp", alt: "CUBO ECOLÓGICO\n50 UNID X CAJA" },
     ],
     seoTitle: "Cubo Ecológico 50 Unidades | ARDY Import Perú",
     seoMeta: "Adquiere cubo ecológico de 9 x 9 x 9 cm en presentación de 50 unidades por caja. Disponible en colores azul, natural, negro y rojo en Perú.",
