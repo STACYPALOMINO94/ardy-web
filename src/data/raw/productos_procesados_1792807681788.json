@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "parlante-bluetooth-bamboo",
+      "slugsAnteriores": [],
+      "nombre": "Parlante bluetooth bamboo",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Parlante bluetooth bamboo fabricado en madera, ideal para tecnología y accesorios corporativos en Perú.",
+      "descripcionLarga": "El parlante bluetooth bamboo es un dispositivo de tecnología y accesorios diseñado para empresas que buscan opciones en madera. Cuenta con medidas de 41.50x41.50x16cm y 7x7cm, adaptándose a requerimientos comerciales y de merchandising corporativo en el mercado peruano.",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 36.53,
+            "100": 34.53,
+            "500": 32.8
+          }
+        }
+      },
+      "material": "madera",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "bambu"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150915/ardy-import/productos/ardy-111/foto-1.png",
+          "alt": "PARLANTE BLUETOOTH BAMBOO"
+        }
+      ],
+      "seoTitle": "Parlante Bluetooth Bamboo para Merchandising en Perú | ARDY Import",
+      "seoMeta": "Adquiere el parlante bluetooth bamboo fabricado en madera para empresas y merchandising en Perú. Conoce sus medidas y características.",
+      "palabraClave": "parlante bluetooth bamboo",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-111"
+    }
+  ]
+}
