@@ -1,0 +1,48 @@
+{
+  "formato": "ardy-operations/producto-web",
+  "version": 2,
+  "productos": [
+    {
+      "slug": "cargador-cronos",
+      "slugsAnteriores": [],
+      "nombre": "Cargador cronos",
+      "categoria": "Tecnologia y accesorios",
+      "descripcionCorta": "Cargador Cronos de plástico color negro, perteneciente a la categoría de tecnología y accesorios.",
+      "descripcionLarga": "Adquiere el Cargador Cronos fabricado en material plástico de color negro. Este producto se encuentra dentro de la categoría de tecnología y accesorios, siendo una opción para el mercado peruano.\n\nMedidas: 16 cm",
+      "moq": 50,
+      "modalidades": {
+        "importacion": null,
+        "nacionalizado": {
+          "precioDesde": 500,
+          "precios": {
+            "50": 15.65,
+            "100": 13.65,
+            "500": 12.93
+          }
+        }
+      },
+      "material": "plastico",
+      "tecnicas": [],
+      "areaMarcado": "",
+      "colores": [
+        "negro"
+      ],
+      "tallas": [],
+      "disponibilidad": "En stock",
+      "permisoMtc": null,
+      "esNovedad": false,
+      "destacado": false,
+      "fotos": [
+        {
+          "url": "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150901/ardy-import/productos/ardy-101/foto-1.png",
+          "alt": "CARGADOR CRONOS"
+        }
+      ],
+      "seoTitle": "Cargador Cronos de Plástico | ARDY Import Perú",
+      "seoMeta": "Cargador Cronos fabricado en plástico color negro. Disponible en Perú para el sector de tecnología y accesorios.",
+      "palabraClave": "cargador cronos en peru",
+      "fechaActualizacion": "2026-10-24",
+      "sku": "ARDY-101"
+    }
+  ]
+}
