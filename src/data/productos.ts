@@ -1353,7 +1353,10 @@ export const productos: Producto[] = [
     esNovedad: false,
     destacado: false,
     fotos: [
-      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792150833/ardy-import/productos/ardy-060/foto-1.png", alt: "LIBRETA ATENEA" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792805749/ardy-import/productos/ardy-060/foto-1.jpg", alt: "Libreta atenea — imagen 2" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792805796/ardy-import/productos/ardy-060/foto-2.png", alt: "Libreta atenea — imagen 3" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792805846/ardy-import/productos/ardy-060/foto-3.png", alt: "Libreta atenea — imagen 4" },
+      { url: "https://res.cloudinary.com/tw3hi0pz/image/upload/v1792805986/ardy-import/productos/ardy-060/foto-4.webp", alt: "LIBRETA ATENEA" },
     ],
     seoTitle: "Libreta Atenea de Papel al por Mayor en Perú | ARDY Import",
     seoMeta: "Compra la Libreta Atenea de papel en colores azul, negro y rojo. Medidas de 15.8cm x 11.5cm x 1.5cm. Ideal para oficinas y merchandising en Perú.",
